@@ -33,9 +33,10 @@ public class BattleManager : MonoBehaviour
     [Header("HP")]
     [SerializeField] Slider playerHpBar;
     [SerializeField] Slider enemyHpBar;
-
     [SerializeField] Text countDownText;
 
+    [Header("LOG")]
+    [SerializeField] LogUI log;
 
     float chooseTime = 5f; // 선택시간5초
 
@@ -252,6 +253,8 @@ public class BattleManager : MonoBehaviour
                 Debug.Log("1.플레이어 마법공격 했는가? F ->" + isMagic);
                 Debug.Log("몬스터 타입 -> 회피: T 방어:F  ->" + counterType);
 
+
+                if (log) log.Print("플레이어 공격 실패");
                 playerHp -= counterDamage;
                 AnimationActive(spum, PlayerState.DAMAGED);
                 AnimationActive(enSpum, PlayerState.ATTACK);
@@ -261,9 +264,13 @@ public class BattleManager : MonoBehaviour
                 Debug.Log("2.플레이어 마법공격 했는가? F ->" + isMagic);
                 Debug.Log("몬스터 타입 -> 회피: F 방어:T  ->" + counterType);
 
+             
+                if (log) log.Print("플레이어 공격 성공");
                 enemyHp -= attackPower;
-                AnimationActive(spum, PlayerState.ATTACK);
-                AnimationActive(enSpum, PlayerState.DAMAGED);
+                StartCoroutine(PlayerAttackMove());
+
+                //AnimationActive(spum, PlayerState.ATTACK);
+                //AnimationActive(enSpum, PlayerState.DAMAGED);
             }
         }
         else  // 플레이어가 방어턴인경우
@@ -275,17 +282,92 @@ public class BattleManager : MonoBehaviour
             // 공격 판정
             if (pa == counterType)
             {
+
+                if (log) log.Print("플레이어 카운터 성공");
                 enemyHp -= counterDamage;
                 AnimationActive(spum, PlayerState.ATTACK);
                 AnimationActive(enSpum, PlayerState.DAMAGED);
             }
             else
             {
+
+                if (log) log.Print("플레이어 카운터 실패");
                 playerHp -= attackPower;
-                AnimationActive(spum, PlayerState.DAMAGED);
-                AnimationActive(enSpum, PlayerState.ATTACK);
+                StartCoroutine(EnemyAttackMove());
+
+                //AnimationActive(spum, PlayerState.DAMAGED);
+                //AnimationActive(enSpum, PlayerState.ATTACK);
             }
         }
+
+
+        IEnumerator PlayerAttackMove()
+        {
+            // 플레이어 위치 저장
+            Transform playerTr = spum.transform;
+            Vector3 startPos = playerTr.position;
+
+            // 적 위치 기준 (적 앞쪽 약간)
+            Vector3 targetPos = EnemyBoot.enemy.transform.position + new Vector3(-1.0f, 0, 0); // 적 왼쪽 앞
+
+            // 앞으로 이동
+            float moveTime = 0.3f;
+            float t = 0;
+            while (t < moveTime)
+            {
+                t += Time.deltaTime;
+                playerTr.position = Vector3.Lerp(startPos, targetPos, t / moveTime);
+                yield return null;
+            }
+
+            // 공격 애니메이션
+            AnimationActive(spum, PlayerState.ATTACK);
+            AnimationActive(enSpum, PlayerState.DAMAGED);
+            yield return new WaitForSeconds(0.5f); // 타격 타이밍 대기
+
+            // 원래 자리로 복귀
+            t = 0;
+            while (t < moveTime)
+            {
+                t += Time.deltaTime;
+                playerTr.position = Vector3.Lerp(targetPos, startPos, t / moveTime);
+                yield return null;
+            }
+
+            // 대기 상태로 변경
+            AnimationActive(spum, PlayerState.IDLE);
+        }
+
+        IEnumerator EnemyAttackMove()
+        {
+            Transform enemyTr = enSpum.transform;
+            Vector3 startPos = enemyTr.position;
+            Vector3 targetPos = spum.transform.position + new Vector3(1.0f, 0, 0); // 플레이어 앞쪽
+
+            float moveTime = 0.3f;
+            float t = 0f;
+            while (t < moveTime)
+            {
+                t += Time.deltaTime;
+                enemyTr.position = Vector3.Lerp(startPos, targetPos, t / moveTime);
+                yield return null;
+            }
+
+            AnimationActive(enSpum, PlayerState.ATTACK);
+            AnimationActive(spum, PlayerState.DAMAGED);
+            yield return new WaitForSeconds(0.5f);
+
+            t = 0f;
+            while (t < moveTime)
+            {
+                t += Time.deltaTime;
+                enemyTr.position = Vector3.Lerp(targetPos, startPos, t / moveTime);
+                yield return null;
+            }
+
+            AnimationActive(enSpum, PlayerState.IDLE);
+        }
+
 
     }
 

@@ -20,6 +20,7 @@ public class LogUI : MonoBehaviour
 
     public void Print(string msg)
     {
+       
         logText.text = msg;
     }
 }

@@ -182,7 +182,11 @@ public class SPUM_Prefabs : MonoBehaviour
                 {
                     bool isTrigger = parameter.name.ToUpper().Contains(StateStr.ToUpper());
                     if(isTrigger){
+<<<<<<< HEAD
                          //Debug.Log($"Parameter: {parameter.name}, Type: {parameter.type}");
+=======
+                         Debug.Log($"Parameter: {parameter.name}, Type: {parameter.type}");
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
                         animator.SetTrigger(parameter.name);
                     }
                 }

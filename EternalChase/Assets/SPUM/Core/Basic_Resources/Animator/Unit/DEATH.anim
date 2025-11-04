@@ -5660,7 +5660,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
+<<<<<<< HEAD
     path: Root/P_RFoot
+=======
+    path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5672,7 +5676,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
+<<<<<<< HEAD
     path: Root/P_RFoot
+=======
+    path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5684,7 +5692,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
+<<<<<<< HEAD
     path: Root/P_RFoot
+=======
+    path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5948,7 +5960,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
+<<<<<<< HEAD
     path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+=======
+    path: Root/P_RFoot
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5960,7 +5976,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
+<<<<<<< HEAD
     path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+=======
+    path: Root/P_RFoot
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5972,7 +5992,11 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
+<<<<<<< HEAD
     path: Root/BodySet/P_Body/ArmSet/ArmL/P_LArm
+=======
+    path: Root/P_RFoot
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     classID: 4
     script: {fileID: 0}
     flags: 0

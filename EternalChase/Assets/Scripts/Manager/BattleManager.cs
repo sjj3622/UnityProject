@@ -1,12 +1,20 @@
+<<<<<<< HEAD
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+=======
+Ôªøusing System.Collections;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+using UnityEngine;
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
 using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
+<<<<<<< HEAD
     public enum ActionType { NONE, ATTACK, MAGIC, DEF, AVOID }
     public enum Turn { PlayerAttack, EnemyAttack }
     SPUM_Prefabs spum, enSpum;
@@ -16,12 +24,25 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Button magicBtn; //∏∂π˝∞¯∞›
     [SerializeField] Button defenseBtn; //πÊæÓ
     [SerializeField] Button avoidBtn; // »∏««
+=======
+
+    public enum ActionType { NONE, ATTACK, MAGIC, DEF, AVOID }
+    public enum Turn { PlayerAttack, EnemyAttack }
+
+    //ÌîåÎ†àÏù¥Ïñ¥
+    [Header("Player UI")]
+    [SerializeField] Button attackBtn; // Î¨ºÎ¶¨Í≥µÍ≤©
+    [SerializeField] Button magicBtn; // ÎßàÎ≤ïÍ≥µÍ≤©
+    [SerializeField] Button defenseBtn; // ÎßâÍ∏∞
+    [SerializeField] Button avoidBtn; // Ìù¨Ìîº
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
 
     [SerializeField] Image imgAttack;
     [SerializeField] Image imgMagic;
     [SerializeField] Image imgDef;
     [SerializeField] Image imgAvoid;
 
+<<<<<<< HEAD
     // ¿˚
     [Header("Enemy UI")]
     [SerializeField] Image imgAttacken;
@@ -29,10 +50,23 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Image imgDefen;
     [SerializeField] Image imgAvoiden;
 
+=======
+    [Header("Enemy UI")]
+    [SerializeField] Button EattackBtn; // Î¨ºÎ¶¨Í≥µÍ≤©
+    [SerializeField] Button EmagicBtn; // ÎßàÎ≤ïÍ≥µÍ≤©
+    [SerializeField] Button EdefenseBtn; // ÎßâÍ∏∞
+    [SerializeField] Button EavoidBtn; // Ìù¨Ìîº
+
+    [SerializeField] Image imgEAttack;
+    [SerializeField] Image imgEMagic;
+    [SerializeField] Image imgEDef;
+    [SerializeField] Image imgEAvoid;
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
 
     [Header("HP")]
     [SerializeField] Slider playerHpBar;
     [SerializeField] Slider enemyHpBar;
+<<<<<<< HEAD
     [SerializeField] Text countDownText;
 
     [Header("LOG")]
@@ -71,18 +105,55 @@ public class BattleManager : MonoBehaviour
         enemyHpBar.value = enemyHp;
 
         //πˆ∆∞ ƒ›πÈ
+=======
+
+    float chooseTime = 5f; // ÏÑ†ÌÉùÏãúÍ∞Ñ 5Ï¥à
+    // ÏûÑÏãúÎ°ú Îä•Î†•Ïπò
+    int PhyPower = 10, magicPower = 10;
+    int enPhyPower = 10, enMagicPower = 10;
+
+    int counterdamage = 5;
+
+    int playerHp, enemyHp;
+
+    bool playerLocked; // ÌîåÎ†àÏù¥Ïñ¥Í∞Ä ÏÑ†ÌÉùÌñàÎäîÍ∞Ä
+    bool roundRunning;
+
+    ActionType playerChoise = ActionType.NONE;
+    ActionType enemyChoice = ActionType.NONE;
+    Turn currenTurn = Turn.PlayerAttack;
+
+    private void Awake()
+    {
+        playerHp = GameManager.playerMaxHp; // ÌîåÎ†àÏù¥Ïñ¥Ïùò ÏµúÎåÄ hp
+        enemyHp = 50; // Ï†ÅÏùò Í∏∞Î≥∏ hp
+
+        // Ïä¨ÎùºÏù¥ÎìúÏóê Ï†ÅÏö©
+        playerHpBar.maxValue = playerHp; // Ïä¨ÎùºÏù¥Îìú ÏµúÎåÄÍ∞í ÏÑ§Ï†ï
+        playerHpBar.value = playerHp; // Ï≤òÏùå ÏãúÏûëÏãú Ïä¨ÎùºÏù¥ÎìúÎäî ÍΩâÏ±ÑÏö∞Í∏∞
+        enemyHpBar.maxValue = enemyHp;
+        enemyHpBar.value = enemyHp;
+
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
         attackBtn.onClick.AddListener(() => PlayerChoose(ActionType.ATTACK));
         magicBtn.onClick.AddListener(() => PlayerChoose(ActionType.MAGIC));
         defenseBtn.onClick.AddListener(() => PlayerChoose(ActionType.DEF));
         avoidBtn.onClick.AddListener(() => PlayerChoose(ActionType.AVOID));
     }
 
+<<<<<<< HEAD
     void Start()
     {
         enSpum = EnemyBoot.enemy.GetComponent<SPUM_Prefabs>();
         enSpum.OverrideControllerInit();
 
         PlayerController.gameState = "Battle";
+=======
+
+    void Start()
+    {
+
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     }
 
 
@@ -91,11 +162,19 @@ public class BattleManager : MonoBehaviour
 
     }
 
+<<<<<<< HEAD
     void PlayerChoose(ActionType type) // «√∑π¿ÃæÓ ƒ≥∏Ø≈Õ∞° ¿⁄Ω≈¿« ≈œªÛ»≤ø° º±≈√«œ±‚
     {
         if (!roundRunning) return; // ¿ÃπÃ πˆ∆∞¿ª ≈¨∏Ø«—∞ÊøÏ - º±≈√ ¥Î±‚ Ω√∞£ ¡æ∑·
 
         if (currentTurn == Turn.PlayerAttack)//«ˆ¿Á «√∑π¿ÃæÓ¿« ≈œø° ∏¬√Áµø¿€
+=======
+    void PlayerChoose(ActionType type)
+    {
+        if (!roundRunning) return; // Ïù¥ÎØ∏ Î≤ÑÌäº ÌÅ¥Î¶≠ÌïúÍ≤ΩÏö∞
+
+        if (currenTurn == Turn.PlayerAttack) // ÌòÑÏû¨ ÌîåÎ†àÏù¥Ïñ¥Ïùò ÌÑ¥Ïóê ÎßûÏ∂∞ÎèôÏûë
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
         {
             if (type != ActionType.ATTACK && type != ActionType.MAGIC) return;
         }
@@ -103,21 +182,30 @@ public class BattleManager : MonoBehaviour
         {
             if (type != ActionType.DEF && type != ActionType.AVOID) return;
         }
+<<<<<<< HEAD
         Debug.Log(type);
         playerChoice = type;
 
+=======
+
+        playerChoise = type;
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     }
 
     private void OnEnable()
     {
         StartCoroutine(battleLoop());
     }
+<<<<<<< HEAD
 
     //  ¿¸≈ı ∏ﬁº≠µÂ, ∞¯∞› <-> πÊæÓ ±≥¥Î ¿¸≈ı
+=======
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     IEnumerator battleLoop()
     {
         while (playerHp > 0 && enemyHp > 0)
         {
+<<<<<<< HEAD
             // ∂ÛøÓµÂ ¡ÿ∫Ò
             ResetAllParentColors(); // πˆ∆∞¿« ªˆªÛ¿ª √ ±‚ªÛ≈¬∑Œ µπ∏Æ±‚
             playerChoice = ActionType.NONE;
@@ -140,10 +228,26 @@ public class BattleManager : MonoBehaviour
 
             }
             else  // ¿˚ ∞¯∞› ≈œ
+=======
+            //ÎùºÏö¥Îìú Ï§ÄÎπÑ
+            ResetAllParentColors(); // Î≤ÑÌäºÏùò ÏÉâÏÉÅÏùÑ Ï¥àÍ∏∞ÏÉÅÌÉúÎ°ú ÎèåÎ¶¨Í∏∞
+            playerChoise = ActionType.NONE;
+            enemyChoice = ActionType.NONE;
+            roundRunning = true;
+
+            //ÌÑ¥ÏóêÎî∞Îùº Î≤ÑÌäº ÎπÑÌôúÏÑ±Ìôî/ÌôúÏÑ±Ìôî
+            if (currenTurn == Turn.PlayerAttack) // ÌîåÎ†àÏù¥Ïñ¥Ïùò Í≥µÍ≤© ÌÑ¥
+            {
+                EnableButton(att: true, mag: true, def: false, av: false);
+                enemyChoice = (Random.value < 0.5f) ? ActionType.DEF : ActionType.AVOID;
+            }
+            else // Ï†Å Í≥µÍ≤© ÌÑ¥
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
             {
                 EnableButton(att: false, mag: false, def: true, av: true);
                 enemyChoice = (Random.value < 0.5f) ? ActionType.ATTACK : ActionType.MAGIC;
             }
+<<<<<<< HEAD
             Debug.Log(playerChoice);
 
 
@@ -398,11 +502,68 @@ public class BattleManager : MonoBehaviour
 
 
     void EnableButton(bool att, bool mag, bool def, bool av)  // «√∑π¿ÃæÓ πˆ∆∞ »∞º∫ ∫Ò»∞º∫
+=======
+
+            //ÏÑ†ÌÉù ÎåÄÍ∏∞ ÏãúÍ∞Ñ 5Ï¥à
+            float t = 0f;
+            while (t < chooseTime) // ÏÑ†ÌÉù ÎåÄÍ∏∞ ÏãúÍ∞ÑÏù∏ 5Ï¥àÎ≥¥Îã§ ÏûëÎã§Î©¥ Í≥ÑÏÜç ÎåÄÍ∏∞ÌïòÍ∏∞ÏúÑÌïú
+                                   // Î∞òÎ≥µÎ¨∏
+            {
+                t += Time.deltaTime; // deltaTimeÏùÑ Ïù¥Ïö©ÌïòÏó¨ ÏãúÍ∞ÑÏ∏°Ï†ï
+                yield return null; // Î∞òÎ≥µÎ¨∏Ïù¥ ÎÅùÎÇ†ÎïåÍπåÏßÄ Í≥ÑÏÜç ÎåÄÍ∏∞ ÌïòÍ∏∞
+
+            }
+
+            // ÏÑ†ÌÉù ÏãúÍ∞Ñ Ï¢ÖÎ£å
+            // ÏÑ†ÌÉùÎêú Í≥µÍ≤© ÎòêÎäî Î∞©Ïñ¥ Ïùò Î≤ÑÌäº ÏÉâÏÉÅ ÌëúÌòÑ
+            LockSelect(); // ÏÑ†ÌÉùÎêú Î≤ÑÌäº ÏÉâÏÉÅ
+
+        }
+    }
+
+    void LockSelect()
+    {
+        // ÌîåÎ†àÏù¥Ïñ¥ Í∞Ä ÏÑ†ÌÉùÌïú Î≤ÑÌäº Í≤ÄÏ†ïÏúºÎ°ú
+        // Ï†Å ÏÑ†ÌÉù Í≤ÄÏ†ïÏúºÎ°ú
+        // Î≤ÑÌäºÎßå ÏûàÎäî Í≤ΩÏö∞ * 8
+        //Ï†Å Î≤ÑÌäº Í≤ÄÏ†ïÏÉâÏúºÎ°ú *4
+        //attackBtn.GetComponent<Image>().color = 
+        //    enemyChoice == ActionType.ATTACK ? Color.black : Color.white;
+        //ÌîåÎ†àÏù¥Ïñ¥ Î≤ÑÌäº Í≤ÄÏ†ïÏÉâÏúºÎ°ú *4
+        //attackBtn.GetComponent<Image>().color =
+        //   playerChoise == ActionType.ATTACK ? Color.black : Color.white;
+
+
+
+
+        // Ïù¥ÎØ∏ÏßÄÎ°ú Ìïú Í≤ΩÏö∞ * 8
+        // ÌîåÎ†àÏù¥Ïñ¥Í∞Ä ÏÑ†ÌÉùÌïú Î≤ÑÌäº Í≤ÄÏ†ïÏúºÎ°ú
+        imgAttack.color = playerChoise == ActionType.ATTACK ? Color.black :Color.white;
+        imgMagic.color = playerChoise == ActionType.ATTACK ? Color.black :Color.white;
+        imgDef.color = playerChoise == ActionType.ATTACK ? Color.black :Color.white;
+        imgAvoid.color = playerChoise == ActionType.ATTACK ? Color.black :Color.white;
+
+        //Ï†Å ÏÑ†ÌÉù Í≤ÄÏ†ïÏúºÎ°ú
+        imgEAttack.color = playerChoise == ActionType.ATTACK ? Color.black : Color.white;
+        imgEMagic.color = playerChoise == ActionType.ATTACK ? Color.black : Color.white;
+        imgEDef.color = playerChoise == ActionType.ATTACK ? Color.black : Color.white;
+        imgEAvoid.color = playerChoise == ActionType.ATTACK ? Color.black : Color.white;
+
+
+
+        // ÌîåÎ†àÏù¥Ïñ¥ Î≤ÑÌäº Ï†ÑÎ∂Ä Ïû†Í∏à
+        EnableButton(false, false, false, false);
+
+    }
+
+    void EnableButton(bool att, bool mag, bool def, bool av)
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
     {
         attackBtn.interactable = att;
         magicBtn.interactable = mag;
         defenseBtn.interactable = def;
         avoidBtn.interactable = av;
+<<<<<<< HEAD
     }
 
     void ResetAllParentColors() // πˆ∆∞ ªˆªÛ ø¯∑° ªÛ≈¬∑Œ µπ∏Æ±‚
@@ -411,11 +572,22 @@ public class BattleManager : MonoBehaviour
         //attackBtn.GetComponent<Image>().color = Color.white;
 
         //πˆ∆∞¿« πË∞Ê¿∏∑Œ ¿ÃπÃ¡ˆ∞¥√º ¿÷¥¬∞ÊøÏ
+=======
+
+    }
+
+    void ResetAllParentColors()
+    {
+        //Î≤ÑÌäºÎßå ÏûàÎäîÍ≤ΩÏö∞
+        //attackBtn.GetComponent<Image>().color = Color.white;
+        //Î≤ÑÌäºÏùò Î∞∞Í≤ΩÏúºÎ°ú Ïù¥ÎØ∏ÏßÄ Í∞ùÏ≤¥Í∞ÄÏûàÎäîÍ≤ΩÏö∞
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
         imgAttack.color = Color.white;
         imgMagic.color = Color.white;
         imgDef.color = Color.white;
         imgAvoid.color = Color.white;
 
+<<<<<<< HEAD
         imgAttacken.color = Color.white;
         imgMagicen.color = Color.white;
         imgDefen.color = Color.white;
@@ -433,4 +605,26 @@ public class BattleManager : MonoBehaviour
     ¿¸≈ıπÊΩƒ¿∫  π∞∏Æ∞¯∞›¿ª ∏∑¿ªºˆ ¿÷¥¬∞« πÊæÓ¿Ã∞Ì  , ∏∂π˝∞¯∞›¿ª ∏∑¿ªºˆ ¿÷¥¬∞« »∏««
     ∏∏æ‡ ≥ª∞° π∞∏Æ∞¯∞›º±≈√«œ∞Ì ¿˚¿Ã πÊæÓ∏¶ º±≈√«ﬂ¥Ÿ∏È  ∞¯∞›Ω«∆–∑Œ  ∆–≥Œ∆º hp -5 ∞®º“
         ∞¯∞› º∫∞¯Ω√ ∞¯∞›∑¬ ∏∏≈≠ hp ∞®º“
+=======
+        imgEAttack.color = Color.white;
+        imgEMagic.color = Color.white;
+        imgEDef.color = Color.white;
+        imgEAvoid.color = Color.white;
+
+
+    }
+
+
+}
+/*
+
+    5Ï¥àÏùò ÏãúÍ∞ÑÎèôÏïà Í≥µÍ≤© ÎòêÎäî Î∞©Ïñ¥Î•º ÏÑ†ÌÉùÌï¥ÏïºÌïúÎã§
+    ÏÑ†ÌÉùÎêú Í∏∞Îä•Ïóê ÌôîÎ©¥ ÌëúÏãú
+    Ïó∞Ï∂ú
+    Ï†ÅÏùÄ ÎûúÎç§ÌïòÍ≤å ÏÑ†ÌÉùÌïúÎã§
+    Ï†ÑÌà¨Î∞©ÏãùÏùÄ Î¨ºÎ¶¨Í≥µÍ≤©ÏùÑ ÎßâÏùÑÏàò ÏûàÎäîÍ±¥ Î∞©Ïñ¥Ïù¥Í≥† , ÎßàÎ≤ïÍ≥µÍ≤©ÏùÑ ÎßâÏùÑÏàò ÏûàÎäîÍ±¥ Ìù¨Ìîº
+    ÎßåÏïΩ ÎÇ¥Í∞Ä Î¨ºÎ¶¨Í≥µÍ≤©ÏÑ†ÌÉùÌïòÍ≥† Ï†ÅÏù¥ Î∞©Ïñ¥Î•º ÏÑ†ÌÉùÌñàÎã§Î©¥ Í≥µÍ≤©Ïã§Ìå®Î°ú Ìå®ÎÑêÌã∞ hp -5Í∞êÏÜå
+    Í≥µÍ≤© ÏÑ±Í≥µÏãú Í≥µÍ≤©Î†• ÎßåÌÅº hp Í∞êÏÜå
+
+>>>>>>> 22ff9ed88032a66f3cc0fc3a068ec87347d487ea
  */

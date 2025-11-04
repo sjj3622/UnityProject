@@ -1,0 +1,240 @@
+fileFormatVersion: 2
+guid: bedc462c53107204fb3840105227bee6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "Cora\xE7\xE3o-Cristal-Quebrando_0"
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 2302
+        width: 515
+        height: 515
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62efdd266e8d7a94e87e28e3d04e311b
+      internalID: -2079019101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Cora\xE7\xE3o-Cristal-Quebrando_1"
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 2271
+        width: 545
+        height: 577
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0304c8a8bb7d1f43a0af01f72f9179b
+      internalID: 721771585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Cora\xE7\xE3o-Cristal-Quebrando_2"
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 1079
+        width: 841
+        height: 937
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 841528e5c66d0d64aabd5f78d399ca33
+      internalID: 1955199739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Cora\xE7\xE3o-Cristal-Quebrando_3"
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 1152
+        width: 781
+        height: 779
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac46c46b4decee34d98dcf260fe8d082
+      internalID: -1343823529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      "Cora\xE7\xE3o-Cristal-Quebrando_0": -2079019101
+      "Cora\xE7\xE3o-Cristal-Quebrando_1": 721771585
+      "Cora\xE7\xE3o-Cristal-Quebrando_10": -2119133598
+      "Cora\xE7\xE3o-Cristal-Quebrando_11": -1531612410
+      "Cora\xE7\xE3o-Cristal-Quebrando_12": 624447778
+      "Cora\xE7\xE3o-Cristal-Quebrando_13": 1431935918
+      "Cora\xE7\xE3o-Cristal-Quebrando_14": 1765849469
+      "Cora\xE7\xE3o-Cristal-Quebrando_15": 655022321
+      "Cora\xE7\xE3o-Cristal-Quebrando_16": -1521872242
+      "Cora\xE7\xE3o-Cristal-Quebrando_17": 998733626
+      "Cora\xE7\xE3o-Cristal-Quebrando_18": 2028281508
+      "Cora\xE7\xE3o-Cristal-Quebrando_19": 2055234609
+      "Cora\xE7\xE3o-Cristal-Quebrando_2": 1955199739
+      "Cora\xE7\xE3o-Cristal-Quebrando_20": 1268854746
+      "Cora\xE7\xE3o-Cristal-Quebrando_21": -1655554018
+      "Cora\xE7\xE3o-Cristal-Quebrando_22": 1627844541
+      "Cora\xE7\xE3o-Cristal-Quebrando_23": -2092959063
+      "Cora\xE7\xE3o-Cristal-Quebrando_24": 979755721
+      "Cora\xE7\xE3o-Cristal-Quebrando_25": 623447569
+      "Cora\xE7\xE3o-Cristal-Quebrando_26": 275564162
+      "Cora\xE7\xE3o-Cristal-Quebrando_27": -947778583
+      "Cora\xE7\xE3o-Cristal-Quebrando_28": -1551874983
+      "Cora\xE7\xE3o-Cristal-Quebrando_3": -1343823529
+      "Cora\xE7\xE3o-Cristal-Quebrando_4": 1445535871
+      "Cora\xE7\xE3o-Cristal-Quebrando_5": -1592751639
+      "Cora\xE7\xE3o-Cristal-Quebrando_6": 1699491270
+      "Cora\xE7\xE3o-Cristal-Quebrando_7": -474889917
+      "Cora\xE7\xE3o-Cristal-Quebrando_8": -1499504871
+      "Cora\xE7\xE3o-Cristal-Quebrando_9": -54754136
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

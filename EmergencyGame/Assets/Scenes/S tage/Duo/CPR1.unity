@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1875640426}
-  smoothSpeed: 0.001
+  smoothSpeed: 0.005
   offset: {x: 0, y: 0, z: 0}
 --- !u!1001 &371171321
 PrefabInstance:
@@ -1341,6 +1341,7 @@ MonoBehaviour:
   targetX: 4
   timerText: {fileID: 854642453}
   timerDuration: 300
+  isCarried: 0
 --- !u!61 &562916008
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2248,6 +2249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfa7ca2d86532e4d832caf042bc0290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gate: {fileID: 1563926227}
+  patient: {fileID: 562916004}
   panel: {fileID: 94527933}
   messageText: {fileID: 1323093374}
   optionButtons:
@@ -3200,6 +3203,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7878350319992209165, guid: f881b3fdf9773534a9d5ba16c3ae97ce, type: 3}
   m_PrefabInstance: {fileID: 1553381266}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1563926225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563926226}
+  - component: {fileID: 1563926227}
+  m_Layer: 0
+  m_Name: Gate
+  m_TagString: Gate
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563926226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563926225}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.22, y: -2.02, z: 0.020787988}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563926227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563926225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff570643739a9446a8458ae36a7e88d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  medicPrefab: {fileID: 6698318738157994687, guid: 4b2eda8c3a735a347ab4a1a9d16e9514, type: 3}
 --- !u!1001 &1565131732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4189,6 +4237,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 365746822}
+  - {fileID: 1563926226}
   - {fileID: 562916004}
   - {fileID: 1875640426}
   - {fileID: 657406576}

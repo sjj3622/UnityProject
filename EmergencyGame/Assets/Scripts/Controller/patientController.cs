@@ -13,7 +13,7 @@ public class patientController : MonoBehaviour
     public string DeadAni = "SantaDead";
     public string StataAni = "Stata";
 
-    string nowAni = "", oldAni = "";
+    // string nowAni = "", oldAni = "";
 
     [Header("Move Settings")]
     public float speed = 2f; // 이동 속도
@@ -26,6 +26,7 @@ public class patientController : MonoBehaviour
     private bool timerRunning = false;
 
     bool isDead = false;
+    public bool isCarried = false; // Medic이 태웠는지 여부
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class patientController : MonoBehaviour
 
     void Update()
     {
-        if (!isDead)
+        if (!isDead && !isCarried) // Medic이 태운 상태라면 이동 정지
         {
             // 이동
             if (tr.position.x > targetX)
@@ -78,6 +79,7 @@ public class patientController : MonoBehaviour
             }
         }
     }
+
 
     IEnumerator StartTimer()
     {

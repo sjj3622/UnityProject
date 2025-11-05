@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour
     Animator animator;
 
     [Header("MOVE")]
-    float axisH, axisV;
     public float speed = 3.0f;
     bool isStopped = false;
 
-
+    Vector2 moveDir;          // 이동 방향
+    Vector2 lastDir = Vector2.down; // 마지막 이동 방향
+    Vector2 targetPos;        // 마우스 클릭한 목적지
+    bool isMoving = false;    // 이동 중 여부
 
     [Header("Animation Names")]
     public string stopUPAni = "PlayerIdleUP";
@@ -28,83 +30,96 @@ public class PlayerController : MonoBehaviour
     string nowAni = "", oldAni = "";
     public static string gameState = "game";
 
-    Vector2 moveDir; // 이동 방향 저장용
-    Vector2 lastDir = Vector2.down; // 마지막 이동 방향 (정지 시 어떤 방향을 바라볼지)
+    Camera mainCam;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        mainCam = Camera.main;
 
         nowAni = stopDOWNAni;
         oldAni = nowAni;
         animator.Play(nowAni);
+
+        targetPos = transform.position;
     }
 
     void Update()
     {
-        if (gameState != "game") return;
-        if (isStopped) return;
-        axisH = Input.GetAxisRaw("Horizontal");
-        axisV = Input.GetAxisRaw("Vertical");
+        if (gameState != "game" || isStopped) return;
 
-        moveDir = new Vector2(axisH, axisV).normalized;
-
-        // --- 방향에 따른 애니메이션 전환 ---
-        if (moveDir.magnitude > 0.01f)
+        // --- 마우스 클릭으로 목적지 설정 ---
+        if (Input.GetMouseButtonDown(0))
         {
-            // 이동 중
-            if (Mathf.Abs(moveDir.x) > Mathf.Abs(moveDir.y))
+            Vector3 mouseWorld = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorld.z = 0;
+            targetPos = mouseWorld;
+            isMoving = true;
+        }
+
+        // --- 목적지로 이동 중이라면 방향 계산 ---
+        if (isMoving)
+        {
+            Vector2 currentPos = transform.position;
+            Vector2 dir = (targetPos - currentPos);
+            float distance = dir.magnitude;
+
+            if (distance < 0.05f)
             {
-                // 좌우 이동이 더 큼
-                if (moveDir.x > 0)
-                    nowAni = runRIGHTAni;
-                else
-                    nowAni = runLEFTAni;
+                // 목적지 도달
+                rb.velocity = Vector2.zero;
+                isMoving = false;
+                SetIdleAnimation();
             }
             else
             {
-                // 상하 이동이 더 큼
-                if (moveDir.y > 0)
-                    nowAni = runUPAni;
-                else
-                    nowAni = runDOWNAni;
+                moveDir = dir.normalized;
+                rb.velocity = moveDir * speed;
+                SetMoveAnimation(moveDir);
             }
-
-            lastDir = moveDir; // 마지막 방향 기억
         }
         else
         {
-            // 멈춤 상태
-            if (Mathf.Abs(lastDir.x) > Mathf.Abs(lastDir.y))
-            {
-                if (lastDir.x > 0)
-                    nowAni = stopRIGHTAni;
-                else
-                    nowAni = stopLEFTAni;
-            }
-            else
-            {
-                if (lastDir.y > 0)
-                    nowAni = stopUPAni;
-                else
-                    nowAni = stopDOWNAni;
-            }
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+    void SetMoveAnimation(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            nowAni = dir.x > 0 ? runRIGHTAni : runLEFTAni;
+        }
+        else
+        {
+            nowAni = dir.y > 0 ? runUPAni : runDOWNAni;
         }
 
-        // --- 애니메이션 변경 ---
+        lastDir = dir;
+        ChangeAnimation();
+    }
+
+    void SetIdleAnimation()
+    {
+        if (Mathf.Abs(lastDir.x) > Mathf.Abs(lastDir.y))
+        {
+            nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
+        }
+        else
+        {
+            nowAni = lastDir.y > 0 ? stopUPAni : stopDOWNAni;
+        }
+        ChangeAnimation();
+    }
+
+    void ChangeAnimation()
+    {
         if (nowAni != oldAni)
         {
             oldAni = nowAni;
             animator.Play(nowAni);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (gameState != "game") return;
-
-        rb.velocity = moveDir * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -128,15 +143,12 @@ public class PlayerController : MonoBehaviour
             {
                 panel.GameP();
             }
-
-
         }
     }
 
     void Gamestop()
     {
         rb.velocity = Vector2.zero;
-        rb.isKinematic = true; // 물리효과 중단 (중력, 힘 등 무시)
-        
+        rb.isKinematic = true;
     }
 }

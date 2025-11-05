@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +17,7 @@ public class LevelsPanel : MonoBehaviour
         }
     }
 
-    public void SoloBtnPanel() //¹öÆ°Å¬¸¯½Ã Panel È°¼ºÈ­ ÇÔ¼ö
+    public void SoloBtnPanel() //ï¿½ï¿½Æ°Å¬ï¿½ï¿½ï¿½ï¿½ Panel È°ï¿½ï¿½È­ ï¿½Ô¼ï¿½
     {
 
         if (SoloPanel != null)
@@ -27,7 +27,7 @@ public class LevelsPanel : MonoBehaviour
         }
     }
 
-    public void DuoBtnPanel() //¹öÆ°Å¬¸¯½Ã Panel ºñÈ°¼ºÈ­ ÇÔ¼ö
+    public void DuoBtnPanel() //ï¿½ï¿½Æ°Å¬ï¿½ï¿½ï¿½ï¿½ Panel ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½Ô¼ï¿½
     {
         if (SoloPanel != null)
         {
@@ -42,12 +42,12 @@ public class LevelsPanel : MonoBehaviour
 
     }
 
-    public void ExitClick()   // °ÔÀÓ Á¾·á ¹öÆ°
+    public void ExitClick()   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     {
-        Application.Quit(); // À¯´ÏÆ¼ °ÔÀÓ Á¾·á
+        Application.Quit(); // ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;  //À¯´ÏÆ¼ ¿¡µðÅÍÀÇ ½ÃÀÛ´ÜÃßºÎºÐ
+        UnityEditor.EditorApplication.isPlaying = false;  //ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û´ï¿½ï¿½ßºÎºï¿½
 #endif
     }
 
@@ -55,6 +55,7 @@ public class LevelsPanel : MonoBehaviour
     public void CPR1Cilck()
     {
         SceneManager.LoadScene("CPR1");
+        GameManager.gameState = "Stage1";
     }
 
 

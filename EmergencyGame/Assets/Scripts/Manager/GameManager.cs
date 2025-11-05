@@ -1,33 +1,91 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameState;
 
-    [Header("GamePanel °ü·Ã")]
+    public static GameManager Instance;
+    public static string gameState;
+    public GateController gate;
+    public Transform patient;
+
+    [Header("GamePanel")]
     [SerializeField] CPR1Panel panel;
     [SerializeField] Text messageText;
 
-    [Header("º¸±â ¹öÆ°µé")]
+    [Header("OptionBtn")]
     [SerializeField] Button[] optionButtons;
 
-    // º¸±â ÅØ½ºÆ®
-    private string[] optionTexts = new string[]
+    private string[][] optionTexts = new string[][]
     {
-        "119¿¡ ½Å°íÇÑ´Ù",                 // Á¤´ä
-        "±×³É Áö³ªÄ£´Ù",
-        "ÁÖº¯ »ç¶÷¿¡°Ô µµ¿òÀ» ¿äÃ»ÇÑ´Ù",
-        "½ÉÆó¼Ò»ı¼úÀ» ½ÃµµÇÑ´Ù"
+        new string[]
+        {
+            "êµ¬ê²½ë§Œ í•œë‹¤.",
+            "ê·¸ëƒ¥ ì§€ë‚˜ì¹œë‹¤.",
+            "ì“°ëŸ¬ì§„ ì‚¬ëŒì˜ ìƒíƒœë¥¼ í™•ì¸í•œë‹¤.",
+            "ê°€ë§Œíˆ ìˆëŠ”ë‹¤."
+        },
+        new string[]
+        {
+            "119ì— ì‹ ê³ í•œë‹¤.",
+            "ë‹¤ë¥¸ì‚¬ëŒ í•´ì£¼ê² ì§€",
+            "ë¬´ì„­ë‹¤ ë„ë§ê°€ì",
+            "..."
+        }
     };
 
-    private string correctAnswer = "119¿¡ ½Å°íÇÑ´Ù"; // Á¤´ä
-    private bool isQuestionShown = false; // ÇÑ ¹ø¸¸ ½ÇÇàµÇµµ·Ï Á¦¾î¿ë ÇÃ·¡±×
+    private string[] correctAnswer = { "ì“°ëŸ¬ì§„ ì‚¬ëŒì˜ ìƒíƒœë¥¼ í™•ì¸í•œë‹¤.", "119ì— ì‹ ê³ í•œë‹¤." };
+    private string[] WrongAnswer1 = { "êµ¬ê²½ë§Œ í•œë‹¤.", "ë‹¤ë¥¸ì‚¬ëŒ í•´ì£¼ê² ì§€" };
+    private string[] WrongAnswer2 = { "ê·¸ëƒ¥ ì§€ë‚˜ì¹œë‹¤.", "ë¬´ì„­ë‹¤ ë„ë§ê°€ì" };
+    private string[] WrongAnswer3 = { "ê°€ë§Œíˆ ìˆëŠ”ë‹¤.", "..." };
+
+    private bool isQuestionShown = false;
+    private int currentStep = 0; //  í˜„ì¬ ì§ˆë¬¸ ë‹¨ê³„ (0=ì²«ë²ˆì§¸, 1=ë‘ë²ˆì§¸)
+
+
+    //void Awake()
+    //{
+    //    // ì—”ë”©
+    //    if (gameState == "gameClear")
+    //    {
+    //        gate.SpawnMedic(patient);
+    //    }
+
+
+    //    if (GameObject.FindGameObjectWithTag("Patient") == null)
+    //    {
+    //        Debug.Log("íƒ€ì¼“í™•ì¸" + GameObject.FindGameObjectWithTag("Patient"));
+    //        panel.ClaerPanel.SetActive(true);
+    //    }
+    //}
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        
+    }
+
 
     void Start()
     {
+
+        if (gameState == "StageClear")
+        {
+            gate.SpawnMedic(patient);
+        }
+
+
+        Debug.Log("ê²Œì„ ìŠ¤í…Œì´ì§€ :" + gameState);
+        if (gameState != "Stage1") return;
         if (panel == null)
             panel = FindObjectOfType<CPR1Panel>();
 
@@ -36,53 +94,128 @@ public class GameManager : MonoBehaviour
         foreach (Button btn in optionButtons)
             btn.gameObject.SetActive(false);
 
-        // ¹öÆ° Å¬¸¯ ÀÌº¥Æ® µî·Ï
         for (int i = 0; i < optionButtons.Length; i++)
         {
-            int index = i; // Å¬·ÎÀú ¹®Á¦ ¹æÁö
-            optionButtons[i].onClick.AddListener(() => OnOptionSelected(index));
+            int index = i;
+            optionButtons[i].onClick.AddListener(() => StartCoroutine(OnOptionSelected(index)));
         }
     }
 
+
+
     void Update()
     {
-        // GamePanelÀÌ ÄÑÁö°í, ¾ÆÁ÷ ¹®Á¦¸¦ Ç¥½ÃÇÏÁö ¾Ê¾Ò´Ù¸é ÇÑ ¹ø¸¸ ½ÇÇà
+        if (GameObject.FindGameObjectWithTag("Patient") == null)
+        {
+            Debug.Log("íƒ€ì¼“í™•ì¸" + GameObject.FindGameObjectWithTag("Patient"));
+            panel.ClaerPanel.SetActive(true);
+        }
+
+
+        if (gameState != "Stage1") return;
+
         if (panel != null && panel.GamePanel.activeSelf && !isQuestionShown)
         {
-            isQuestionShown = true; // ´Ù½Ã ½ÇÇàµÇÁö ¾Êµµ·Ï ¼³Á¤
+            isQuestionShown = true;
+            ShowQuestion(currentStep);
+        }
 
-            messageText.gameObject.SetActive(true);
-            messageText.text = "»ç¶÷ÀÌ ¾²·¯Á³´Ù. ´ç½ÅÀº ¾î¶»°Ô ÇÒ °ÍÀÎ°¡¿ä?";
 
-            // º¸±â ¼ø¼­ ·£´ı ¼¯±â
-            Shuffle(optionTexts);
+        
+    }
 
-            for (int i = 0; i < optionButtons.Length; i++)
+    void ShowQuestion(int step)
+    {
+        messageText.gameObject.SetActive(true);
+
+        if (step == 0)
+        {
+            messageText.text = "ì‚¬ëŒì´ ì“°ëŸ¬ì¡Œë‹¤. ë‹¹ì‹ ì€ ì–´ë–»ê²Œ í•  ê²ƒì¸ê°€ìš”?";
+        }
+        else if (step == 1)
+        {
+            messageText.text = "ìƒíƒœë¥¼ í™•ì¸í•´ë³´ë‹ˆ ì‹¬ì¥ì´ ë›°ì§€ ì•Šì•„! ë‹¤ìŒì—ëŠ” ë­˜ í•´ì•¼ í•˜ì§€?";
+        }
+
+        Shuffle(optionTexts[step]);
+        for (int i = 0; i < optionButtons.Length; i++)
+        {
+            optionButtons[i].gameObject.SetActive(true);
+            optionButtons[i].GetComponentInChildren<Text>().text = optionTexts[step][i];
+        }
+    }
+
+    void SetButtonsInteractable(bool interactable)
+    {
+        foreach (Button btn in optionButtons)
+        {
+            btn.interactable = interactable;
+        }
+    }
+
+    IEnumerator OnOptionSelected(int index)
+    {
+
+        //  ë²„íŠ¼ í´ë¦­ ê¸ˆì§€
+        SetButtonsInteractable(true);
+
+
+        string selected = optionButtons[index].GetComponentInChildren<Text>().text;
+
+        //  ë‹¨ê³„ë³„ ì •ë‹µ ì²´í¬
+        if (selected == correctAnswer[currentStep])
+        {
+
+            Debug.Log($"ì •ë‹µ! ë‹¨ê³„ {currentStep + 1} : {selected}");
+            
+            currentStep++; // ë‹¤ìŒ ë‹¨ê³„ë¡œ ì´ë™
+
+            if (currentStep < optionTexts.Length)
             {
-                optionButtons[i].gameObject.SetActive(true);
-                optionButtons[i].GetComponentInChildren<Text>().text = optionTexts[i];
+                ShowQuestion(currentStep); // ë‹¤ìŒ ì§ˆë¬¸ í‘œì‹œ
+                SetButtonsInteractable(true);
+                
+            }
+            else
+            {
+                // ë§ˆì§€ë§‰ ì§ˆë¬¸ê¹Œì§€ ì™„ë£Œ
+                messageText.text = "ë‹¤ìŒì€ CPR!";
+                SetButtonsInteractable(true);
+                yield return new WaitForSeconds(3f);  // 3ì´ˆ ëŒ€ê¸°
+                gameState = "StageClear";
+
+                if (gameState == "StageClear")
+                {
+                    panel.GamePanel.SetActive(false);
+                    isQuestionShown = false;
+
+                    // ë‹¤ìŒ ì”¬ìœ¼ë¡œ ì´ë™
+                    SceneManager.LoadScene("GamePlaying");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("ì˜¤ë‹µì‹œ");
+            if (selected == WrongAnswer1[currentStep])
+            {
+                StartCoroutine(ShowWrongAnswerMessage("ì ê¹ êµ¬ê²½ë§Œ í•´ë³¼ê¹Œ?", "ë‚´ê°€ í• ìˆ˜ ìˆëŠ”ê²Œ ì•„ë‹ˆì•¼", "ì•„ë‹ˆì•¼ ë‹¤ì‹œ ìƒê°í•´ë³´ì"));
+            }
+            else if (selected == WrongAnswer2[currentStep])
+            {
+                StartCoroutine(ShowWrongAnswerMessage("ê·¸ëƒ¥ ì§€ë‚˜ê°€ì...", "ë‚œ í•  ìˆ˜ ì—†ì–´..", "ì•„ë‹ˆì•¼ ë‹¤ì‹œ ìƒê°í•´ë³´ì"));
+            }
+            else if (selected == WrongAnswer3[currentStep])
+            {
+                StartCoroutine(ShowWrongAnswerMessage("ëˆ„êµ°ê°€ê°€ í•˜ê² ì§€?", "...", "ì•„ë‹ˆì•¼ ë‹¤ì‹œ ìƒê°í•´ë³´ì"));
             }
         }
     }
 
-    // ¹öÆ° Å¬¸¯ ½Ã ½ÇÇà
-    void OnOptionSelected(int index)
-    {
-        string selected = optionButtons[index].GetComponentInChildren<Text>().text;
 
-        if (selected == correctAnswer)
-        {
-            Debug.Log("Á¤´äÀÔ´Ï´Ù!");
-            panel.GamePanel.SetActive(false); // GamePanel ºñÈ°¼ºÈ­
-            isQuestionShown = false; // ´ÙÀ½ ¹®Á¦¸¦ À§ÇØ ÃÊ±âÈ­
-        }
-        else
-        {
-            Debug.Log("¿À´äÀÔ´Ï´Ù. ´Ù½Ã ½ÃµµÇØº¸¼¼¿ä!");
-        }
-    }
 
-    // Fisher-Yates ¼ÅÇÃ
+
+
     void Shuffle<T>(T[] array)
     {
         for (int i = 0; i < array.Length; i++)
@@ -93,4 +226,31 @@ public class GameManager : MonoBehaviour
             array[randomIndex] = temp;
         }
     }
+
+    IEnumerator ShowWrongAnswerMessage(string firstMessage, string secondMessage, string againMessage)
+    {
+        if (currentStep == 0)
+        {
+            messageText.text = firstMessage;
+            SetButtonsInteractable(false);
+            yield return new WaitForSeconds(1f);
+            messageText.text = againMessage;
+            yield return new WaitForSeconds(1f);
+            messageText.text = "ì‚¬ëŒì´ ì“°ëŸ¬ì¡Œë‹¤. ë‹¹ì‹ ì€ ì–´ë–»ê²Œ í•  ê²ƒì¸ê°€ìš”?";
+            SetButtonsInteractable(true);
+        }
+        else if (currentStep == 1)
+        {
+            messageText.text = secondMessage;
+            SetButtonsInteractable(false);
+            yield return new WaitForSeconds(1f);
+            messageText.text = againMessage;
+            yield return new WaitForSeconds(1f);
+            messageText.text = "ìƒíƒœë¥¼ í™•ì¸í•´ë³´ë‹ˆ ì‹¬ì¥ì´ ë›°ì§€ ì•Šì•„! ë‹¤ìŒì—ëŠ” ë­˜ í•´ì•¼ í•˜ì§€?";
+            SetButtonsInteractable(true);
+        }
+    }
+
+
+
 }

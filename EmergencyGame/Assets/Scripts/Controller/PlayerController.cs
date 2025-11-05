@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -31,6 +32,9 @@ public class PlayerController : MonoBehaviour
     public static string gameState = "game";
 
     Camera mainCam;
+    
+
+   
 
     void Start()
     {
@@ -47,6 +51,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //if (gameState == "gameClear")
+        //{
+            
+        //}
+
+
+
         if (gameState != "game" || isStopped) return;
 
         // --- 마우스 클릭으로 목적지 설정 ---
@@ -128,7 +139,6 @@ public class PlayerController : MonoBehaviour
         {
             animator.Play(stopUPAni);
             gameState = "gamestart";
-            Debug.Log(gameState);
             Gamestop();
 
             CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
@@ -148,7 +158,16 @@ public class PlayerController : MonoBehaviour
 
     void Gamestop()
     {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
+        // 충돌 비활성화
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false; // 충돌 꺼서 다른 오브젝트와 상호작용 안 함
+        Debug.Log("캐릭터 충돌 비활성화");
+        // Rigidbody 고정 (움직임 방지)
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true; // 물리 영향 중지
+        }
     }
 }

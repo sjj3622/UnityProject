@@ -28,6 +28,11 @@ public class patientController : MonoBehaviour
     bool isDead = false;
     public bool isCarried = false; // Medic이 태웠는지 여부
 
+
+
+    
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -78,6 +83,29 @@ public class patientController : MonoBehaviour
                 timerText.text = $"{minutes:00}:{seconds:00}";
             }
         }
+
+        //if (GameManager.gameState == "StageClear")
+        //{
+            
+        //    // Rigidbody 고정 (움직임 방지)
+        //    if (rb != null)
+        //    {
+        //        rb.velocity = Vector2.zero;
+        //        rb.isKinematic = true; // 물리 영향 중지
+        //    }
+
+        //    //  애니메이션을 DeadAni로 고정
+        //    if (animator != null)
+        //    {
+        //        animator.Play(DeadAni);
+        //    }
+
+            
+
+        //    //  타이머 중지
+        //    timerRunning = false;
+        //}
+
     }
 
 

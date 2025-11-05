@@ -802,9 +802,9 @@ GameObject:
   - component: {fileID: 1722350200}
   - component: {fileID: 1722350199}
   - component: {fileID: 1722350198}
-  - component: {fileID: 1722350201}
   - component: {fileID: 1722350202}
   - component: {fileID: 1722350203}
+  - component: {fileID: 1722350204}
   m_Layer: 0
   m_Name: heart
   m_TagString: Heart
@@ -900,26 +900,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1722350201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722350197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a89d80fe258d2084381952d3b8a428b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Panel: {fileID: 1044775026}
-  minSpeed: 0.01
-  maxSpeed: 4
-  speedIncreaseRate: 0.8
-  speedDecreaseRate: 0.3
-  currentStage: 1
-  randomKeyInterval: 3
-  messageText: {fileID: 462004571}
 --- !u!61 &1722350202
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -992,6 +972,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1722350204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722350197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a0e9b28ea0487499ac6069d42c9c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Panel: {fileID: 1044775026}
+  minSpeed: 0
+  maxSpeed: 5
+  speedIncreaseRate: 0.8
+  speedDecreaseRate: 0.01
+  currentStage: 1
+  randomKeyInterval: 5
+  messageText: {fileID: 462004571}
 --- !u!1 &1842004713
 GameObject:
   m_ObjectHideFlags: 0

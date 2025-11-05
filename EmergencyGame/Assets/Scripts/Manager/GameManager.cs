@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager Instance;
+    
     public static string gameState;
     public GateController gate;
     public Transform patient;
@@ -48,44 +48,12 @@ public class GameManager : MonoBehaviour
     private int currentStep = 0; //  현재 질문 단계 (0=첫번째, 1=두번째)
 
 
-    //void Awake()
-    //{
-    //    // 엔딩
-    //    if (gameState == "gameClear")
-    //    {
-    //        gate.SpawnMedic(patient);
-    //    }
-
-
-    //    if (GameObject.FindGameObjectWithTag("Patient") == null)
-    //    {
-    //        Debug.Log("타켓확인" + GameObject.FindGameObjectWithTag("Patient"));
-    //        panel.ClaerPanel.SetActive(true);
-    //    }
-    //}
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        
-    }
-
 
     void Start()
     {
 
-        if (gameState == "StageClear")
-        {
-            gate.SpawnMedic(patient);
-        }
-
-
         Debug.Log("게임 스테이지 :" + gameState);
-        if (gameState != "Stage1") return;
+        //if (gameState == null) return;
         if (panel == null)
             panel = FindObjectOfType<CPR1Panel>();
 
@@ -99,12 +67,21 @@ public class GameManager : MonoBehaviour
             int index = i;
             optionButtons[i].onClick.AddListener(() => StartCoroutine(OnOptionSelected(index)));
         }
+        
+        if (gameState == "StageClear")
+        {
+            Debug.Log("구급대원 출동");
+            gate.SpawnMedic(patient);
+        }
+
     }
 
 
 
     void Update()
     {
+        
+
         if (GameObject.FindGameObjectWithTag("Patient") == null)
         {
             Debug.Log("타켓확인" + GameObject.FindGameObjectWithTag("Patient"));
@@ -112,7 +89,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (gameState != "Stage1") return;
+        //if (gameState != "gamestart") return;
 
         if (panel != null && panel.GamePanel.activeSelf && !isQuestionShown)
         {
@@ -190,6 +167,8 @@ public class GameManager : MonoBehaviour
                     isQuestionShown = false;
 
                     // 다음 씬으로 이동
+                    SceneStateManager.instance.SaveState(GameObject.Find("Patient"));
+                    SceneStateManager.instance.SaveState(Camera.main.gameObject);
                     SceneManager.LoadScene("GamePlaying");
                 }
             }

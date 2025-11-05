@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+//스페이스바 꾹 눌렸을 시(키보드 다운 시간 계산)
 public class HeartSpeedController : MonoBehaviour
 {
     GameManager gameManager;
@@ -22,7 +24,7 @@ public class HeartSpeedController : MonoBehaviour
 
     private KeyCode targetKey; // 3단계 랜덤 키
     private float randomKeyTimer = 0f;
-    public float randomKeyInterval = 3f; // 랜덤 키 갱신 간격
+    public float randomKeyInterval = 5f; // 랜덤 키 갱신 간격
     //public static string gameState;
 
 
@@ -43,7 +45,7 @@ public class HeartSpeedController : MonoBehaviour
     {
         if (animator == null) return;
 
-        Debug.Log("currentStage" + currentStage);
+        Debug.Log("animator.speed" + animator.speed);
 
         switch (currentStage)
         {
@@ -75,7 +77,7 @@ public class HeartSpeedController : MonoBehaviour
         if (isCollidingWithHandle)
         {
             messageText.text = "1단계 시작!";
-            Debug.Log("animator.speed" + animator.speed);
+            
 
             if (Input.GetKey(KeyCode.Space) && isCollidingWithHandle == true)
                 animator.speed += speedIncreaseRate * Time.deltaTime;
@@ -105,18 +107,18 @@ public class HeartSpeedController : MonoBehaviour
         if (isCollidingWithHandle)
         {
             messageText.text = "2단계 시작!";
-            Debug.Log("animator.speed" + animator.speed);
+            
 
-            if (Input.GetKey(KeyCode.Space) && isCollidingWithHandle == true)
+            if (Input.GetKey(KeyCode.Space)) //&& isCollidingWithHandle == true)
                 animator.speed += speedIncreaseRate * Time.deltaTime;
             else
                 animator.speed -= speedDecreaseRate;
         }
-        else
-        {
-            //충돌 안 할 때는 천천히 감소
-            animator.speed -= (speedDecreaseRate / 2) * Time.deltaTime;
-        }
+        //else
+        //{
+        //    //충돌 안 할 때는 천천히 감소
+        //    animator.speed -= (speedDecreaseRate / 2) * Time.deltaTime;
+        //}
 
         if(animator.speed >= 3.0f && animator.speed < 5.0f)
         {
@@ -135,9 +137,9 @@ public class HeartSpeedController : MonoBehaviour
         // 일정 시간마다 새로운 랜덤 키 생성
         if (randomKeyTimer >= randomKeyInterval || targetKey == KeyCode.None || !isCollidingWithHandle)
         {
-            Debug.Log("animator.speed" + animator.speed);
+            
 
-            randomKeyTimer = 0f;
+            randomKeyTimer = 0.1f;
             targetKey = (KeyCode)Random.Range((int)KeyCode.A, (int)KeyCode.B + 1);
             Debug.Log($"새 랜덤 키: {targetKey}");
             messageText.text = $"눌러야 할 키: {targetKey}";
@@ -147,7 +149,7 @@ public class HeartSpeedController : MonoBehaviour
         {
             if (Input.GetKeyDown(targetKey))
             {
-                animator.speed += speedIncreaseRate * Time.deltaTime * 10f; // 반응 빠르게 증가
+                animator.speed += speedIncreaseRate; // 반응 빠르게 증가
                 Debug.Log("정확한 키 입력!");
                 targetKey = KeyCode.None; // 다음 키로 넘어감
             }
@@ -158,7 +160,7 @@ public class HeartSpeedController : MonoBehaviour
             }
 
         }
-            if(animator.speed >= 5.0f)
+            if(animator.speed >= 4.0f)
             {
                 animator.speed = maxSpeed;
                 messageText.text = "GameClaer";

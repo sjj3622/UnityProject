@@ -12,8 +12,6 @@ public class GateController : MonoBehaviour
     // Medic을 게이트 위치에서 소환해서 환자에게 보냄
     public void SpawnMedic(Transform patient)
     {
-
-        Debug.Log("여기1번");
         if (medicPrefab == null || patient == null)
         {
             Debug.LogWarning("Medic prefab 또는 patient가 없습니다!");
@@ -22,14 +20,14 @@ public class GateController : MonoBehaviour
 
         // 게이트 위치에 Medic 생성
         GameObject medicObj = Instantiate(medicPrefab, transform.position, Quaternion.identity);
-        Debug.Log("여기2번");
+        
 
         // MedicController에 게이트와 환자 정보 전달
         MedicController medic = medicObj.GetComponent<MedicController>();
         if (medic != null)
         {
             medic.Init(transform, patient);
-            Debug.Log("여기3번");
+            Debug.Log("소환 완료");
         }
     }
 }

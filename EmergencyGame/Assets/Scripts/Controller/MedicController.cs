@@ -14,10 +14,10 @@ public class MedicController : MonoBehaviour
     private bool returningToGate = false;   // 게이트로 복귀 중
     private bool movingToPatient = true;    // 환자에게 이동 중인지
 
-    public void Init(Transform gate, Transform patient)
+    public void Init(Transform gate, Transform Patient)
     {
         gateTr = gate;
-        patientTr = patient;
+        patientTr = Patient;
     }
 
     void Start()
@@ -28,11 +28,16 @@ public class MedicController : MonoBehaviour
 
     void Update()
     {
+
         if (movingToPatient && patientTr != null && !isCarryingPatient)
         {
             // 환자 방향으로 이동
+            
+            Debug.Log("환자 쪽으로 이동");
             Vector2 dir = (patientTr.position - tr.position).normalized;
-            rb.MovePosition(rb.position + dir * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + dir * speed * Time.deltaTime *15f);
+            Debug.Log("Time.deltaTime : " + Time.deltaTime);
+            Debug.Log("환자 이동중");
 
             // 환자 근처 도착 시 태우기
             float distance = Vector2.Distance(tr.position, patientTr.position);
@@ -45,7 +50,7 @@ public class MedicController : MonoBehaviour
         {
             // 게이트로 이동
             Vector2 dir = (gateTr.position - tr.position).normalized;
-            rb.MovePosition(rb.position + dir * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + dir * speed * Time.deltaTime * 15f);
 
             float distance = Vector2.Distance(tr.position, gateTr.position);
             if (distance < 0.3f)

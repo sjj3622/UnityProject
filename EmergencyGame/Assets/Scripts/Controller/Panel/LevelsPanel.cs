@@ -42,12 +42,12 @@ public class LevelsPanel : MonoBehaviour
 
     }
 
-    public void ExitClick()   // ���� ���� ��ư
+    public void ExitClick()  
     {
-        Application.Quit(); // ����Ƽ ���� ����
+        Application.Quit(); 
 
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;  //����Ƽ �������� ���۴��ߺκ�
+        UnityEditor.EditorApplication.isPlaying = false;  
 #endif
     }
 
@@ -58,7 +58,11 @@ public class LevelsPanel : MonoBehaviour
         GameManager.gameState = "Stage1";
     }
 
-
+    public void FT1Cilck()
+    {
+        SceneManager.LoadScene("FT1");
+        GameManager.gameState = "FT1";
+    }
 
 
     void Update()

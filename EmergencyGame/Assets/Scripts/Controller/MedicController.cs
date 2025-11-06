@@ -35,7 +35,7 @@ public class MedicController : MonoBehaviour
             
             Debug.Log("환자 쪽으로 이동");
             Vector2 dir = (patientTr.position - tr.position).normalized;
-            rb.MovePosition(rb.position + dir * speed * Time.deltaTime *15f);
+            rb.MovePosition(rb.position + dir * speed * Time.deltaTime);
             Debug.Log("Time.deltaTime : " + Time.deltaTime);
             Debug.Log("환자 이동중");
 
@@ -50,7 +50,7 @@ public class MedicController : MonoBehaviour
         {
             // 게이트로 이동
             Vector2 dir = (gateTr.position - tr.position).normalized;
-            rb.MovePosition(rb.position + dir * speed * Time.deltaTime * 15f);
+            rb.MovePosition(rb.position + dir * speed * Time.deltaTime);
 
             float distance = Vector2.Distance(tr.position, gateTr.position);
             if (distance < 0.3f)

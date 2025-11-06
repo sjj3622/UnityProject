@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
@@ -20,12 +20,12 @@ public class HeartSpeedControllerOne : MonoBehaviour
 
 
     [Header("Stage Settings")]
-    public int currentStage = 1; // 1~3´Ü°è
+    public int currentStage = 1; // 1~3 ë‹¨ê³„
     private bool isCollidingWithHandle = false;
 
-    private KeyCode targetKey; // 3´Ü°è ·£´ý Å°
+    private KeyCode targetKey;
     private float randomKeyTimer = 0f;
-    public float randomKeyInterval = 5f; // ·£´ý Å° °»½Å °£°Ý
+    public float randomKeyInterval = 5f; 
 
     [SerializeField] Text messageText;
 
@@ -40,7 +40,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("Á¡¼ö :" + score);
+        Debug.Log("ìŠ¤ì½”ì–´ :" + score);
         if (animator == null) return;
 
         switch (currentStage)
@@ -56,12 +56,14 @@ public class HeartSpeedControllerOne : MonoBehaviour
                 break;
         }
 
-        // ¼Óµµ Á¦ÇÑ
+        
         animator.speed = Mathf.Clamp(animator.speed, 0f, maxSpeed);
 
-        // ÃÖ´ñ°ª µµ´Þ ½Ã 
-        if (animator.speed >= maxSpeed)
+        
+        if (score >= 100)
         {
+
+            animator.speed = maxSpeed;
             GameManager.gameState = "StageClear";
             SceneManager.LoadScene("CPR1");
         }
@@ -71,9 +73,9 @@ public class HeartSpeedControllerOne : MonoBehaviour
     {
         if (isCollidingWithHandle)
         {
-            messageText.text = "1´Ü°è ½ÃÀÛ!";
+            messageText.text = "1ë‹¨ê³„ ì‹œìž‘!";
 
-            //  ´­·¶À» ¶§ ÇÑ ¹ø¸¸ Áõ°¡
+           
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.speed += speedIncreaseRate;
@@ -82,13 +84,13 @@ public class HeartSpeedControllerOne : MonoBehaviour
             //else { score -= 1; }
         }
 
-        // Ãæµ¹ ÁßÀÌ ¾Æ´Ò ¶§´Â ÃµÃµÈ÷ °¨¼Ò
+       
 
 
         if (score > 5)
         {
             messageText.gameObject.SetActive(true);
-            messageText.text = "1´Ü°è ¼º°ø!";
+            messageText.text = "1ë‹¨ê³„ ì„±ê³µ!";
             StartCoroutine(NextStageDelay(2, 1.5f));
         }
     }
@@ -97,9 +99,9 @@ public class HeartSpeedControllerOne : MonoBehaviour
     {
         if (isCollidingWithHandle)
         {
-            messageText.text = "2´Ü°è ½ÃÀÛ!";
+            
 
-            //  Stage2µµ ´©¸¦ ¶§ ÇÑ ¹ø¸¸ Áõ°¡
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.speed += speedIncreaseRate;
@@ -112,7 +114,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
         if (score > 50)
         {
             messageText.gameObject.SetActive(true);
-            messageText.text = "2´Ü°è ¼º°ø!";
+            messageText.text = "2ë‹¨ê³„ ì„±ê³µ!";
             StartCoroutine(NextStageDelay(3, 1.5f));
         }
     }
@@ -124,11 +126,11 @@ public class HeartSpeedControllerOne : MonoBehaviour
         if (randomKeyTimer >= randomKeyInterval || targetKey == KeyCode.None || !isCollidingWithHandle)
         {
             randomKeyTimer = 0f;
-            // ·£´ý Å°¸¦ A~D Á¤µµ·Î Á¦ÇÑ (¿¹½Ã)
+           
             KeyCode[] possibleKeys = { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F };
             targetKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
 
-            messageText.text = $"´­·¯¾ß ÇÒ Å°: {targetKey}";
+            messageText.text = $"ëˆŒëŸ¬ì•¼ í•  í‚¤: {targetKey}";
         }
 
         if (isCollidingWithHandle && Input.anyKeyDown)
@@ -137,21 +139,21 @@ public class HeartSpeedControllerOne : MonoBehaviour
             {
                 animator.speed += speedIncreaseRate;
                 targetKey = KeyCode.None;
-                messageText.text = "Á¤È®ÇÑ Å° ÀÔ·Â!";
+                messageText.text = "ì¢‹ìŠµë‹ˆë‹¤!";
                 score += 10;
             }
             else
             {
                 score -= 2;
-                messageText.text = "Æ²¸° Å°!";
+                messageText.text = "ì•„ë‹™ë‹ˆë‹¤!";
             }
         }
 
-        if (score == 100)
-        {
-            animator.speed = maxSpeed;
-            messageText.text = "Game Clear!";
-        }
+        //if (score == 100)
+        //{
+        //    animator.speed = maxSpeed;
+        //    messageText.text = "Game Clear!";
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -171,7 +173,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
         currentStage = 0;
         yield return new WaitForSeconds(delay);
 
-        messageText.text = $"{nextStage}´Ü°è ½ÃÀÛ!";
+        messageText.text = $"{nextStage}ë‹¨ê³„ ì‹œìž‘!";
         currentStage = nextStage;
     }
 }

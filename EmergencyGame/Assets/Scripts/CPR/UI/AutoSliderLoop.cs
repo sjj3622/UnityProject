@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -10,6 +10,14 @@ public class AutoSliderLoop : MonoBehaviour
 
     void Start()
     {
+        
+    }
+
+
+    private void Update()
+    {
+        if (GameManager.gameState != "gameStart") return;
+
         if (targetSlider == null)
             targetSlider = GetComponent<Slider>();
 
@@ -19,6 +27,7 @@ public class AutoSliderLoop : MonoBehaviour
 
         StartCoroutine(MoveSliderRoutine());
     }
+
 
     IEnumerator MoveSliderRoutine()
     {

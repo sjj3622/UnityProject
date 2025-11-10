@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -163,13 +163,15 @@ public class GameManager : MonoBehaviour
 
                 if (gameState == "StageClear")
                 {
-                    panel.GamePanel.SetActive(false);
+                    //panel.GamePanel.SetActive(false);
                     isQuestionShown = false;
 
                     // 다음 씬으로 이동
                     SceneStateManager.instance.SaveState(GameObject.Find("Patient"));
+                    SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
                     SceneStateManager.instance.SaveState(Camera.main.gameObject);
                     SceneManager.LoadScene("GamePlaying");
+                    gameState = "StageRule";
                 }
             }
         }

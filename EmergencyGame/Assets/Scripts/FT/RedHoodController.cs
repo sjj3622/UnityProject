@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,21 +13,21 @@ public class RedHoodController : MonoBehaviour
     private bool isJumping = false;
 
     [Header("Settings")]
-    public float minX;  // ½ÃÀÛ X À§Ä¡
-    public float maxX = 8f;    // ¸ñÇ¥ X À§Ä¡ ¹üÀ§
+    public float minX;  // ì‹œì‘ X ìœ„ì¹˜
+    public float maxX = 8f;    // ëª©í‘œ X ìœ„ì¹˜ ë²”ìœ„
     public float minY;
     public float maxY = 6f;
 
-    public float moveSpeed = 3f; // ÀÌµ¿ ¼Óµµ
-    public float jumpHeight = 1.0f; // Á¡ÇÁ ³ôÀÌ
-    public float jumpDuration = 0.5f; // Á¡ÇÁ ½Ã°£
+    public float moveSpeed = 3f; // ì´ë™ ì†ë„
+    public float jumpHeight = 1.0f; // ì í”„ ë†’ì´
+    public float jumpDuration = 0.5f; // ì í”„ ì‹œê°„
 
 
     [Header("UI")]
-    public Transform textObject; //¿©±â¿¡ Text ÀÚ½Ä ¿ÀºêÁ§Æ®¸¦ µå·¡±×ÇØ ³õ±â
+    public Transform textObject; //ì—¬ê¸°ì— Text ìì‹ ì˜¤ë¸Œì íŠ¸ë¥¼ ë“œë˜ê·¸í•´ ë†“ê¸°
 
 
-    private Vector3 originalTextScale; // ¿ø·¡ ÅØ½ºÆ® ½ºÄÉÀÏ ÀúÀå¿ë º¯¼ö
+    private Vector3 originalTextScale; // ì›ë˜ í…ìŠ¤íŠ¸ ìŠ¤ì¼€ì¼ ì €ì¥ìš© ë³€ìˆ˜
 
 
 
@@ -47,20 +47,20 @@ public class RedHoodController : MonoBehaviour
         animator = GetComponent<Animator>();
         transform.position = new Vector3(minX, minY, transform.position.z);
 
-        // ÅØ½ºÆ® ¿ø·¡ ½ºÄÉÀÏ ÀúÀå
+        // í…ìŠ¤íŠ¸ ì›ë˜ ìŠ¤ì¼€ì¼ ì €ì¥
         if (textObject != null)
             originalTextScale = textObject.localScale;
 
-        // ·£´ı ¸ñÇ¥ À§Ä¡ ¼³Á¤
+        // ëœë¤ ëª©í‘œ ìœ„ì¹˜ ì„¤ì •
         float randomX = Random.Range(-4.0f, maxX);
         float randomY = Random.Range(-6.0f, minY);
 
         targetPosition = new Vector3(randomX, randomY, transform.position.z);
 
-        // Ã³À½¿¡´Â Idle Àç»ı
+        // ì²˜ìŒì—ëŠ” Idle ì¬ìƒ
         animator.Play("Idle");
 
-        // 1ÃÊ ÈÄ Run ½ÃÀÛ
+        // 1ì´ˆ í›„ Run ì‹œì‘
         Invoke("StartRunning", 1f);
     }
 
@@ -70,7 +70,7 @@ public class RedHoodController : MonoBehaviour
         {
             MoveTowardsTarget();
         }
-        // ¿©±â¼­ ÅØ½ºÆ® ¹İÀü ¹æÁö Ã³¸®
+        // ì—¬ê¸°ì„œ í…ìŠ¤íŠ¸ ë°˜ì „ ë°©ì§€ ì²˜ë¦¬
         FixTextFlip();
 
     }
@@ -79,11 +79,11 @@ public class RedHoodController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !isJumping)
         {
-            Debug.Log("Ãæµ¹");
+            Debug.Log("ì¶©ëŒ");
             camManager.OnPlayerPatientCollision();
 
             isRunning = false;
-            //GetComponent<Collider2D>().enabled = false; // Ãæµ¹ ºñÈ°¼ºÈ­
+            //GetComponent<Collider2D>().enabled = false; // ì¶©ëŒ ë¹„í™œì„±í™”
             StartCoroutine(JumpAndDie());
             Textupdate();
 
@@ -101,21 +101,21 @@ public class RedHoodController : MonoBehaviour
 
     void MoveTowardsTarget()
     {
-        // ¸ñÇ¥ À§Ä¡±îÁö ÀÌµ¿
+        // ëª©í‘œ ìœ„ì¹˜ê¹Œì§€ ì´ë™
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        // ¸ñÇ¥ À§Ä¡ µµ´Ş ½Ã
+        // ëª©í‘œ ìœ„ì¹˜ ë„ë‹¬ ì‹œ
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f && !isJumping)
         {
-            // ¹æÇâ ¹İÀü
+            // ë°©í–¥ ë°˜ì „
             Vector3 scale = transform.localScale;
             scale.x *= -1;
             transform.localScale = scale;
 
-            // »õ·Î¿î ¸ñÇ¥ À§Ä¡ ¼³Á¤ (ÇöÀç À§Ä¡ ±âÁØ ¹İ´ë ¹æÇâÀ¸·Î)
+            // ìƒˆë¡œìš´ ëª©í‘œ ìœ„ì¹˜ ì„¤ì • (í˜„ì¬ ìœ„ì¹˜ ê¸°ì¤€ ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ)
             SetNewTarget();
 
-            Debug.Log($"¹æÇâ ¹İÀüµÊ, »õ·Î¿î Å¸°Ù: {targetPosition}");
+            Debug.Log($"ë°©í–¥ ë°˜ì „ë¨, ìƒˆë¡œìš´ íƒ€ê²Ÿ: {targetPosition}");
         }
 
 
@@ -123,26 +123,26 @@ public class RedHoodController : MonoBehaviour
 
         void SetNewTarget()
         {
-            // -4.0 ~ 8.0 ¹üÀ§ ³»¿¡¼­ ·£´ı X°ª ¼±ÅÃ
+            // -4.0 ~ 8.0 ë²”ìœ„ ë‚´ì—ì„œ ëœë¤ Xê°’ ì„ íƒ
             float randomX = Random.Range(-4.0f, 8.0f);
             float randomY = Random.Range(-6.0f, 6.0f);
 
-            // ¸ñÇ¥ À§Ä¡ ¼³Á¤ (Y, Z´Â ÇöÀç À§Ä¡ À¯Áö)
+            // ëª©í‘œ ìœ„ì¹˜ ì„¤ì • (Y, ZëŠ” í˜„ì¬ ìœ„ì¹˜ ìœ ì§€)
             targetPosition = new Vector3(randomX, randomY, transform.position.z);
 
-            // ¹Ù¶óº¸´Â ¹æÇâÀ» ·£´ı ¸ñÇ¥¿¡ ¸ÂÃç ¹İÀü
+            // ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ ëœë¤ ëª©í‘œì— ë§ì¶° ë°˜ì „
             if (randomX < transform.position.x)
             {
-                // ¿ŞÂÊÀ¸·Î °¡¾ß ÇÏ¹Ç·Î XÃà ¹İÀü
+                // ì™¼ìª½ìœ¼ë¡œ ê°€ì•¼ í•˜ë¯€ë¡œ Xì¶• ë°˜ì „
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
             else
             {
-                // ¿À¸¥ÂÊÀ¸·Î °¡¾ß ÇÏ¹Ç·Î XÃà ¹İÀü
+                // ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ì•¼ í•˜ë¯€ë¡œ Xì¶• ë°˜ì „
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
 
-            Debug.Log($"»õ ¸ñÇ¥ ¼³Á¤: {targetPosition}");
+            Debug.Log($"ìƒˆ ëª©í‘œ ì„¤ì •: {targetPosition}");
         }
 
     }
@@ -159,7 +159,7 @@ public class RedHoodController : MonoBehaviour
         Vector3 apex = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         float elapsed = 0f;
 
-        // Á¡ÇÁ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌµ¿
+        // ì í”„ ì• ë‹ˆë©”ì´ì…˜ ì´ë™
         while (elapsed < jumpDuration)
         {
             transform.position = Vector3.Lerp(startPos, apex, elapsed / jumpDuration);
@@ -169,7 +169,7 @@ public class RedHoodController : MonoBehaviour
 
         transform.position = apex;
 
-        // ´Ù½Ã ¶¥À¸·Î
+        // ë‹¤ì‹œ ë•…ìœ¼ë¡œ
         elapsed = 0f;
         while (elapsed < jumpDuration)
         {
@@ -180,18 +180,18 @@ public class RedHoodController : MonoBehaviour
 
         transform.position = startPos;
 
-        // Dead ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        // Dead ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         animator.Play("RedHoodDead");
     }
 
-    //ÅØ½ºÆ® ¹İÀü ¹æÁö ÇÔ¼ö
+    //í…ìŠ¤íŠ¸ ë°˜ì „ ë°©ì§€ í•¨ìˆ˜
     void FixTextFlip()
     {
         if (textObject != null)
         {
             Vector3 scale = originalTextScale;
 
-            // ºÎ¸ğ°¡ ¹İÀüµÇ¾úÀ¸¸é ÀÚ½Ä ½ºÄÉÀÏ¿¡ -1À» °öÇØ¼­ º¸Á¤
+            // ë¶€ëª¨ê°€ ë°˜ì „ë˜ì—ˆìœ¼ë©´ ìì‹ ìŠ¤ì¼€ì¼ì— -1ì„ ê³±í•´ì„œ ë³´ì •
             scale.x = Mathf.Sign(transform.localScale.x) * originalTextScale.x;
             scale.y = originalTextScale.y;
             scale.z = originalTextScale.z;
@@ -207,7 +207,7 @@ public class RedHoodController : MonoBehaviour
             TMPro.TextMeshPro tmpText = textObject.GetComponent<TMPro.TextMeshPro>();
             if (tmpText != null)
             {
-                tmpText.text = "ÇÇ°¡ ¸¹ÀÌ ³ª¿ä...";
+                tmpText.text = "í”¼ê°€ ë§ì´ ë‚˜ìš”...";
             }
 
         }

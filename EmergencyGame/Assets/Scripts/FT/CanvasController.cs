@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
-    public GameObject OpBtn1; // º¸±â1
-    public GameObject OpBtn2; // º¸±â2
-    public GameObject textObject; //·Î±× 
+    public GameObject OpBtn1; // ë³´ê¸°1
+    public GameObject OpBtn2; // ë³´ê¸°2
+    public GameObject textObject; //ë¡œê·¸ 
 
     public Text OP1Text;
     public Text OP2Text;
@@ -24,17 +24,17 @@ public class CanvasController : MonoBehaviour
     {
         if (OpBtn1 != null)
         {
-            // ÅØ½ºÆ® º¯°æ
-            legacyText.myText.text = "ÀÏ´Ü ÇÇ¸¦ ´Û¾Æº¸ÀÚ";
+            // í…ìŠ¤íŠ¸ ë³€ê²½
+            legacyText.myText.text = "ì¼ë‹¨ í”¼ë¥¼ ë‹¦ì•„ë³´ì";
 
-            // 3ÃÊ µÚ ¾À ÀüÈ¯ ÄÚ·çÆ¾ ½ÇÇà
+            // 3ì´ˆ ë’¤ ì”¬ ì „í™˜ ì½”ë£¨í‹´ ì‹¤í–‰
             StartCoroutine(LoadNextSceneAfterDelay(3f, "FTGamepalying"));
         }
     }
 
     private IEnumerator LoadNextSceneAfterDelay(float delay, string sceneName)
     {
-        yield return new WaitForSeconds(delay); // delay ÃÊ ±â´Ù¸²
-        SceneManager.LoadScene(sceneName);       // ¾À ÀüÈ¯
+        yield return new WaitForSeconds(delay); // delay ì´ˆ ê¸°ë‹¤ë¦¼
+        SceneManager.LoadScene(sceneName);       // ì”¬ ì „í™˜
     }
 }

@@ -6,15 +6,15 @@ public class PlayerControllerKey : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator animator;
-    
+
 
 
     [Header("MOVE")]
     public float speed = 3.0f;
     bool isStopped = false;
 
-    Vector2 moveDir;          // ÀÌµ¿ ¹æÇâ
-    Vector2 lastDir = Vector2.down; // ¸¶Áö¸· ÀÌµ¿ ¹æÇâ
+    Vector2 moveDir;          // ì´ë™ ë°©í–¥
+    Vector2 lastDir = Vector2.down; // ë§ˆì§€ë§‰ ì´ë™ ë°©í–¥
 
     [Header("Animation Names")]
     public string stopUPAni = "PlayerIdleUP";
@@ -32,7 +32,7 @@ public class PlayerControllerKey : MonoBehaviour
 
     void Start()
     {
-        
+
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -46,13 +46,13 @@ public class PlayerControllerKey : MonoBehaviour
     {
         if (gameState != "game" || isStopped) return;
 
-        // --- Å°º¸µå ÀÔ·Â ¹Ş±â ---
-        float h = Input.GetAxisRaw("Horizontal"); // A, D ¶Ç´Â ¡ç, ¡æ
-        float v = Input.GetAxisRaw("Vertical");   // W, S ¶Ç´Â ¡è, ¡é
+        // --- í‚¤ë³´ë“œ ì…ë ¥ ë°›ê¸° ---
+        float h = Input.GetAxisRaw("Horizontal"); // A, D ë˜ëŠ” â†, â†’
+        float v = Input.GetAxisRaw("Vertical");   // W, S ë˜ëŠ” â†‘, â†“
 
         moveDir = new Vector2(h, v).normalized;
 
-        // --- ÀÌµ¿ ---
+        // --- ì´ë™ ---
         if (moveDir != Vector2.zero)
         {
             rb.velocity = moveDir * speed;
@@ -104,10 +104,10 @@ public class PlayerControllerKey : MonoBehaviour
 
     void OnDisable()
     {
-        // PlayerControllerKey°¡ ºñÈ°¼ºÈ­µÉ ¶§ ¸ØÃã ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // PlayerControllerKeyê°€ ë¹„í™œì„±í™”ë  ë•Œ ë©ˆì¶¤ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         SetIdleAnimation();
 
-        // Rigidbody ¼Óµµ 0À¸·Î ¸ØÃã
+        // Rigidbody ì†ë„ 0ìœ¼ë¡œ ë©ˆì¶¤
         if (rb != null)
             rb.velocity = Vector2.zero;
     }

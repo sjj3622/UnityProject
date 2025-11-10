@@ -8,10 +8,14 @@ public class SceneStateManager : MonoBehaviour
     private Vector3 savedPlayerPosition;
     private Vector3 savedPatientPosition;
     private Vector3 savedCameraPosition;
+    private Vector3 savedTimerPosition;
+
 
     private bool playerSaved = false;
     private bool patientSaved = false;
     private bool cameraSaved = false;
+    private bool TimerSaved = false;
+
 
     void Awake()
     {
@@ -37,52 +41,68 @@ public class SceneStateManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // ¾À ·Îµå ÈÄ º¹¿ø
+    // ì”¬ ë¡œë“œ í›„ ë³µì›
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "CPR1") // Æ¯Á¤ ¾À¸¸ º¹¿øÇÏ°í ½Í´Ù¸é À¯Áö
+        if (scene.name == "CPR") // íŠ¹ì • ì”¬ë§Œ ë³µì›í•˜ê³  ì‹¶ë‹¤ë©´ ìœ ì§€
         {
-            // Player º¹¿ø
+            // Player ë³µì›
             if (playerSaved)
             {
                 GameObject player = GameObject.Find("Player");
                 if (player != null)
                 {
                     player.transform.position = savedPlayerPosition;
-                    Debug.Log("Player À§Ä¡ º¹¿ø: " + savedPlayerPosition);
+                    Debug.Log("Player ìœ„ì¹˜ ë³µì›: " + savedPlayerPosition);
                 }
             }
 
-            // Patient º¹¿ø
+            // Patient ë³µì›
             if (patientSaved)
             {
                 GameObject patient = GameObject.Find("Patient");
                 if (patient != null)
                 {
                     patient.transform.position = savedPatientPosition;
-                    Debug.Log("Patient À§Ä¡ º¹¿ø: " + savedPatientPosition);
+                    Debug.Log("Patient ìœ„ì¹˜ ë³µì›: " + savedPatientPosition);
                 }
             }
 
-            // Camera º¹¿ø
+            // Camera ë³µì›
             if (cameraSaved)
             {
                 Camera mainCam = Camera.main;
                 if (mainCam != null)
                 {
                     mainCam.transform.position = savedCameraPosition;
-                    Debug.Log("Ä«¸Ş¶ó À§Ä¡ º¹¿ø: " + savedCameraPosition);
+                    Debug.Log("ì¹´ë©”ë¼ ìœ„ì¹˜ ë³µì›: " + savedCameraPosition);
                 }
             }
         }
+
+        if (scene.name == "GamePlaying")
+        {
+            if (TimerSaved)
+            {
+                GameObject Timer = GameObject.Find("Timer");
+                if (Timer != null)
+                {
+                    Timer.transform.position = savedCameraPosition;
+                    Timer.SetActive(true);
+                    Debug.Log("íƒ€ì´ë¨¸ ìœ„ì¹˜ ë³µì›: " + savedCameraPosition);
+                }
+            }
+        }
+
+
     }
 
-    // ÀúÀå ÇÔ¼ö (Player / Patient / Camera ÀÚµ¿ ÀÎ½Ä)
+    // ì €ì¥ í•¨ìˆ˜ (Player / Patient / Camera ìë™ ì¸ì‹)
     public void SaveState(GameObject target)
     {
         if (target == null)
         {
-            Debug.LogWarning("SaveState¿¡ nullÀÌ µé¾î¿Ô½À´Ï´Ù.");
+            Debug.LogWarning("SaveStateì— nullì´ ë“¤ì–´ì™”ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -92,27 +112,33 @@ public class SceneStateManager : MonoBehaviour
         {
             savedPlayerPosition = target.transform.position;
             playerSaved = true;
-            Debug.Log("Player À§Ä¡ ÀúÀå: " + savedPlayerPosition);
+            Debug.Log("Player ìœ„ì¹˜ ì €ì¥: " + savedPlayerPosition);
         }
         else if (name == "Patient")
         {
             savedPatientPosition = target.transform.position;
             patientSaved = true;
-            Debug.Log("Patient À§Ä¡ ÀúÀå: " + savedPatientPosition);
+            Debug.Log("Patient ìœ„ì¹˜ ì €ì¥: " + savedPatientPosition);
         }
         else if (name.Contains("Camera"))
         {
             savedCameraPosition = target.transform.position;
             cameraSaved = true;
-            Debug.Log("Camera À§Ä¡ ÀúÀå: " + savedCameraPosition);
+            Debug.Log("Camera ìœ„ì¹˜ ì €ì¥: " + savedCameraPosition);
+        }
+        else if (name == "Timer")
+        {
+            savedTimerPosition = target.transform.position;
+            TimerSaved = true;
+            Debug.Log("Timer ìœ„ì¹˜ ì €ì¥: " + savedCameraPosition);
         }
         else
         {
-            Debug.Log("SaveState: ´ë»óÀÌ Player, Patient, Camera°¡ ¾Æ´Õ´Ï´Ù. ´ë»ó ÀÌ¸§: " + name);
+            Debug.Log("SaveState: ëŒ€ìƒì´ Player, Patient, Cameraê°€ ì•„ë‹™ë‹ˆë‹¤. ëŒ€ìƒ ì´ë¦„: " + name);
         }
     }
 
-    // ÀüºÎ ÀúÀå
+    // ì „ë¶€ ì €ì¥
     public void SaveAll()
     {
         GameObject player = GameObject.Find("Player");
@@ -136,10 +162,10 @@ public class SceneStateManager : MonoBehaviour
             cameraSaved = true;
         }
 
-        Debug.Log("Player, Patient, Camera À§Ä¡ ÀúÀå ¿Ï·á");
+        Debug.Log("Player, Patient, Camera ìœ„ì¹˜ ì €ì¥ ì™„ë£Œ");
     }
 
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     public void ClearSaved()
     {
         playerSaved = false;
@@ -150,6 +176,6 @@ public class SceneStateManager : MonoBehaviour
         savedPatientPosition = Vector3.zero;
         savedCameraPosition = Vector3.zero;
 
-        Debug.Log("ÀúÀåµÈ »óÅÂ ÃÊ±âÈ­µÊ.");
+        Debug.Log("ì €ì¥ëœ ìƒíƒœ ì´ˆê¸°í™”ë¨.");
     }
 }

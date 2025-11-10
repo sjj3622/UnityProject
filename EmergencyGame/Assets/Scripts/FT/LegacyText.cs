@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ public class LegacyText : MonoBehaviour
 
     void Start()
     {
-        myText.text = "»êÃ¥Áß...";
+        myText.text = "í”¼ê°€ ë‚œë‹¤...";
 
     }
 

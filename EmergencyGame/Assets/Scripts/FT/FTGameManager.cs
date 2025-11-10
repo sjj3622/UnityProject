@@ -1,16 +1,16 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class FTGameManager : MonoBehaviour
 {
     [Header("References")]
-    public GameObject player;      // Player ¿ÀºêÁ§Æ®
-    public GameObject patient;     // Patient ¿ÀºêÁ§Æ®
-    public GameObject panel;       // È°¼ºÈ­ÇÒ ÆĞ³Î
+    public GameObject player;      // Player ì˜¤ë¸Œì íŠ¸
+    public GameObject patient;     // Patient ì˜¤ë¸Œì íŠ¸
+    public GameObject panel;       // í™œì„±í™”í•  íŒ¨ë„
     public GameObject textObject;  // Logo Text
     public GameObject patienttext; // Patient Text
-    public GameObject OpBtn1Object; // º¸±â1
-    public GameObject OpBtn2Object; // º¸±â2
+    public GameObject OpBtn1Object; // ë³´ê¸°1
+    public GameObject OpBtn2Object; // ë³´ê¸°2
 
 
     private PlayerControllerKey playerControllerKey;
@@ -18,8 +18,8 @@ public class FTGameManager : MonoBehaviour
     private Collider2D patientCollider;
     private LegacyText legacyText;
 
-    private bool hasCollided = false;       // Ãæµ¹ Ã³¸® ÇÃ·¡±×
-    private Coroutine textCoroutine = null; // ÁøÇà ÁßÀÎ ÄÚ·çÆ¾ ÀúÀå
+    private bool hasCollided = false;       // ì¶©ëŒ ì²˜ë¦¬ í”Œë˜ê·¸
+    private Coroutine textCoroutine = null; // ì§„í–‰ ì¤‘ì¸ ì½”ë£¨í‹´ ì €ì¥
 
     void Start()
     {
@@ -58,10 +58,10 @@ public class FTGameManager : MonoBehaviour
 
         if (playerCollider != null && patientCollider != null && !hasCollided)
         {
-            // Player¿Í Patient°¡ °ãÄ¡¸é
+            // Playerì™€ Patientê°€ ê²¹ì¹˜ë©´
             if (playerCollider.IsTouching(patientCollider))
             {
-                hasCollided = true; // ÇÑ ¹ø¸¸ Ã³¸®µÇµµ·Ï ÇÃ·¡±× ¼³Á¤
+                hasCollided = true; // í•œ ë²ˆë§Œ ì²˜ë¦¬ë˜ë„ë¡ í”Œë˜ê·¸ ì„¤ì •
 
                 if (playerControllerKey != null)
                     playerControllerKey.enabled = false;
@@ -78,14 +78,14 @@ public class FTGameManager : MonoBehaviour
 
                 if (legacyText != null && legacyText.myText != null)
                 {
-                    legacyText.myText.text = "ºÎµúÇô¼­ ³Ñ¾îÁ³´Ù!";
+                    legacyText.myText.text = "ë¶€ë”ªí˜€ì„œ ë„˜ì–´ì¡Œë‹¤!";
 
-                    // ±âÁ¸ ÄÚ·çÆ¾ÀÌ ½ÇÇà ÁßÀÌ¸é ¸ØÃã
+                    // ê¸°ì¡´ ì½”ë£¨í‹´ì´ ì‹¤í–‰ ì¤‘ì´ë©´ ë©ˆì¶¤
                     if (textCoroutine != null)
                         StopCoroutine(textCoroutine);
 
-                    textCoroutine = StartCoroutine(ChangeTextAfterDelay(3.0f, "´ÙÀ½À¸·Î ÇØ¾ßµÉ°ÍÀº?", OpBtn1Object, OpBtn2Object));
-                    
+                    textCoroutine = StartCoroutine(ChangeTextAfterDelay(3.0f, "ë‹¤ìŒìœ¼ë¡œ í•´ì•¼ë ê²ƒì€?", OpBtn1Object, OpBtn2Object));
+
 
                 }
             }
@@ -101,7 +101,7 @@ public class FTGameManager : MonoBehaviour
             legacyText.myText.text = newText;
         }
 
-        // 2ÃÊ ÈÄ ¹öÆ° È°¼ºÈ­
+        // 2ì´ˆ í›„ ë²„íŠ¼ í™œì„±í™”
         if (btn1 != null) btn1.SetActive(true);
         if (btn2 != null) btn2.SetActive(true);
 

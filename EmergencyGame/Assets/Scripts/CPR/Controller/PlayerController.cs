@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public string runRIGHTAni = "PlayerrunRIGHT";
 
     string nowAni = "", oldAni = "";
-    public static string gameState = "game";
+    //public static string gameState = "game";
 
     Camera mainCam;
     
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        GameManager.gameState = "game";
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         mainCam = Camera.main;
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (gameState != "game" || isStopped) return;
+        if (GameManager.gameState != "game" || isStopped) return;
 
         // --- 마우스 클릭으로 목적지 설정 ---
         if (Input.GetMouseButtonDown(0))
@@ -138,7 +139,7 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Patient"))
         {
             animator.Play(stopUPAni);
-            gameState = "gamestart";
+            GameManager.gameState = "gamestart";
             Gamestop();
 
             CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();

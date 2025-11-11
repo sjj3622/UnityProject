@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        GameManager.gameState = "game";
+        //GameManager.gameState = "game";
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         mainCam = Camera.main;
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (GameManager.gameState != "game" || isStopped) return;
-
+        //if (GameManager.gameState != "game" || isStopped) return;
+        if (isStopped) return;
         // --- 마우스 클릭으로 목적지 설정 ---
         if (Input.GetMouseButtonDown(0))
         {
@@ -170,6 +170,7 @@ public class PlayerController : MonoBehaviour
 
     void Gamestop()
     {
+        isStopped = true;
         // 충돌 비활성화
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)

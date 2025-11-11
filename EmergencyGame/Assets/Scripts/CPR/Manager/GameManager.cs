@@ -8,8 +8,9 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-
+    TimerController timerController;
     
+
     public static string gameState;
     public GateController gate;
     public Transform patient;
@@ -52,10 +53,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        timerController = GetComponent<TimerController>();
         
-
         Debug.Log("게임 스테이지 :" + gameState);
-        
+
         if (panel == null)
             panel = FindObjectOfType<CPR1Panel>();
 
@@ -69,13 +70,14 @@ public class GameManager : MonoBehaviour
             int index = i;
             optionButtons[i].onClick.AddListener(() => StartCoroutine(OnOptionSelected(index)));
         }
-        
+
         if (gameState == "StageClear")
         {
             Debug.Log("구급대원 출동");
             gate.SpawnMedic(patient);
-            timer.TR();
-            timer.StartTimerDirectly();
+            // timer.TR();
+            timer.TimerSave();
+            
         }
 
     }
@@ -84,12 +86,13 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("TimerController.timerText.text: " + timer.timerText.text);
+        //Debug.Log("TimerController.timerText.text: " + timer.timerText.text);
 
         if (GameObject.FindGameObjectWithTag("Patient") == null)
         {
-            Debug.Log("타켓확인" + GameObject.FindGameObjectWithTag("Patient"));
+            //Debug.Log("타켓확인" + GameObject.FindGameObjectWithTag("Patient"));
             panel.ClaerPanel.SetActive(true);
+
         }
 
 
@@ -102,7 +105,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        
+
     }
 
     void ShowQuestion(int step)
@@ -148,14 +151,14 @@ public class GameManager : MonoBehaviour
         {
 
             Debug.Log($"정답! 단계 {currentStep + 1} : {selected}");
-            
+
             currentStep++; // 다음 단계로 이동
 
             if (currentStep < optionTexts.Length)
             {
                 ShowQuestion(currentStep); // 다음 질문 표시
                 SetButtonsInteractable(true);
-                
+
             }
             else
             {
@@ -172,7 +175,7 @@ public class GameManager : MonoBehaviour
 
                     // 다음 씬으로 이동
                     SceneStateManager.instance.SaveState(GameObject.Find("Patient"));
-                    SceneStateManager.instance.SaveState(GameObject.Find("Timer"));        
+                    SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
                     SceneStateManager.instance.SaveState(Camera.main.gameObject);
                     SceneManager.LoadScene("GamePlaying");
                     gameState = "StageRule";

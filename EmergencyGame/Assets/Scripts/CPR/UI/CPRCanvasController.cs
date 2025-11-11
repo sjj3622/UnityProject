@@ -25,8 +25,8 @@ public class CPRCanvasController : MonoBehaviour
     private void Update()
     {
         Debug.Log(GameManager.gameState);
-        timer.TR();
-        timer.StartTimerDirectly();
+        //timer.TR();
+        timer.TimerSave();
     }
 
     public void OnClosePanel()

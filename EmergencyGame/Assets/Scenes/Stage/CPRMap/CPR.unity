@@ -350,7 +350,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 100
@@ -1864,8 +1864,10 @@ GameObject:
   - component: {fileID: 1010973009}
   - component: {fileID: 1010973008}
   - component: {fileID: 1010973007}
+  - component: {fileID: 1010973010}
+  - component: {fileID: 1010973011}
   m_Layer: 0
-  m_Name: 00_79
+  m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1959,6 +1961,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1645595312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1010973010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010973006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4326898f7ed1771439b31565794dc4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Star0: Star0
+  Star1: Star1
+  Star2: Star2
+  Star3: Star3
+  Star4: Star
+  timerController: {fileID: 854642455}
+--- !u!114 &1010973011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010973006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0362dbc955fbc24daa75af896419742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1047054727
 PrefabInstance:
   m_ObjectHideFlags: 0

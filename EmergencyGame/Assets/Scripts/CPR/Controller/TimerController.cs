@@ -17,6 +17,9 @@ public class TimerController : MonoBehaviour
 
     void Awake()
     {
+        //if (transform.parent != null)
+        //    transform.SetParent(null); // 부모에서 분리해서 루트로 이동
+
         DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
     }
 
@@ -31,19 +34,19 @@ public class TimerController : MonoBehaviour
         {
             timerText.text = "";
         }
-        Debug.Log("시작");
+
     }
 
     void Update()
     {
 
-        Debug.Log(gameObject.name + " 위치: " + transform.position +
-              ", 활성화: " + gameObject.activeSelf);
+        //Debug.Log(gameObject.name + " 위치: " + transform.position +
+        //      ", 활성화: " + gameObject.activeSelf);
 
         if (GameManager.gameState == "StageClear")
         {
-            timerRunning = true;
-            Debug.Log("timerRunning:" + timerRunning);
+            timerRunning = false;
+
         }
 
         if (timerRunning)
@@ -62,7 +65,7 @@ public class TimerController : MonoBehaviour
                 timerText.text = $"{minutes:00}:{seconds:00}";
             }
         }
-        
+
 
     }
 
@@ -70,21 +73,25 @@ public class TimerController : MonoBehaviour
 
     public void TR()
     {
-        Debug.Log("TR시작");
+
         timerRunning = true;
     }
     public void StartTimerDirectly()
     {
         if (!timerRunning)
         {
-            Debug.Log("1번 시작");
+
             timer = timerDuration;
             timerRunning = true;
             Debug.Log("타이머 직접 시작됨");
         }
+
+    }
+    public void TimerSave()
+    {
         if (GameManager.gameState == "StageRule")
         {
-            Debug.Log("2번 시작");
+            Debug.Log("타이머 2");
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
             {
@@ -103,6 +110,8 @@ public class TimerController : MonoBehaviour
         }
         if (GameManager.gameState == "StageClear")
         {
+            Debug.Log("타이머 3");
+            
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
             {
@@ -113,17 +122,14 @@ public class TimerController : MonoBehaviour
                     if (int.TryParse(split[0], out minutes) && int.TryParse(split[1], out seconds))
                     {
                         timer = minutes * 60 + seconds;
-                        timerRunning = false;
                         Debug.Log("저장된 Timer 값으로 재시작: " + timer);
                     }
                     totalTimer = timer;
+                    
                 }
             }
-            
+
         }
-
-        
-
 
     }
 

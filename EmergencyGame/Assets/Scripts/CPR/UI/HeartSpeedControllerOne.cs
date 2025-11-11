@@ -9,6 +9,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
 
     private Animator animator;
     private BoxCollider2D boxCollider;
+    TimerController timerController;
 
     [Header("Speed Settings")]
     public float minSpeed = 0f;
@@ -36,6 +37,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
     [Range(0f, 1f)] public float fallChance = 0.1f; // 10% 확률로 하락
     public float downgradeDelay = 1.2f;
 
+    
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -46,10 +48,18 @@ public class HeartSpeedControllerOne : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         if (boxCollider != null)
             originalColliderSize = boxCollider.size;
+
+        timerController = GetComponent<TimerController>();
+
+        
+        
+        
     }
 
     void Update()
     {
+
+       
         if (GameManager.gameState != "gameStart") return;
         if (animator == null) return;
 
@@ -72,6 +82,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
         {
             animator.speed = maxSpeed;
             GameManager.gameState = "StageClear";
+            SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
             SceneManager.LoadScene("CPR");
         }
     }
@@ -89,7 +100,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.speed += speedIncreaseRate;
-                score += 1;
+                score += 100;
                 isCollidingWithHandle = false;
                 UpdateScoreAndStageMessage();
             }

@@ -139,8 +139,18 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Patient"))
         {
             animator.Play(stopUPAni);
+
+
             GameManager.gameState = "gamestart";
-            Gamestop();
+
+            // 타이머 시작 호출
+            TimerController timer = FindObjectOfType<TimerController>();
+            if (timer != null)
+            {
+                timer.StartTimerDirectly(); // <- 직접 호출 메서드 추가 필요
+            }
+
+            Gamestop(); // <- 타이머 시작한 뒤 충돌 비활성화
 
             CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
             if (camFollow != null)
@@ -156,6 +166,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
 
     void Gamestop()
     {

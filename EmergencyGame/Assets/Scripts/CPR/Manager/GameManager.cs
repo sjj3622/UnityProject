@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static string gameState;
     public GateController gate;
     public Transform patient;
+    public TimerController timer;
 
     [Header("GamePanel")]
     [SerializeField] CPR1Panel panel;
@@ -51,9 +52,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
 
         Debug.Log("게임 스테이지 :" + gameState);
-        //if (gameState == null) return;
+        
         if (panel == null)
             panel = FindObjectOfType<CPR1Panel>();
 
@@ -72,6 +74,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("구급대원 출동");
             gate.SpawnMedic(patient);
+            timer.TR();
+            timer.StartTimerDirectly();
         }
 
     }
@@ -80,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        Debug.Log("TimerController.timerText.text: " + timer.timerText.text);
 
         if (GameObject.FindGameObjectWithTag("Patient") == null)
         {
@@ -168,7 +172,7 @@ public class GameManager : MonoBehaviour
 
                     // 다음 씬으로 이동
                     SceneStateManager.instance.SaveState(GameObject.Find("Patient"));
-                    SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
+                    SceneStateManager.instance.SaveState(GameObject.Find("Timer"));        
                     SceneStateManager.instance.SaveState(Camera.main.gameObject);
                     SceneManager.LoadScene("GamePlaying");
                     gameState = "StageRule";

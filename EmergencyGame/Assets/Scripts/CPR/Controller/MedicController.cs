@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,11 +33,10 @@ public class MedicController : MonoBehaviour
         {
             // 환자 방향으로 이동
             
-            Debug.Log("환자 쪽으로 이동");
+            
             Vector2 dir = (patientTr.position - tr.position).normalized;
             rb.MovePosition(rb.position + dir * speed * Time.deltaTime);
-            Debug.Log("Time.deltaTime : " + Time.deltaTime);
-            Debug.Log("환자 이동중");
+            
 
             // 환자 근처 도착 시 태우기
             float distance = Vector2.Distance(tr.position, patientTr.position);

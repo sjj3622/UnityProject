@@ -1,0 +1,831 @@
+fileFormatVersion: 2
+guid: 675a821a796db0f44900957b55f36640
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01eccdfceaba4e241b92c53d09128611
+      internalID: 229267451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_1
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab02732dc0ec32943a77b2708d5320a5
+      internalID: -47984039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c87fc7f0d8cb9a4ba6df43bde5af5bf
+      internalID: -841077689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_3
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee20582aa9d3073438a6971472e855b1
+      internalID: 1118192052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a780b0c58a3600d43a7853487d7eff42
+      internalID: 1719536106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_5
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 492
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 257b8f0601e8fe940abf00e8fb7c3775
+      internalID: -454133099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_6
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd74930a2750f1144aeafb0eb2ccf6b2
+      internalID: 1103366622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_7
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3588a0b5a8941454a90e0c1ddbb08f70
+      internalID: -2008483814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_8
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55abfc71b8023654385fd43dd38549aa
+      internalID: 1297020768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_9
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e45fd9c1f67ebc4fb64d20260c2a859
+      internalID: 1353395450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_10
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff94c8d8947d5ef48a9074db961f1ac2
+      internalID: 553207291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_11
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 440
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a821b5fbcd6b0c24c95fd29cbda3e6c6
+      internalID: 1568547785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_12
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 342
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f64f7b0c3dc8684f92fc0f1cb25fc6c
+      internalID: 519763847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_13
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 342
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36071e2b1e6d14b45bf4211b9821c1ae
+      internalID: -1161870122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_14
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 342
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e8dff06f1f49c346a36c4e9fed4e61b
+      internalID: 1850370356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_15
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 342
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 744b8be90fc193f4796a941834de3e15
+      internalID: 1160927707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_16
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 342
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7efe363821c91704b8ad6c95efd0e14e
+      internalID: 1604795768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_17
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 244
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff70f9c9336c0684cbba0a390d3ed381
+      internalID: 1278438684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_18
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 244
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5993d0ff40b1ba46a53aabf4dbb6a37
+      internalID: 1703636167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_19
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 244
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67fbb919905b4e94aa2b99ebd6121c2e
+      internalID: -823844928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_20
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 244
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88e5bce55a65aa94681229137036ba09
+      internalID: -729633372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_21
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 244
+        width: 165
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d259ae1d00914e409bda7611c5f60e9
+      internalID: 1379307054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_22
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 124
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40831d3238d969348bfe741dd40221ae
+      internalID: 994777882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_23
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 124
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0768914f927dc24ab1de7f6f752bc3b
+      internalID: 770073547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_24
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 124
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b58d31d77c4dada4cba5a73bb64aaf2e
+      internalID: 160973343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_25
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 124
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5769d3e4293e2e74c80524bf4214ee40
+      internalID: -1071737173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_26
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 124
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0157f3c7734915a4888529dc7dd8eea8
+      internalID: -1535738560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_27
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 4
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa889df8df7b3646a1c6a3e72d5fb77
+      internalID: 2061608059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_28
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 4
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 077d56b0bea82d24eae332afed4e9f79
+      internalID: -615963741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_29
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 4
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb399e9e0640c834c87374cd017469fd
+      internalID: -405060093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_30
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 4
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69443ee0960d5bd41838e54593e63b7c
+      internalID: 2042978363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MS-DOS - Battle of the Eras - Miscellaneous - Blood_31
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4
+        width: 177
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eafccb77b32f3e04cbb11e5bfd214315
+      internalID: -585593106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_0: 229267451
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_1: -47984039
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_10: 553207291
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_11: 1568547785
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_12: 519763847
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_13: -1161870122
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_14: 1850370356
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_15: 1160927707
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_16: 1604795768
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_17: 1278438684
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_18: 1703636167
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_19: -823844928
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_2: -841077689
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_20: -729633372
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_21: 1379307054
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_22: 994777882
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_23: 770073547
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_24: 160973343
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_25: -1071737173
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_26: -1535738560
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_27: 2061608059
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_28: -615963741
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_29: -405060093
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_3: 1118192052
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_30: 2042978363
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_31: -585593106
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_4: 1719536106
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_5: -454133099
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_6: 1103366622
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_7: -2008483814
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_8: 1297020768
+      MS-DOS - Battle of the Eras - Miscellaneous - Blood_9: 1353395450
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

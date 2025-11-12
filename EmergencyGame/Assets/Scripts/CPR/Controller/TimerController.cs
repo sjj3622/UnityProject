@@ -8,7 +8,7 @@ public class TimerController : MonoBehaviour
     public GameObject Patient;
     [Header("Timer Settings")]
     public Text timerText;
-    public float timerDuration = 300f;
+    public float timerDuration = 180f;
     public float totalTimer = 0f;
 
 

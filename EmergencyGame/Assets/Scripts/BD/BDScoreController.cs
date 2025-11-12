@@ -1,32 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BDScoreController : MonoBehaviour
 {
-    public GameObject Panel; // 인스펙터에 연결
-    public int score = 0;
-    public Text scoreText;
+    [Header("UI 연결")]
+    public GameObject Panel; // 점수 달성 시 표시되는 패널
+    public Text scoreText;   // UI 텍스트 (Score 표시용)
 
-    public void AddScore(int amount)
-    {
-        score += amount;
-        Debug.Log($"AddScore 호출: {amount}, 총점: {score}");
-
-        if (scoreText != null)
-            scoreText.text = "Score: " + score;
-    }
+    [Header("점수 설정")]
+    public int score = 0;            // 현재 점수
+    public int goalScore = 100;      // 목표 점수 (Panel 표시 기준)
 
     void Start()
     {
         if (Panel != null)
             Panel.SetActive(false);
+
+        // 시작 시 점수 표시
+        UpdateScoreText();
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        Debug.Log($"AddScore 호출: {amount}, 총점: {score}");
+        UpdateScoreText();
+    }
+
+    void UpdateScoreText()
+    {
+        if (scoreText != null)
+            scoreText.text = "Score: " + score;
+        else
+            Debug.LogWarning("scoreText가 Inspector에 연결되지 않았습니다!");
     }
 
     void Update()
     {
-        if (Panel != null && score >= 100)
+        if (Panel != null && score >= goalScore)
             Panel.SetActive(true);
     }
 }

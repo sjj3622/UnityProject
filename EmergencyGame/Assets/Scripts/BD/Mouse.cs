@@ -6,12 +6,7 @@ public class Mouse : MonoBehaviour
 {
     public Texture2D[] cursorImages;
 
-    //public Texture2D cursorImage1; // 첫 번째 이미지
-    //public Texture2D cursorImage2; // 두 번째 이미지
-    //public Texture2D cursorImage3; // 세 번째 이미지
-    //public Texture2D cursorImage4; // 네 번째 이미지
-
-    //public bool isUsingImage1 = true; // 현재 사용 중인 이미지
+   
 
     public int mouseImg = 0;
     string targetBloodName = "";
@@ -64,52 +59,68 @@ public class Mouse : MonoBehaviour
     }
 
 
+    //public void RemoveClickedBleed()
+    //{
+
+    //    switch (mouseImg)
+    //    {
+    //        case 0: targetBloodName = "blood1"; break;
+    //        case 1: targetBloodName = "blood2"; break;
+    //        case 2: targetBloodName = "blood3"; break;
+    //        case 3: targetBloodName = "blood4"; break;
+    //    }
+
+
+    //    if (bleedController == null) return;
+
+    //    // 마우스 클릭 위치 (월드 좌표)
+    //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    mousePos.z = 0f; // 2D 기준
+
+    //    // targetSprite 하위 모든 피 오브젝트 확인
+    //    for (int i = bleedController.targetSprite.transform.childCount - 1; i >= 0; i--)
+    //    {
+    //        Transform child = bleedController.targetSprite.transform.GetChild(i);
+    //        float distance = Vector2.Distance(new Vector2(mousePos.x, mousePos.y),
+    //                                          new Vector2(child.position.x, child.position.y));
+
+    //        if (distance < 1.0f && child.name == targetBloodName)
+    //        {
+    //            // 피 제거
+    //            Destroy(child.gameObject);
+    //            Debug.Log("클릭된 피 오브젝트: " + child.name);
+
+    //            // 이 피에 붙은 Blood 스크립트 가져오기
+    //            Blood blood = child.GetComponent<Blood>();
+    //            if (blood != null)
+    //            {
+
+    //                blood.ScorePlus();
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("Blood 스크립트 없음!");
+    //            }
+    //        }
+
+    //    }
+
+    //}
+
     public void RemoveClickedBleed()
     {
-        
-        switch (mouseImg)
-        {
-            case 0: targetBloodName = "blood1"; break;
-            case 1: targetBloodName = "blood2"; break;
-            case 2: targetBloodName = "blood3"; break;
-            case 3: targetBloodName = "blood4"; break;
-        }
-
-
-        if (bleedController == null) return;
-
-        // 마우스 클릭 위치 (월드 좌표)
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f; // 2D 기준
+        mousePos.z = 0f;
 
-        // targetSprite 하위 모든 피 오브젝트 확인
-        for (int i = bleedController.targetSprite.transform.childCount - 1; i >= 0; i--)
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        if (hit.collider != null)
         {
-            Transform child = bleedController.targetSprite.transform.GetChild(i);
-            float distance = Vector2.Distance(new Vector2(mousePos.x, mousePos.y),
-                                              new Vector2(child.position.x, child.position.y));
-
-            if (distance < 1.0f && child.name == targetBloodName)
+            BloodObject bloodObj = hit.collider.GetComponent<BloodObject>();
+            if (bloodObj != null)
             {
-                // 피 제거
-                Destroy(child.gameObject);
-                Debug.Log("클릭된 피 오브젝트: " + child.name);
-
-                // 이 피에 붙은 Blood 스크립트 가져오기
-                Blood blood = child.GetComponent<Blood>();
-                if (blood != null)
-                {
-                    Debug.Log("Blood.ScorePlus() 호출!");
-                    blood.ScorePlus();
-                }
-                else
-                {
-                    Debug.Log("Blood 스크립트 없음!");
-                }
+                bloodObj.OnClicked(mouseImg); // 클릭 시 호출
             }
-
         }
-
     }
-
 }

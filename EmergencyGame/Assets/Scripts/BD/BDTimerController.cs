@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class BDTimerController : MonoBehaviour
 {
+    //private BDgpManger gameManager;
+
+
     public Text timerText;
     public float timerDuration = 180f;
     public float totalTimer = 0f;
@@ -14,6 +17,7 @@ public class BDTimerController : MonoBehaviour
 
     void Start()
     {
+        //gameManager = FindAnyObjectByType<BDgpManger>();
         timerText.text = "";
         
 
@@ -22,7 +26,7 @@ public class BDTimerController : MonoBehaviour
     
     void Update()
     {
-        if (GameManager.gameState == "BDStart")
+        if (BDgpManger.gameState == "BDStart")
         {
             timerRunning = false;
         }

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DBgpManger : MonoBehaviour
+public class BDgpManger : MonoBehaviour
 {
+    public static string gameState;
+
     GameObject Panel;
 
     private BleedController bleedController;

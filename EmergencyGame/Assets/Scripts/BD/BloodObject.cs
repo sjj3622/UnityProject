@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BloodObject : MonoBehaviour
 {
+    private BleedController bleedController;
+    private Mouse Mouse;
     public enum ClickType
     {
         SingleClick,
@@ -22,7 +24,7 @@ public class BloodObject : MonoBehaviour
     public float holdTimeRequired = 0f;
 
     [Header("점수")]
-    public int score = 1;
+    private int score = 1;
 
     private float holdTimer = 0f;
     private bool isMouseOver = false;
@@ -34,18 +36,21 @@ public class BloodObject : MonoBehaviour
         // 이름으로 타입 설정
         if (name.Contains("blood1"))
         {
+            
             requiredMouseType = 0;
             clickType = ClickType.SingleClick;
-            score = 1;
+            score =10;
         }
         else if (name.Contains("blood2"))
         {
+            
             requiredMouseType = 1;
             clickType = ClickType.DoubleClick;
             score = 3;
         }
         else if (name.Contains("blood3"))
         {
+            
             requiredMouseType = 2;
             clickType = ClickType.Hold;
             holdTimeRequired = 2f;
@@ -53,15 +58,37 @@ public class BloodObject : MonoBehaviour
         }
         else if (name.Contains("blood4"))
         {
+            
             requiredMouseType = 3;
             clickType = ClickType.Hold;
             holdTimeRequired = 5f;
             score = 10;
         }
     }
-
+    void Start()
+    {
+        bleedController = FindAnyObjectByType<BleedController>();
+        Mouse = FindAnyObjectByType<Mouse>();
+    }
     void Update()
     {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Debug.Log("왼족 버튼 클릭");
+            if (Mouse != null)
+            {
+                //Debug.Log("Mouse 스크립트 존재함 — RemoveClickedBleed() 호출 시도");
+                Mouse.RemoveClickedBleed();
+                //Debug.Log("RemoveClickedBleed() 호출 완료"); // 함수가 호출된 직후
+            }
+            else
+            {
+                Debug.LogWarning("Mouse 스크립트가 null 입니다! 연결 안 됨");
+            }
+
+        }
+
         if (!removableByClick || !isMouseOver) return;
 
         Mouse mouse = FindAnyObjectByType<Mouse>();
@@ -103,6 +130,7 @@ public class BloodObject : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     holdTimer += Time.deltaTime;
+                    Debug.Log("holdTimer :" + holdTimer);
                     if (holdTimer >= holdTimeRequired)
                         RemoveObject();
                 }
@@ -117,10 +145,14 @@ public class BloodObject : MonoBehaviour
     void RemoveObject()
     {
         BDScoreController scoreController = FindAnyObjectByType<BDScoreController>();
+
+       // Debug.Log("scoreController :" + scoreController);
+
         if (scoreController != null)
             scoreController.AddScore(score);
 
         Destroy(gameObject);
+
         Debug.Log($"{gameObject.name} 제거됨 (점수 {score}, 클릭타입 {clickType})");
     }
 
@@ -140,6 +172,7 @@ public class BloodObject : MonoBehaviour
     // BloodObject.cs 안에 추가
     public void OnClicked(int currentMouseType)
     {
+        //Debug.Log("클릭 설정");
         if (!removableByClick) return;
         if (currentMouseType != requiredMouseType)
         {
@@ -156,11 +189,13 @@ public class BloodObject : MonoBehaviour
 
             case ClickType.DoubleClick:
                 clickCount++;
+                Debug.Log("clickCount :" + clickCount);
                 if (clickCount == 1)
                     lastClickTime = Time.time;
 
                 if (clickCount == 2 && (Time.time - lastClickTime) <= 0.3f)
                 {
+                    Debug.Log("clickCount2 :" + clickCount);
                     RemoveObject();
                     clickCount = 0;
                 }

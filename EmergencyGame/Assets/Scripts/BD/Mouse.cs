@@ -9,7 +9,7 @@ public class Mouse : MonoBehaviour
    
 
     public int mouseImg = 0;
-    string targetBloodName = "";
+    
 
     private BleedController bleedController;
     private BDScoreController scoreController;
@@ -39,6 +39,17 @@ public class Mouse : MonoBehaviour
 
     }
 
+    public void ResetToDefaultCursor()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // 기본 커서로 변경
+        mouseImg = 0; // 선택된 커서 인덱스도 초기화
+        Debug.Log("커서를 기본 OS 커서로 초기화");
+    }
+
+    private void OnDisable()
+    {
+        ResetToDefaultCursor();
+    }
     void SpaceDown()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -109,18 +120,31 @@ public class Mouse : MonoBehaviour
 
     public void RemoveClickedBleed()
     {
+        //Debug.Log("함수 시작");
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f;
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        Collider2D hitCollider = Physics2D.OverlapPoint(mousePos2D);
 
-        if (hit.collider != null)
+        if (hitCollider != null)
         {
-            BloodObject bloodObj = hit.collider.GetComponent<BloodObject>();
+            Debug.Log("클릭된 오브젝트: " + hitCollider.name);
+
+            BloodObject bloodObj = hitCollider.GetComponent<BloodObject>();
             if (bloodObj != null)
             {
-                bloodObj.OnClicked(mouseImg); // 클릭 시 호출
+               // Debug.Log("bloodObj: " + bloodObj);
+                //bloodObj.OnClicked(mouseImg);
             }
+            else
+            {
+                Debug.Log("BloodObject 스크립트 없음!");
+            }
+        }
+        else
+        {
+            Debug.Log("클릭된 오브젝트 없음!");
         }
     }
 }

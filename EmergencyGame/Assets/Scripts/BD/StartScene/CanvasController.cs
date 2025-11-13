@@ -27,6 +27,8 @@ public class CanvasController : MonoBehaviour
             // 텍스트 변경
             legacyText.myText.text = "일단 피를 닦아보자";
 
+            BDgpManager.gameState = "GameStart";
+
             // 3초 뒤 씬 전환 코루틴 실행
             StartCoroutine(LoadNextSceneAfterDelay(3f, "BleedingGamepalying"));
         }
@@ -35,6 +37,12 @@ public class CanvasController : MonoBehaviour
     private IEnumerator LoadNextSceneAfterDelay(float delay, string sceneName)
     {
         yield return new WaitForSeconds(delay); // delay 초 기다림
+
+        BDSceneStateManager.instance.SaveState(GameObject.Find("Patient"));
+        BDSceneStateManager.instance.SaveState(GameObject.Find("Player"));
+        //SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
+        BDSceneStateManager.instance.SaveState(Camera.main.gameObject);
+
         SceneManager.LoadScene(sceneName);       // 씬 전환
     }
 }

@@ -18,36 +18,46 @@ public class BleedController : MonoBehaviour
 
     private List<GameObject> currentBleeds = new List<GameObject>();
 
-    
-
     void Start()
     {
-       
-        if (BDgpManger.gameState == null)
+        //게임 마무리 되면 삭제
+        BDgpManager.gameState = "BDStart";
+
+        if (BDgpManager.gameState == null)
         {
-            Debug.LogError("씬에 DBgpManger가 없습니다!");
+            Debug.LogError("씬에 BDgpManger가 없습니다!");
             return;
         }
 
-        if (BDgpManger.gameState != "GameStart")
+        if (BDgpManager.gameState != "BDStart")
         {
-            Debug.Log("게임이 시작되지 않았습니다. gameState = " + BDgpManger.gameState);
+            Debug.Log("게임이 시작되지 않았습니다. gameState = " + BDgpManager.gameState);
             return;
         }
 
-        // 배열 길이 확인
         if (bleedPrefabs.Length != bleedProbabilities.Length)
         {
             Debug.LogError("bleedPrefabs와 bleedProbabilities의 길이가 일치하지 않습니다!");
             return;
         }
 
-        // 초기 피 생성
         SpawnBleeds(initialBleedCount);
 
-        // 코루틴 시작
         StartCoroutine(RemoveBleedRoutine());
         StartCoroutine(AddBleedRoutine());
+    }
+
+    void OnDisable()
+    {
+        // 오브젝트가 비활성화/파괴될 때 코루틴 중지와 리스트 정리
+        StopAllCoroutines();
+        currentBleeds.Clear();
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+        currentBleeds.Clear();
     }
 
     void SpawnBleeds(int count)
@@ -58,15 +68,8 @@ public class BleedController : MonoBehaviour
             return;
         }
 
-        if (BDgpManger.gameState != "GameStart")
-            return; // 게임이 시작되지 않았으면 피 생성 금지
-
-        if(BDgpManger.gameState == "GameOver")
-        {
-
-        }
-
-
+        if (BDgpManager.gameState != "BDStart")
+            return;
 
         Texture2D tex = targetSprite.sprite.texture;
         Rect spriteRect = targetSprite.sprite.textureRect;
@@ -78,6 +81,7 @@ public class BleedController : MonoBehaviour
 
         while (created < count && attempts < count * 20)
         {
+
             attempts++;
 
             float randX = Random.Range(bounds.min.x, bounds.max.x);
@@ -95,6 +99,7 @@ public class BleedController : MonoBehaviour
                 Color pixelColor = tex.GetPixel(texX, texY);
                 if (pixelColor.a > 0.1f)
                 {
+                    
                     GameObject randomPrefab = GetWeightedRandomPrefab();
 
                     GameObject bleed = Instantiate(randomPrefab, worldPos, Quaternion.identity, targetSprite.transform);
@@ -102,23 +107,6 @@ public class BleedController : MonoBehaviour
                     currentBleeds.Add(bleed);
                     created++;
 
-                    if (bleed.name.Contains("blood4"))
-                    {
-                        BloodObject bleedObj = bleed.GetComponent<BloodObject>();
-                        if (bleedObj == null)
-                            bleedObj = bleed.AddComponent<BloodObject>();
-
-                        bleedObj.removableByClick = true;
-                        bleedObj.holdTimeRequired = 5f;
-                    }
-
-                    // 피 개수 체크
-                    if (currentBleeds.Count > 30)
-                    {
-                        DBgpManger.gameState = "GameOver";
-                        Debug.Log("피가 30개 초과! 게임 종료.");
-                        return;
-                    }
                 }
             }
         }
@@ -145,15 +133,34 @@ public class BleedController : MonoBehaviour
 
     IEnumerator RemoveBleedRoutine()
     {
+        
         while (true)
         {
+           // Debug.Log($"[Remove] frame={Time.frameCount}, Count(after)={currentBleeds.Count}");
             yield return new WaitForSeconds(1.5f);
 
+            // 리스트이 비어있지 않은지 확인
             if (currentBleeds.Count > 0)
             {
+                // 안전하게 인덱스 선택
                 int index = Random.Range(0, currentBleeds.Count);
+                if (index < 0 || index >= currentBleeds.Count)
+                    continue;
+
                 GameObject toRemove = currentBleeds[index];
+
+                // 리스트에서 먼저 제거
                 currentBleeds.RemoveAt(index);
+               // Debug.Log("currentBleeds.Count: - " + currentBleeds.Count);
+
+                // 이미 파괴되었는지 확인
+                if (toRemove == null) // Unity의 == 연산은 파괴된 오브젝트도 null로 판정
+                {
+                    // 이미 파괴되어 있으면 건너뜀
+                    continue;
+                }
+
+                // 코루틴으로 페이드 후 파괴 처리
                 StartCoroutine(FadeToBlackAndDestroy(toRemove, 1f));
             }
         }
@@ -161,35 +168,91 @@ public class BleedController : MonoBehaviour
 
     IEnumerator FadeToBlackAndDestroy(GameObject obj, float duration)
     {
-        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
-        if (sr != null)
-        {
-            Color originalColor = sr.color;
-            float elapsed = 0f;
+        // 시작 시 객체 살아 있는지 확인
+        if (obj == null)
+            yield break;
 
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                float t = elapsed / duration;
-                float r = Mathf.Lerp(originalColor.r, 0f, t);
-                float g = Mathf.Lerp(originalColor.g, 0f, t);
-                float b = Mathf.Lerp(originalColor.b, 0f, t);
-                sr.color = new Color(r, g, b, originalColor.a);
-                yield return null;
-            }
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+
+        // 만약 SpriteRenderer가 없으면 바로 파괴
+        if (sr == null)
+        {
+            if (obj != null) Destroy(obj);
+            yield break;
         }
 
-        Destroy(obj);
+        Color originalColor = sr.color;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            // 매 프레임 파괴 여부 재확인
+            if (obj == null) // 파괴된 경우 코루틴 종료
+                yield break;
+
+            // sr도 파괴됐는지 확인
+            if (sr == null)
+            {
+                // sr이 파괴되었다면 더 이상 색을 조작할 수 없음 — 객체가 살아 있으면 그냥 파괴
+                if (obj != null) Destroy(obj);
+                yield break;
+            }
+
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            // 안전하게 current sr 색 변경
+            Color cur = sr.color; // sr이 살아있음을 확인했으므로 안전
+            float r = Mathf.Lerp(originalColor.r, 0f, t);
+            float g = Mathf.Lerp(originalColor.g, 0f, t);
+            float b = Mathf.Lerp(originalColor.b, 0f, t);
+            sr.color = new Color(r, g, b, cur.a);
+
+            yield return null;
+        }
+
+        // 루프 끝난 뒤에도 obj가 살아있으면 파괴
+        if (obj != null)
+            Destroy(obj);
     }
 
     IEnumerator AddBleedRoutine()
     {
-        while (BDgpManger.gameState == "GameStart")
+        
+        while (true)
         {
+            //Debug.Log($"[Add] frame={Time.frameCount}, Count(before)={currentBleeds.Count - 1}, Count(after)={currentBleeds.Count}");
             yield return new WaitForSeconds(1f);
-            SpawnBleeds(1);
-            if (BDgpManger.gameState == "GameOver")
-                yield break; // 게임 종료 시 코루틴 중단
+            
+            if (BDgpManager.gameState != "BDStart")
+                continue;
+
+            // 피가 많을 땐 생성 금지
+            if (currentBleeds.Count < 30)
+            {
+                SpawnBleeds(1);
+               // Debug.Log("[Add] 피 생성됨. 현재 개수: " + currentBleeds.Count);
+            }
         }
+
     }
+
+
+    public void ClearAllBleeds()
+    {
+        // 리스트에 남아있는 모든 피 오브젝트 삭제
+        foreach (GameObject bleed in currentBleeds)
+        {
+            if (bleed != null)
+                Destroy(bleed);
+        }
+        currentBleeds.Clear();
+
+        // 코루틴 중지
+        StopAllCoroutines();
+
+        // 스크립트 비활성화
+        enabled = false;
+    }
+
 }

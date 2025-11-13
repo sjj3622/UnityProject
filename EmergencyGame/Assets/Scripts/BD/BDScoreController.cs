@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class BDScoreController : MonoBehaviour
 {
     [Header("UI 연결")]
-    public GameObject Panel; // 점수 달성 시 표시되는 패널
     public Text scoreText;   // UI 텍스트 (Score 표시용)
 
     [Header("점수 설정")]
@@ -13,8 +12,6 @@ public class BDScoreController : MonoBehaviour
 
     void Start()
     {
-        if (Panel != null)
-            Panel.SetActive(false);
 
         // 시작 시 점수 표시
         UpdateScoreText();
@@ -37,7 +34,6 @@ public class BDScoreController : MonoBehaviour
 
     void Update()
     {
-        if (Panel != null && score >= goalScore)
-            Panel.SetActive(true);
+        
     }
 }

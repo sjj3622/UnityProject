@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Schema;
 using UnityEngine;
 
-public class StarScore : MonoBehaviour
+public class BDStarScore : MonoBehaviour
 {
 
     Animator animator;
@@ -18,20 +18,17 @@ public class StarScore : MonoBehaviour
     string nowAni = "", oldAni = "";
 
 
-    public TimerController timerController;
-
-
+    private BDTimerController bdtimerController;
+ 
     void Start()
     {
-        if (timerController == null)
-            timerController = FindObjectOfType<TimerController>();
-
-        if (timerController == null)
-            Debug.LogWarning("씬에서 TimerController를 찾을 수 없습니다!");
-
-
+        bdtimerController = FindObjectOfType<BDTimerController>();
         animator = GetComponent<Animator>();
 
+        if (bdtimerController == null)
+            Debug.LogWarning("씬에서 TimerController를 찾을 수 없습니다!");
+
+        gameObject.SetActive(false);
 
 
     }
@@ -40,47 +37,31 @@ public class StarScore : MonoBehaviour
     void Update()
     {
 
-        gameObject.SetActive(true);
-
-        if (timerController != null)
-            UpdateStarAnimation();
-        else
-            Debug.LogWarning("TimerController가 연결되지 않았습니다!");
-
-
-
     }
 
-    void UpdateStarAnimation()
-    {
-        float timeValue = timerController.totalTimer;
-        Debug.Log("totalTimer 값: " + timeValue);
-        StarScroe();
-
-    }
-
+    
     public void StarScroe()
     {
         Debug.Log("별 스코어");
-        float timeValue = timerController.totalTimer; // totalTimer 값 가져오기
-        Debug.Log("totalTimer 값: " + timeValue);
+        
+        Debug.Log("totalTimer 값: " + bdtimerController.timer);
 
-        if (timeValue <= 180 && timeValue > 144)
+        if (bdtimerController.timer <= 180 && bdtimerController.timer > 144)
         {
             Debug.Log("별4");
             nowAni = Star4;
         }
-        else if (timeValue <= 144 && timeValue > 108)
+        else if (bdtimerController.timer <= 144 && bdtimerController.timer > 108)
         {
             Debug.Log("별3");
             nowAni = Star3;
         }
-        else if (timeValue <= 108 && timeValue > 72)
+        else if (bdtimerController.timer <= 108 && bdtimerController.timer > 72)
         {
             Debug.Log("별2");
             nowAni = Star2;
         }
-        else if (timeValue <= 72 && timeValue > 36)
+        else if (bdtimerController.timer <= 72 && bdtimerController.timer > 36)
         {
             Debug.Log("별1");
             nowAni = Star1;

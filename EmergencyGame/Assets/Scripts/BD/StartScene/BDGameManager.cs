@@ -90,6 +90,12 @@ public class BDGameManager : MonoBehaviour
                 }
             }
         }
+
+        if(BDgpManager.gameState == "BDClear")
+        {
+            legacyText.myText.text = "감사합니다. 덕분에 살았어요";
+        }
+
     }
 
     private IEnumerator ChangeTextAfterDelay(float delay, string newText, GameObject btn1, GameObject btn2)

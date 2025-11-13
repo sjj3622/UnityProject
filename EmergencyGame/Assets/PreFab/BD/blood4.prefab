@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5842540088713844117}
   m_Layer: 0
   m_Name: blood4
-  m_TagString: Untagged
+  m_TagString: blood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,9 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98e8de5eb95b1847abb5004c105ebff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  removableByClick: 0
-  requiredMouseType: 0
-  holdTimeRequired: 5
+  removableByClick: 1
+  requiredMouseType: 3
+  clickType: 2
+  holdTimeRequired: 3
+  score: 10
 --- !u!61 &5842540088713844117
 BoxCollider2D:
   m_ObjectHideFlags: 0

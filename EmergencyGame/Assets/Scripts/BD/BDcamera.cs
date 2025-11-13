@@ -5,24 +5,33 @@ using UnityEngine;
 public class BDcamera : MonoBehaviour
 {
     [Header("드래그 설정")]
-    public float dragSpeed = 1f; // 마우스 드래그 속도
+    public float dragSpeed = 1f;
 
     [Header("줌 설정")]
-    public float zoomSpeed = 5f; // 마우스 휠 줌 속도
-    public float minZoom = 2f;   // 최소 줌
-    public float maxZoom = 10f;  // 최대 줌
+    public float zoomSpeed = 5f;
+    public float minZoom = 2f;
+    public float maxZoom = 10f;
 
     [Header("제한 영역")]
-    public Transform targetArea; // 카메라가 움직일 수 있는 이미지 오브젝트
+    public Transform targetArea;
     private Vector3 minBounds;
     private Vector3 maxBounds;
 
     private Vector3 lastMousePosition;
     private Camera cam;
 
+    //  초기 상태 저장용
+    private Vector3 initialPosition;
+    private float initialZoom;
+    private bool isReset = false; // 여러 번 초기화 방지용
+
     void Start()
     {
         cam = GetComponent<Camera>();
+
+        // 초기 상태 저장
+        initialPosition = transform.position;
+        initialZoom = cam.orthographicSize;
 
         if (targetArea != null)
         {
@@ -48,16 +57,28 @@ public class BDcamera : MonoBehaviour
         HandleCameraDrag();
         HandleZoom();
         ClampCameraPosition();
+
+        //  특정 상태일 때 카메라 초기화
+        if (BDgpManager.gameState == "BDClear" && !isReset)
+        {
+            ResetCamera();
+            isReset = true; // 중복 초기화 방지
+            this.enabled = false;
+        }
+        else if (BDgpManager.gameState != "BDClear")
+        {
+            isReset = false; // 상태가 바뀌면 다시 초기화 가능하게
+        }
     }
 
     void HandleCameraDrag()
     {
-        if (Input.GetMouseButtonDown(1)) // 우클릭 눌렀을 때
+        if (Input.GetMouseButtonDown(1))
         {
             lastMousePosition = Input.mousePosition;
         }
 
-        if (Input.GetMouseButton(1)) // 우클릭 드래그 중일 때
+        if (Input.GetMouseButton(1))
         {
             Vector3 delta = Input.mousePosition - lastMousePosition;
             Vector3 move = new Vector3(-delta.x, -delta.y, 0) * dragSpeed * Time.deltaTime;
@@ -65,7 +86,7 @@ public class BDcamera : MonoBehaviour
             transform.Translate(move, Space.Self);
             lastMousePosition = Input.mousePosition;
 
-            ClampCameraPosition(); // 드래그 중에도 즉시 제한 적용
+            ClampCameraPosition();
         }
     }
 
@@ -75,11 +96,8 @@ public class BDcamera : MonoBehaviour
 
         if (Mathf.Abs(scroll) > 0.01f)
         {
-            // 줌 변경
             cam.orthographicSize -= scroll * zoomSpeed;
             cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom);
-
-            // 줌 후 카메라 위치가 영역을 벗어나지 않게 조정
             ClampCameraPosition();
         }
     }
@@ -90,15 +108,12 @@ public class BDcamera : MonoBehaviour
 
         Vector3 camPos = transform.position;
 
-        // 카메라 크기 계산
         float camHeight = cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
-        // 현재 줌 상태에서 카메라가 영역보다 커질 경우 보정
         float areaWidth = maxBounds.x - minBounds.x;
         float areaHeight = maxBounds.y - minBounds.y;
 
-        // 만약 카메라 시야가 영역보다 커지면 중앙 고정
         if (camWidth * 2 >= areaWidth)
             camPos.x = (minBounds.x + maxBounds.x) / 2f;
         else
@@ -110,5 +125,14 @@ public class BDcamera : MonoBehaviour
             camPos.y = Mathf.Clamp(camPos.y, minBounds.y + camHeight, maxBounds.y - camHeight);
 
         transform.position = camPos;
+    }
+
+    //  카메라 초기화 함수
+    void ResetCamera()
+    {
+        transform.position = initialPosition;
+        cam.orthographicSize = initialZoom;
+        ClampCameraPosition();
+        Debug.Log("카메라가 초기 상태로 복원되었습니다.");
     }
 }

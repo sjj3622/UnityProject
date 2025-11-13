@@ -4,13 +4,13 @@ public class ActiveTracker : MonoBehaviour
 {
     void OnEnable()
     {
-        Debug.Log($"{name} È°¼ºÈ­µÊ! (Scene: {gameObject.scene.name})");
+        Debug.Log($"{name} í™œì„±í™”! (Scene: {gameObject.scene.name})");
         Debug.Log($"StackTrace:\n{System.Environment.StackTrace}");
     }
 
     void OnDisable()
     {
-        Debug.Log($"{name} ºñÈ°¼ºÈ­µÊ! (Scene: {gameObject.scene.name})");
+        Debug.Log($"{name} ë¹„í™œì„±í™”! (Scene: {gameObject.scene.name})");
         Debug.Log($"StackTrace:\n{System.Environment.StackTrace}");
     }
 }

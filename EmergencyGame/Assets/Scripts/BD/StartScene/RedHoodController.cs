@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,7 +58,7 @@ public class RedHoodController : MonoBehaviour
         targetPosition = new Vector3(randomX, randomY, transform.position.z);
 
         // 처음에는 Idle 재생
-        animator.Play("Idle");
+        animator.Play("RedHood");
 
         // 1초 후 Run 시작
         Invoke("StartRunning", 1f);
@@ -72,6 +72,20 @@ public class RedHoodController : MonoBehaviour
         }
         // 여기서 텍스트 반전 방지 처리
         FixTextFlip();
+
+        if(BDgpManager.gameState == "BDClear")
+        {
+            animator.Play("RedHood");
+            // 자신의 Collider2D 비활성화
+            Collider2D col = GetComponent<Collider2D>();
+            if (col != null && col.enabled)
+            {
+                col.enabled = false;
+            }
+
+            // 이동 중이었다면 멈춤
+            isRunning = false;
+        }
 
     }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,5 +41,8 @@ public class CameraManager : MonoBehaviour
         // 📍 플레이어가 화면의 왼쪽 상단에 보이도록 카메라 오프셋 설정
         // 숫자는 조정 가능 (오른쪽/아래로 카메라를 이동)
         offset = new Vector3(1.0f, 0f, 0f);
+
+        //카메라 사이즈 로그 출력
+        Debug.Log("Camera Size Changed! Current Size: " + cam.orthographicSize);
     }
 }

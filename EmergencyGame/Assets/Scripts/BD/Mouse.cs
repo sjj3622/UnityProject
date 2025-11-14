@@ -18,19 +18,34 @@ public class Mouse : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(WaitForGameStart());
+    }
+
+    IEnumerator WaitForGameStart()
+    {
+        // gameState가 "BDStart"가 될 때까지 대기
+        while (BDgpManager.gameState != "BDStart")
+        {
+            yield return null; // 한 프레임 대기
+            
+        }
+
+        // "BDStart"가 되면 실행
+        
+
         // 시작 시 첫 번째 이미지로 커서 설정
-        //Cursor.SetCursor(cursorImage1, new Vector2(cursorImage1.width / 2, cursorImage1.height / 2), CursorMode.Auto);
         Cursor.SetCursor(cursorImages[0], new Vector2(cursorImages[0].width / 2, cursorImages[0].height / 2), CursorMode.Auto);
+
         bleedController = FindAnyObjectByType<BleedController>();
-
         scoreController = FindAnyObjectByType<BDScoreController>();
-
         Blood = FindAnyObjectByType<Blood>();
     }
 
 
     void Update()
     {
+
+
         // 마우스 위치를 실시간으로 확인 (Debug 용)
         Vector3 mousePos = Input.mousePosition;
         //Debug.Log("Mouse Position: " + mousePos);
@@ -69,54 +84,6 @@ public class Mouse : MonoBehaviour
         }
     }
 
-
-    //public void RemoveClickedBleed()
-    //{
-
-    //    switch (mouseImg)
-    //    {
-    //        case 0: targetBloodName = "blood1"; break;
-    //        case 1: targetBloodName = "blood2"; break;
-    //        case 2: targetBloodName = "blood3"; break;
-    //        case 3: targetBloodName = "blood4"; break;
-    //    }
-
-
-    //    if (bleedController == null) return;
-
-    //    // 마우스 클릭 위치 (월드 좌표)
-    //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    mousePos.z = 0f; // 2D 기준
-
-    //    // targetSprite 하위 모든 피 오브젝트 확인
-    //    for (int i = bleedController.targetSprite.transform.childCount - 1; i >= 0; i--)
-    //    {
-    //        Transform child = bleedController.targetSprite.transform.GetChild(i);
-    //        float distance = Vector2.Distance(new Vector2(mousePos.x, mousePos.y),
-    //                                          new Vector2(child.position.x, child.position.y));
-
-    //        if (distance < 1.0f && child.name == targetBloodName)
-    //        {
-    //            // 피 제거
-    //            Destroy(child.gameObject);
-    //            Debug.Log("클릭된 피 오브젝트: " + child.name);
-
-    //            // 이 피에 붙은 Blood 스크립트 가져오기
-    //            Blood blood = child.GetComponent<Blood>();
-    //            if (blood != null)
-    //            {
-
-    //                blood.ScorePlus();
-    //            }
-    //            else
-    //            {
-    //                Debug.Log("Blood 스크립트 없음!");
-    //            }
-    //        }
-
-    //    }
-
-    //}
 
     public void RemoveClickedBleed()
     {

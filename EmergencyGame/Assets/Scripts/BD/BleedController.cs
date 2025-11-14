@@ -16,25 +16,29 @@ public class BleedController : MonoBehaviour
     [Header("초기 생성 피 개수")]
     public int initialBleedCount = 20;
 
+
+    private bool hasStarted = false; // OnGameStart() 1번만 실행되게
     private List<GameObject> currentBleeds = new List<GameObject>();
 
     void Start()
     {
-        //게임 마무리 되면 삭제
-        BDgpManager.gameState = "BDStart";
-
         if (BDgpManager.gameState == null)
         {
-            Debug.LogError("씬에 BDgpManger가 없습니다!");
+            Debug.LogError("씬에 BDgpManager가 없습니다!");
             return;
         }
-
-        if (BDgpManager.gameState != "BDStart")
+    }
+    void Update()
+    {
+        if (!hasStarted && BDgpManager.gameState == "BDStart")
         {
-            Debug.Log("게임이 시작되지 않았습니다. gameState = " + BDgpManager.gameState);
-            return;
+            hasStarted = true;
+            OnGameStart();
         }
+    }
 
+    void OnGameStart()
+    {
         if (bleedPrefabs.Length != bleedProbabilities.Length)
         {
             Debug.LogError("bleedPrefabs와 bleedProbabilities의 길이가 일치하지 않습니다!");
@@ -46,6 +50,8 @@ public class BleedController : MonoBehaviour
         StartCoroutine(RemoveBleedRoutine());
         StartCoroutine(AddBleedRoutine());
     }
+
+
 
     void OnDisable()
     {

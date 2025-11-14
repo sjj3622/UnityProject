@@ -5,7 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class BDgpManager : MonoBehaviour
 {
-    public static string gameState;
+    private static string _gameState;
+    public static string gameState
+    {
+        get { return _gameState; }
+        set
+        {
+            Debug.Log($"[BDgpManager] gameState 변경: {_gameState} -> {value}", FindAnyObjectByType<BDgpManager>());
+            _gameState = value;
+        }
+    }
 
     public GameObject ClearPanel;
     public GameObject OverPanel;
@@ -37,7 +46,7 @@ public class BDgpManager : MonoBehaviour
         bdcamera = FindAnyObjectByType<BDcamera>();
         bdPanel = FindAnyObjectByType<BDPanel>();
 
-        
+
 
         if (ClearPanel != null && OverPanel != null)
         {
@@ -45,12 +54,14 @@ public class BDgpManager : MonoBehaviour
             OverPanel.SetActive(false);
         }
         Debug.Log("BDgpManager.gameState:" + BDgpManager.gameState);
-        
+
     }
 
 
     void Update()
     {
+        
+
         // 시간과 카운트가 처음 시작이 0으로 시작해서 짚어넣음
         if (bdscountController.bloodCount >= 1) isCount = true;
 
@@ -61,9 +72,9 @@ public class BDgpManager : MonoBehaviour
             // 스코어가 100점 이상시 게임 클리어
             //Debug.Log("스코어 100점");
             BDgpManager.gameState = "BDClear";
-            
+
             AllStop();
-            
+
         }
 
         if (bdscountController.bloodCount <= 0 && isCount && BDgpManager.gameState == "BDStart")
@@ -73,9 +84,9 @@ public class BDgpManager : MonoBehaviour
             // 피 오브젝트를 빠르게 없앨시 게임 클리어
             //Debug.Log("BDgpManager.gameState :" + BDgpManager.gameState);
             AllStop();
-            
-            
-           
+
+
+
         }
 
 
@@ -89,7 +100,7 @@ public class BDgpManager : MonoBehaviour
 
         }
 
-        Debug.Log("타이머 :"+bdtimerController.timer);
+
         if (bdtimerController.timer <= 0 && isTimer)
         {
             Debug.Log("타임오버");
@@ -111,7 +122,7 @@ public class BDgpManager : MonoBehaviour
 
         Mouse.enabled = false;
 
-        
+
 
         bdtimerController.timerRunning = false;
 
@@ -139,9 +150,10 @@ public class BDgpManager : MonoBehaviour
             Debug.Log("Timer object = " + GameObject.Find("Timer"));
             BDSceneStateManager.instance.SaveState(GameObject.Find("Timer"));
             BDTimerController.Instance.GoToNextScene("Bleeding");
-            
+
         }
     }
+
 }
 
 

@@ -67,6 +67,12 @@ public class BloodObject : MonoBehaviour
     }
     void Start()
     {
+        if (BDgpManager.gameState != "BDStart")
+        {
+            Debug.Log("게임이 시작되지 않았습니다. gameState = " + BDgpManager.gameState);
+            return;
+        }
+
         bleedController = FindAnyObjectByType<BleedController>();
         Mouse = FindAnyObjectByType<Mouse>();
     }

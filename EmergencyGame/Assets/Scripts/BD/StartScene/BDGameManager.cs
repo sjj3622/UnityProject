@@ -58,7 +58,6 @@ public class BDGameManager : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("스테이지 확인 :"+BDgpManager.gameState);
         
         if (playerCollider != null && patientCollider != null && !hasCollided)
         {

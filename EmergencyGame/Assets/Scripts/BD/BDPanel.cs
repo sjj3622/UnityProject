@@ -15,8 +15,10 @@ public class BDPanel : MonoBehaviour
 
     public void AgainClick()
     {
+        
         BDgpManager.gameState = "";
         BDSceneStateManager.ClearSaved();
+        SceneManager.LoadScene("Bleeding");
 
     }
 

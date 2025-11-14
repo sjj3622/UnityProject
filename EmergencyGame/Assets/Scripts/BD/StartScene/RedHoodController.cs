@@ -7,11 +7,12 @@ public class RedHoodController : MonoBehaviour
 {
     private CameraManager camManager;
 
+
     private Animator animator;
     private Vector3 targetPosition;
     private bool isRunning = false;
     private bool isJumping = false;
-
+    private bool isClearProcessed = false;
     [Header("Settings")]
     public float minX;  // 시작 X 위치
     public float maxX = 8f;    // 목표 X 위치 범위
@@ -25,8 +26,6 @@ public class RedHoodController : MonoBehaviour
 
     [Header("UI")]
     public Transform textObject; //여기에 Text 자식 오브젝트를 드래그해 놓기
-
-
     private Vector3 originalTextScale; // 원래 텍스트 스케일 저장용 변수
 
 
@@ -66,6 +65,7 @@ public class RedHoodController : MonoBehaviour
 
     void Update()
     {
+
         if (isRunning)
         {
             MoveTowardsTarget();
@@ -73,21 +73,30 @@ public class RedHoodController : MonoBehaviour
         // 여기서 텍스트 반전 방지 처리
         FixTextFlip();
 
-        if(BDgpManager.gameState == "BDClear")
+        if (BDgpManager.gameState == "BDClear")
         {
-            animator.Play("RedHood");
+
             // 자신의 Collider2D 비활성화
             Collider2D col = GetComponent<Collider2D>();
             if (col != null && col.enabled)
             {
                 col.enabled = false;
             }
-
             // 이동 중이었다면 멈춤
             isRunning = false;
+            if (!isClearProcessed)
+            {
+                isClearProcessed = true;
+                animator.Play("RedHood");
+                Textupdate();
+
+                StartCoroutine(MoveToExitAfterDelay(1f));
+            }
+
         }
 
     }
+    
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -98,9 +107,10 @@ public class RedHoodController : MonoBehaviour
 
             isRunning = false;
             //GetComponent<Collider2D>().enabled = false; // 충돌 비활성화
-            StartCoroutine(JumpAndDie());
-            Textupdate();
-
+            
+                StartCoroutine(JumpAndDie());
+                Textupdate();
+            
         }
     }
 
@@ -167,8 +177,10 @@ public class RedHoodController : MonoBehaviour
     IEnumerator JumpAndDie()
     {
         isJumping = true;
-        animator.Play("RedHoodJump");
-
+        if (BDgpManager.gameState != "BDClear")
+        {
+            animator.Play("RedHoodJump");
+        }
         Vector3 startPos = transform.position;
         Vector3 apex = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         float elapsed = 0f;
@@ -223,10 +235,42 @@ public class RedHoodController : MonoBehaviour
             {
                 tmpText.text = "피가 많이 나요...";
             }
+            if (BDgpManager.gameState == "BDClear")
+            {
+                tmpText.text = "감사합니다.덕분에 살았어요";
+            }
+
 
         }
     }
 
+    IEnumerator MoveToExitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        animator.Play("RedHoodRun");
+        StartCoroutine(MoveToExit());
+    }
 
+    IEnumerator MoveToExit()
+    {
+        Vector3 targetPos = new Vector3(15f, transform.position.y, transform.position.z);
 
+        while (Vector3.Distance(transform.position, targetPos) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+
+        transform.position = targetPos; // 최종 위치 보정
+    }
+
+    void OnBecameInvisible()
+    {
+        // Clear 과정으로 나가는 중일 때만 삭제
+        if (isClearProcessed)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

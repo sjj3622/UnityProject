@@ -95,6 +95,8 @@ public class PlayerControllerKey : MonoBehaviour
 
     void ChangeAnimation()
     {
+        if (animator == null) return; // animator가 없으면 그냥 리턴
+
         if (nowAni != oldAni)
         {
             oldAni = nowAni;
@@ -110,6 +112,9 @@ public class PlayerControllerKey : MonoBehaviour
         // Rigidbody 속도 0으로 멈춤
         if (rb != null)
             rb.velocity = Vector2.zero;
+
+        if (animator != null)
+            animator.Play(nowAni); // 안전하게 호출
     }
 
 }

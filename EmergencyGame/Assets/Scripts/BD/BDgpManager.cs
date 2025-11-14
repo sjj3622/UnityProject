@@ -17,9 +17,11 @@ public class BDgpManager : MonoBehaviour
     private Mouse Mouse;
     private BDStarScore bdstarScore;
     private BDcamera bdcamera;
+    private BDPanel bdPanel;
 
     private bool isTimer = false;
     private bool isCount = false;
+    private bool isStop = false;
 
 
     void Start()
@@ -33,15 +35,17 @@ public class BDgpManager : MonoBehaviour
         Mouse = FindAnyObjectByType<Mouse>();
         bdstarScore = FindObjectOfType<BDStarScore>(true);
         bdcamera = FindAnyObjectByType<BDcamera>();
+        bdPanel = FindAnyObjectByType<BDPanel>();
 
-        Debug.Log(BDgpManager.gameState);
+        
 
         if (ClearPanel != null && OverPanel != null)
         {
             ClearPanel.SetActive(false);
             OverPanel.SetActive(false);
         }
-
+        Debug.Log("BDgpManager.gameState:" + BDgpManager.gameState);
+        
     }
 
 
@@ -50,29 +54,26 @@ public class BDgpManager : MonoBehaviour
         // 시간과 카운트가 처음 시작이 0으로 시작해서 짚어넣음
         if (bdscountController.bloodCount >= 1) isCount = true;
 
-        if (bdtimerController.timer >= 1) isTimer = true;
+        if (bdtimerController.timer == 180) isTimer = true;
 
         if (bdscoreController.score >= bdscoreController.goalScore)
         {
             // 스코어가 100점 이상시 게임 클리어
-            Debug.Log("스코어 100점");
+            //Debug.Log("스코어 100점");
             BDgpManager.gameState = "BDClear";
             
             AllStop();
-
-            SceneManager.LoadScene("Bleeding");
-
-
+            
         }
 
-        if (bdscountController.bloodCount <= 0 && isCount)
+        if (bdscountController.bloodCount <= 0 && isCount && BDgpManager.gameState == "BDStart")
         {
             Debug.Log("게임 클리어");
             BDgpManager.gameState = "BDClear";
             // 피 오브젝트를 빠르게 없앨시 게임 클리어
-            Debug.Log("BDgpManager.gameState :" + BDgpManager.gameState);
+            //Debug.Log("BDgpManager.gameState :" + BDgpManager.gameState);
             AllStop();
-            StartCoroutine(Wait());
+            
             
            
         }
@@ -88,7 +89,7 @@ public class BDgpManager : MonoBehaviour
 
         }
 
-
+        Debug.Log("타이머 :"+bdtimerController.timer);
         if (bdtimerController.timer <= 0 && isTimer)
         {
             Debug.Log("타임오버");
@@ -110,7 +111,7 @@ public class BDgpManager : MonoBehaviour
 
         Mouse.enabled = false;
 
-        //bdcamera.enabled = false;
+        
 
         bdtimerController.timerRunning = false;
 
@@ -123,13 +124,23 @@ public class BDgpManager : MonoBehaviour
         {
             ClearPanel.SetActive(true);
             OverPanel.SetActive(false);
+            StartCoroutine(Wait());
         }
     }
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1f); // 1초 대기
-        SceneManager.LoadScene("Bleeding");
+        if (!isStop)
+        {
+            isStop = true;
+            bdPanel.CountDown();
+            yield return new WaitForSeconds(3f);
+            Debug.Log("BDSceneStateManager.instance = " + BDSceneStateManager.instance);
+            Debug.Log("Timer object = " + GameObject.Find("Timer"));
+            BDSceneStateManager.instance.SaveState(GameObject.Find("Timer"));
+            BDTimerController.Instance.GoToNextScene("Bleeding");
+            
+        }
     }
 }
 

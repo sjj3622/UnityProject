@@ -19,6 +19,7 @@ public class BDStarScore : MonoBehaviour
 
 
     private BDTimerController bdtimerController;
+    
  
     void Start()
     {
@@ -28,7 +29,7 @@ public class BDStarScore : MonoBehaviour
         if (bdtimerController == null)
             Debug.LogWarning("씬에서 TimerController를 찾을 수 없습니다!");
 
-        gameObject.SetActive(false);
+        
 
 
     }
@@ -36,6 +37,7 @@ public class BDStarScore : MonoBehaviour
 
     void Update()
     {
+        StarScroe();
 
     }
 

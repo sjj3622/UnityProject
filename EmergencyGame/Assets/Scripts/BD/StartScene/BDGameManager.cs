@@ -6,7 +6,8 @@ public class BDGameManager : MonoBehaviour
     [Header("References")]
     public GameObject player;      // Player 오브젝트
     public GameObject patient;     // Patient 오브젝트
-    public GameObject panel;       // 활성화할 패널
+    public GameObject Talkpanel;       // 활성화할 패널
+    public GameObject Clearpanel;       // 활성화할 패널
     public GameObject textObject;  // Logo Text
     public GameObject patienttext; // Patient Text
     public GameObject OpBtn1Object; // 보기1
@@ -39,9 +40,10 @@ public class BDGameManager : MonoBehaviour
             legacyText = textObject.GetComponent<LegacyText>();
         }
 
-        if (panel != null)
+        if (Talkpanel != null && Clearpanel != null)
         {
-            panel.SetActive(false);
+            Talkpanel.SetActive(false);
+            Clearpanel.SetActive(false);
         }
 
         if (patienttext != null)
@@ -56,6 +58,8 @@ public class BDGameManager : MonoBehaviour
     void Update()
     {
 
+        Debug.Log("스테이지 확인 :"+BDgpManager.gameState);
+        
         if (playerCollider != null && patientCollider != null && !hasCollided)
         {
             // Player와 Patient가 겹치면
@@ -66,11 +70,12 @@ public class BDGameManager : MonoBehaviour
                 if (playerControllerKey != null)
                     playerControllerKey.enabled = false;
 
-                if (panel != null)
-                    panel.SetActive(true);
+                if (Talkpanel != null)
+                    Talkpanel.SetActive(true);
 
-                if (OpBtn1Object != null) OpBtn1Object.SetActive(false);
-                if (OpBtn2Object != null) OpBtn2Object.SetActive(false);
+
+                if (OpBtn1Object != null) OpBtn1Object.SetActive(true);
+                if (OpBtn2Object != null) OpBtn2Object.SetActive(true);
 
 
                 if (patienttext != null)
@@ -91,9 +96,16 @@ public class BDGameManager : MonoBehaviour
             }
         }
 
-        if(BDgpManager.gameState == "BDClear")
+
+        if (BDgpManager.gameState == "BDClear" && patient != null)
         {
-            legacyText.myText.text = "감사합니다. 덕분에 살았어요";
+            patienttext.SetActive(true);
+        }
+
+        if (BDgpManager.gameState == "BDClear" && patient == null)
+        {
+            Clearpanel.SetActive(true);
+            
         }
 
     }

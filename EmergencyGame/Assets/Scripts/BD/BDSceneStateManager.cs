@@ -10,17 +10,20 @@ public class BDSceneStateManager : MonoBehaviour
     private Vector3 savedPlayerPosition;
     private Vector3 savedPatientPosition;
     private Vector3 savedCameraPosition;
-
     private Vector3 savedTimerPosition;
 
+    private float savedCameraSize;
+
+    private float savedTimerValue;
+    private bool savedTimerRunning;
 
     private bool playerSaved = false;
     private bool patientSaved = false;
     private bool cameraSaved = false;
-
     private bool TimerSaved = false;
-
-
+    private bool timerValueSaved = false;
+    private bool timerRunningSaved = false;
+    private bool cameraSizeSaved = false;
 
     void Awake()
     {
@@ -28,12 +31,11 @@ public class BDSceneStateManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("소환");
+            Debug.Log("StateManager 생성");
         }
         else
         {
             Destroy(gameObject);
-            Debug.Log("삭제");
             return;
         }
     }
@@ -52,46 +54,38 @@ public class BDSceneStateManager : MonoBehaviour
     {
         Debug.Log($"OnSceneLoaded 호출됨: {scene.name}");
 
-
-        if (scene.name == "Bleeding") // 특정 씬만 복원하고 싶다면 유지
+        if (scene.name == "Bleeding")
         {
-            // Player 복원
+            // --- Player 복원 ---
             if (playerSaved)
             {
-                Debug.Log("플레이어 복원");
                 GameObject player = GameObject.Find("Player");
                 if (player != null)
-                {
                     player.transform.position = savedPlayerPosition;
-                    Debug.Log("Player 위치 복원: " + savedPlayerPosition);
-                }
             }
 
-            // Patient 복원
+            // --- Patient 복원 ---
             if (patientSaved)
             {
-                Debug.Log("환자 복원");
                 GameObject patient = GameObject.Find("Patient");
                 if (patient != null)
-                {
                     patient.transform.position = savedPatientPosition;
-                    Debug.Log("Patient 위치 복원: " + savedPatientPosition);
-                }
             }
 
-            // Camera 복원
+            // --- Camera 복원 ---
             if (cameraSaved)
             {
-                Debug.Log("카메라 복원");
                 Camera mainCam = Camera.main;
                 if (mainCam != null)
                 {
                     mainCam.transform.position = savedCameraPosition;
-                    Debug.Log("카메라 위치 복원: " + savedCameraPosition);
+
+                    if (cameraSizeSaved)
+                        mainCam.orthographicSize = savedCameraSize;
                 }
             }
 
-            // 타이머 복원
+            // --- Timer 복원 ---
             if (TimerSaved)
             {
                 GameObject Timer = GameObject.Find("Timer");
@@ -101,31 +95,30 @@ public class BDSceneStateManager : MonoBehaviour
                     RectTransform timerRect = Timer.GetComponent<RectTransform>();
                     BDTimerController timerCtrl = Timer.GetComponent<BDTimerController>();
 
+                    // 위치 복원
                     if (timerRect != null)
-                    {
                         timerRect.localPosition = savedTimerPosition;
-                    }
+
+                    // 시간 복원
+                    if (timerValueSaved && timerCtrl != null)
+                        timerCtrl.SetCurrentTime(savedTimerValue);
+
+                    // 실행 여부 복원
+                    if (timerRunningSaved && timerCtrl != null)
+                        timerCtrl.SetTimerRunning(savedTimerRunning);
 
                     Timer.SetActive(true);
-                    Debug.Log("Timer 위치 복원 (Canvas 기준): " + savedTimerPosition);
                 }
             }
-
         }
-
     }
 
-
-
-
-
+    // ──────────────────────────────────────────────
+    //                ◼ SAVE STATE ◼
+    // ──────────────────────────────────────────────
     public void SaveState(GameObject target)
     {
-        if (target == null)
-        {
-            Debug.LogWarning("SaveState에 null이 들어왔습니다.");
-            return;
-        }
+        if (target == null) return;
 
         string name = target.name;
 
@@ -133,64 +126,81 @@ public class BDSceneStateManager : MonoBehaviour
         {
             savedPlayerPosition = target.transform.position;
             playerSaved = true;
-            Debug.Log("Player 위치 저장: " + savedPlayerPosition);
         }
         else if (name == "Patient")
         {
             savedPatientPosition = target.transform.position;
             patientSaved = true;
-            Debug.Log("Patient 위치 저장: " + savedPatientPosition);
         }
         else if (name.Contains("Camera"))
         {
-            savedCameraPosition = target.transform.position;
-            cameraSaved = true;
-            Debug.Log("Camera 위치 저장: " + savedCameraPosition);
+            Camera cam = target.GetComponent<Camera>();
+            if (cam != null)
+            {
+                savedCameraPosition = target.transform.position;
+                savedCameraSize = cam.orthographicSize;
+
+                cameraSaved = true;
+                cameraSizeSaved = true;
+            }
         }
         else if (name == "Timer")
         {
             RectTransform rect = target.GetComponent<RectTransform>();
+            BDTimerController timerCtrl = target.GetComponent<BDTimerController>();
+
+            // 위치 저장
             if (rect != null)
             {
                 savedTimerPosition = rect.localPosition;
                 TimerSaved = true;
-                Debug.Log("Timer 위치 저장: " + savedTimerPosition);
             }
-        }
 
-        else
-        {
-            Debug.Log("SaveState: 대상이 Player, Patient, Camera가 아닙니다. 대상 이름: " + name);
+            // 시간 저장
+            if (timerCtrl != null)
+            {
+                savedTimerValue = timerCtrl.GetCurrentTime();
+                timerValueSaved = true;
+
+                savedTimerRunning = timerCtrl.timerRunning;
+                timerRunningSaved = true;
+            }
         }
     }
 
-
-
-
+    // ──────────────────────────────────────────────
+    //                ◼ CLEAR STATE ◼
+    // ──────────────────────────────────────────────
     public void ClearSaved()
     {
         playerSaved = false;
         patientSaved = false;
         cameraSaved = false;
         TimerSaved = false;
+        timerValueSaved = false;
+        timerRunningSaved = false;
 
         savedPlayerPosition = Vector3.zero;
         savedPatientPosition = Vector3.zero;
         savedCameraPosition = Vector3.zero;
         savedTimerPosition = Vector3.zero;
 
+        Debug.Log("저장된 상태 모두 초기화됨.");
 
 
-        Debug.Log("저장된 상태 초기화됨.");
+        GameObject timerObj = GameObject.Find("Timer");
+        if (timerObj != null)
+        {
+            BDTimerController timerCtrl = timerObj.GetComponent<BDTimerController>();
+
+            if (timerCtrl != null)
+            {
+                // 기본 시간으로 되돌림 (예: 180초)
+                timerCtrl.SetCurrentTime(timerCtrl.timerDuration);
+
+                // 타이머 정지
+                timerCtrl.SetTimerRunning(false);
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
 }

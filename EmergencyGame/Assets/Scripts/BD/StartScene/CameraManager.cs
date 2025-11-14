@@ -17,9 +17,13 @@ public class CameraManager : MonoBehaviour
     {
         cam = GetComponent<Camera>();
 
-        // 시작 시 카메라 고정
-        transform.position = new Vector3(0f, 0f, -10f);
-        cam.orthographicSize = 8f;
+        if (BDgpManager.gameState != "BDClear")
+        {
+            Debug.Log("카메락 시작");
+            // 시작 시 카메라 고정
+            transform.position = new Vector3(0f, 0f, -10f);
+            cam.orthographicSize = 8f;
+        }
     }
 
     void LateUpdate()

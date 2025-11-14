@@ -1,20 +1,51 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BDPanel : MonoBehaviour
 {
-    
-   public void AgainClick()
+    public Text ClearCount; // Text 컴포넌트를 연결
+    BDSceneStateManager BDSceneStateManager;
+
+    void Start()
     {
-        BDgpManager.gameState = "BDStart";
-        SceneManager.LoadScene("BleedingGamepalying");
+        BDSceneStateManager = FindAnyObjectByType<BDSceneStateManager>();
+    }
+
+    public void AgainClick()
+    {
+        BDgpManager.gameState = "";
+        BDSceneStateManager.ClearSaved();
+
     }
 
     public void ExitClick()
     {
-        SceneManager.LoadScene("Bleeding");
+        
+        SceneManager.LoadScene("Title");
     }
 
+    public void CountDown()
+    {
+        Debug.Log("카운트 다운시작");
+        StartCoroutine(CountdownAndLoadScene());
+    }
+
+    IEnumerator CountdownAndLoadScene()
+    {
+        int countdown = 3;
+
+        while (countdown > 0)
+        {
+            ClearCount.text = countdown + "초 뒤 돌아갑니다";
+            yield return new WaitForSeconds(1f); // 1초 대기
+            countdown--;
+        }
+
+        // 마지막 0초 표시 (선택 사항)
+        ClearCount.text = "돌아갑니다!";
+        yield return new WaitForSeconds(1f);
+
+    }
 }

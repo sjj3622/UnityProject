@@ -23,7 +23,7 @@ public class BDcamera : MonoBehaviour
     //  초기 상태 저장용
     private Vector3 initialPosition;
     private float initialZoom;
-    private bool isReset = false; // 여러 번 초기화 방지용
+    //private bool isReset = false; // 여러 번 초기화 방지용
 
     void Start()
     {
@@ -59,16 +59,16 @@ public class BDcamera : MonoBehaviour
         ClampCameraPosition();
 
         //  특정 상태일 때 카메라 초기화
-        if (BDgpManager.gameState == "BDClear" && !isReset)
-        {
-            ResetCamera();
-            isReset = true; // 중복 초기화 방지
-            this.enabled = false;
-        }
-        else if (BDgpManager.gameState != "BDClear")
-        {
-            isReset = false; // 상태가 바뀌면 다시 초기화 가능하게
-        }
+        //if (BDgpManager.gameState == "BDClear" && !isReset)
+        //{
+        //    ResetCamera();
+        //    isReset = true; // 중복 초기화 방지
+        //    this.enabled = false;
+        //}
+        //else if (BDgpManager.gameState != "BDClear")
+        //{
+        //    isReset = false; // 상태가 바뀌면 다시 초기화 가능하게
+        //}
     }
 
     void HandleCameraDrag()

@@ -12,14 +12,17 @@ public class BDTimerController : MonoBehaviour
     public float timer;
     public bool timerRunning = false;
 
-    public static BDTimerController Instance { get; private set; }
+    //public static BDTimerController Instance { get; private set; }
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+
+        //DontDestroyOnLoad(gameObject);
+
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //}
     }
 
     void Start()

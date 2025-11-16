@@ -1412,7 +1412,7 @@ GameObject:
   - component: {fileID: 698140165}
   - component: {fileID: 698140164}
   m_Layer: 5
-  m_Name: FMtext
+  m_Name: HMtext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1994,7 +1994,7 @@ GameObject:
   - component: {fileID: 1418378585}
   - component: {fileID: 1418378584}
   m_Layer: 5
-  m_Name: FMBtn
+  m_Name: HMBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2066,7 +2066,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 594191690}
         m_TargetAssemblyTypeName: TitleManager, Assembly-CSharp
-        m_MethodName: FMClick
+        m_MethodName: HMClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

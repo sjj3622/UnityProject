@@ -11,10 +11,10 @@ public class TitleUIManager : MonoBehaviour
         GameDataManager.EnsureExists();
 
         // 초기화용 디버그
-        for (int i = 0; i < GameDataManager.Instance.gameData.starLevels.Length; i++)
-        {
-            Debug.Log($"Initial star[{i}] = {GameDataManager.Instance.gameData.starLevels[i]}");
-        }
+        //for (int i = 0; i < GameDataManager.Instance.gameData.starLevels.Length; i++)
+        //{
+        //    Debug.Log($"Initial star[{i}] = {GameDataManager.Instance.gameData.starLevels[i]}");
+        //}
 
         UpdateStars();
     }
@@ -41,10 +41,10 @@ public class TitleUIManager : MonoBehaviour
 
             stars = Mathf.Clamp(stars, 0, starSprites.Length - 1);
 
-            Debug.Log("stars :" + stars);
+            //Debug.Log("stars :" + stars);
             starImages[i].sprite = starSprites[stars];
 
-            Debug.Log("Star Image " + i + " : " + starImages[i].name + " assigned sprite: " + starImages[i].sprite.name);
+            //Debug.Log("Star Image " + i + " : " + starImages[i].name + " assigned sprite: " + starImages[i].sprite.name);
         }
     }
 }

@@ -97,6 +97,13 @@ public class CanvasController : MonoBehaviour
         Debug.Log("클릭");
         BDSceneStateManager.instance.ClearSaved();
         BDgpManager.gameState = "";
+
+        GameObject obj = GameObject.Find("BDTimer");
+        if (obj != null)
+        {
+            Destroy(obj);
+        }
+
         SceneManager.LoadScene("Title");
     }
 }

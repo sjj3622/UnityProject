@@ -147,9 +147,9 @@ public class BDgpManager : MonoBehaviour
             bdPanel.CountDown();
             yield return new WaitForSeconds(3f);
             Debug.Log("남은 시간 :"+bdtimerController.timer);
-            Debug.Log("Timer object = " + GameObject.Find("Timer"));
-            BDSceneStateManager.instance.SaveState(GameObject.Find("Timer"));
-            BDTimerController.Instance.GoToNextScene("Bleeding");
+            Debug.Log("Timer object = " + GameObject.Find("BDTimer"));
+            BDSceneStateManager.instance.SaveState(GameObject.Find("BDTimer"));
+            bdtimerController.GoToNextScene("Bleeding");
 
         }
     }

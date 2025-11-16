@@ -41,6 +41,8 @@ public class BDSceneStateManager : MonoBehaviour
         }
     }
 
+    
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -89,7 +91,7 @@ public class BDSceneStateManager : MonoBehaviour
             // --- Timer 복원 ---
             if (TimerSaved)
             {
-                GameObject Timer = GameObject.Find("Timer");
+                GameObject Timer = GameObject.Find("BDTimer");
 
                 if (Timer != null)
                 {
@@ -151,7 +153,7 @@ public class BDSceneStateManager : MonoBehaviour
                 cameraSizeSaved = true;
             }
         }
-        else if (name == "Timer")
+        else if (name == "BDTimer")
         {
             RectTransform rect = target.GetComponent<RectTransform>();
             BDTimerController timerCtrl = target.GetComponent<BDTimerController>();

@@ -110,7 +110,7 @@ public class TitleManager : MonoBehaviour
     }
 
     public void CPRClick() => SceneManager.LoadScene("CPR");
-    public void FMClick() => SceneManager.LoadScene("FM");
+    public void HMClick() => SceneManager.LoadScene("HM");
     public void BleedingClick() => SceneManager.LoadScene("Bleeding");
     public void BurnClick() => SceneManager.LoadScene("Burn");
 }

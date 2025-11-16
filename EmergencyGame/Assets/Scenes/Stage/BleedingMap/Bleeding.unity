@@ -28191,11 +28191,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff6ba2c0921a474083367af9e0915b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Star0: Star0
-  Star1: Star1
-  Star2: Star2
-  Star3: Star3
-  Star4: Star
+  Star0: StarImg0
+  Star1: StarImg1
+  Star2: StarImg2
+  Star3: StarImg3
+  Star4: StarImg4
+  sceneIndex: 2
 --- !u!114 &1888485512
 MonoBehaviour:
   m_ObjectHideFlags: 0

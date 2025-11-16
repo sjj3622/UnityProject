@@ -1,26 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Schema;
 using UnityEngine;
 
 public class BDStarScore : MonoBehaviour
 {
-
     Animator animator;
 
     [Header("Animation Names")]
-    public string Star0 = "Star0";
-    public string Star1 = "Star1";
-    public string Star2 = "Star2";
-    public string Star3 = "Star3";
-    public string Star4 = "Star";
+    public string Star0 = "StarImg0";
+    public string Star1 = "StarImg1";
+    public string Star2 = "StarImg2";
+    public string Star3 = "StarImg3";
+    public string Star4 = "StarImg4";
 
     string nowAni = "", oldAni = "";
 
-
+    public int sceneIndex = 2; // 씬 인덱스 지정
     private BDTimerController bdtimerController;
-    
- 
+
     void Start()
     {
         bdtimerController = FindObjectOfType<BDTimerController>();
@@ -28,61 +23,68 @@ public class BDStarScore : MonoBehaviour
 
         if (bdtimerController == null)
             Debug.LogWarning("씬에서 TimerController를 찾을 수 없습니다!");
-
-        
-
-
     }
-
 
     void Update()
     {
-        StarScroe();
-
+        UpdateStarScore();
     }
 
-    
-    public void StarScroe()
+    void UpdateStarScore()
     {
-        Debug.Log("별 스코어");
-        
-        Debug.Log("totalTimer 값: " + bdtimerController.timer);
+        if (bdtimerController == null) return;
 
-        if (bdtimerController.timer <= 180 && bdtimerController.timer > 144)
+        int starCount = 0;
+
+        float timer = bdtimerController.totalTimer;
+        
+        if (timer <= 180 && timer > 144)
         {
+            animator.Play(Star4);
+            starCount = 4;
             Debug.Log("별4");
-            nowAni = Star4;
         }
-        else if (bdtimerController.timer <= 144 && bdtimerController.timer > 108)
+        else if (timer <= 144 && timer > 108)
         {
+            animator.Play(Star3);
+            starCount = 3;
             Debug.Log("별3");
-            nowAni = Star3;
         }
-        else if (bdtimerController.timer <= 108 && bdtimerController.timer > 72)
+        else if (timer <= 108 && timer > 72)
         {
+            animator.Play(Star2);
+            starCount = 2;
             Debug.Log("별2");
-            nowAni = Star2;
         }
-        else if (bdtimerController.timer <= 72 && bdtimerController.timer > 36)
+        else if (timer <= 72 && timer > 36)
         {
+            animator.Play(Star1);
+            starCount = 1;
             Debug.Log("별1");
-            nowAni = Star1;
         }
         else
         {
+            animator.Play(Star0); 
+            starCount = 0;
             Debug.Log("별0");
-            nowAni = Star0;
         }
 
-        ChangeAnimation();
+        //ChangeAnimation();
+
+        // ⭐ GameDataManager에 저장
+        if (GameDataManager.Instance != null)
+            GameDataManager.Instance.SetStar(sceneIndex, starCount);
+        Debug.Log("starCount :" + starCount);
     }
 
-    void ChangeAnimation()
-    {
-        if (nowAni != oldAni)
-        {
-            oldAni = nowAni;
-            animator.Play(nowAni);
-        }
-    }
+    //void ChangeAnimation()
+    //{
+    //    if (nowAni != oldAni)
+    //    {
+            
+    //        oldAni = nowAni;
+    //        animator.Play(nowAni);
+    //        Debug.Log("별이미지 변경");
+    //    }
+    //}
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class TimerController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class TimerController : MonoBehaviour
     public float totalTimer = 0f;
 
 
-    private float timer;
+    public float timer;
     private bool timerRunning = false;
 
     void Awake()
@@ -39,7 +40,7 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
-
+        Debug.Log("시간 :"+timer);
         //Debug.Log(gameObject.name + " 위치: " + transform.position +
         //      ", 활성화: " + gameObject.activeSelf);
 
@@ -71,11 +72,7 @@ public class TimerController : MonoBehaviour
 
 
 
-    public void TR()
-    {
-
-        timerRunning = true;
-    }
+   
     public void StartTimerDirectly()
     {
         if (!timerRunning)
@@ -91,7 +88,7 @@ public class TimerController : MonoBehaviour
     {
         if (GameManager.gameState == "StageRule")
         {
-            Debug.Log("타이머 2");
+            
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
             {
@@ -103,14 +100,14 @@ public class TimerController : MonoBehaviour
                     {
                         timer = minutes * 60 + seconds;
                         timerRunning = true;
-                        Debug.Log("저장된 Timer 값으로 재시작: " + timer);
+                        //Debug.Log("저장된 Timer 값으로 재시작: " + timer);
                     }
                 }
             }
         }
         if (GameManager.gameState == "StageClear")
         {
-            Debug.Log("타이머 3");
+            
             
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
@@ -149,5 +146,10 @@ public class TimerController : MonoBehaviour
         timer = timerDuration;
         timerRunning = true;
         Debug.Log("타이머 시작");
+    }
+
+    internal void SetCurrentTime(float timerValue)
+    {
+        throw new NotImplementedException();
     }
 }

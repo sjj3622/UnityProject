@@ -173,19 +173,19 @@ public class SceneStateManager : MonoBehaviour
         {
             savedPlayerPosition = target.transform.position;
             playerSaved = true;
-            Debug.Log("Player 위치 저장: " + savedPlayerPosition);
+            //Debug.Log("Player 위치 저장: " + savedPlayerPosition);
         }
         else if (name == "Patient")
         {
             savedPatientPosition = target.transform.position;
             patientSaved = true;
-            Debug.Log("Patient 위치 저장: " + savedPatientPosition);
+            //Debug.Log("Patient 위치 저장: " + savedPatientPosition);
         }
         else if (name.Contains("Camera"))
         {
             savedCameraPosition = target.transform.position;
             cameraSaved = true;
-            Debug.Log("Camera 위치 저장: " + savedCameraPosition);
+            //Debug.Log("Camera 위치 저장: " + savedCameraPosition);
         }
         else if (name == "Timer")
         {
@@ -196,13 +196,13 @@ public class SceneStateManager : MonoBehaviour
             {
                 savedTimerPosition = timerRect.localPosition; // 위치 저장
                 TimerSaved = true;
-                Debug.Log("Timer 위치 저장 (Canvas 기준): " + savedTimerPosition);
+                //Debug.Log("Timer 위치 저장 (Canvas 기준): " + savedTimerPosition);
             }
 
             if (timerCtrl != null && timerCtrl.timerText != null)
             {
                 savedTimerText = timerCtrl.timerText.text; // 텍스트 저장
-                Debug.Log("Timer 텍스트 저장: " + savedTimerText);
+                //Debug.Log("Timer 텍스트 저장: " + savedTimerText);
             }
         }
         else

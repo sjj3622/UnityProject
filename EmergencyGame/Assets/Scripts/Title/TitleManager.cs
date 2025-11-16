@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TitleManager : MonoBehaviour
 {
     public GameObject StagePanel;
+    public GameObject PlayerPanel;
     public GameObject PlayBtn;
     public GameObject LevelsBtn;
     public GameObject ExitBtn;
@@ -20,6 +21,8 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         StagePanel.SetActive(false);
+        PlayerPanel.SetActive(false);
+
         panelImage = StagePanel.GetComponent<Image>();
 
         SaveOriginalPosition(PlayBtn);
@@ -73,9 +76,29 @@ public class TitleManager : MonoBehaviour
 
     public void LevelsClick()
     {
-        MoveButton(PlayBtn);
+        //MoveButton(PlayBtn);
+
+        if(PlayBtn.activeSelf)
+            PlayBtn.SetActive(false);
+        else PlayBtn.SetActive(true);
+
+        if (PlayerPanel.activeSelf)
+        {
+            PlayerPanel.SetActive(false);
+        }
+
         MoveButton(LevelsBtn);
         MoveButton(ExitBtn);
+
+
+    }
+
+    public void PlayClick()
+    {
+
+        if (!PlayerPanel.activeSelf) PlayerPanel.SetActive(true);
+        else PlayerPanel.SetActive(false);
+        
     }
 
     public void ExitClick()

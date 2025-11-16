@@ -32,8 +32,8 @@ public class PlayerController : MonoBehaviour
     //public static string gameState = "game";
 
     Camera mainCam;
-    
 
+    TimerController timerController;
    
 
     void Start()
@@ -43,23 +43,35 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         mainCam = Camera.main;
 
+        timerController = FindAnyObjectByType<TimerController>();
+            
+
+        
+
         nowAni = stopDOWNAni;
         oldAni = nowAni;
         animator.Play(nowAni);
 
         targetPos = transform.position;
+        isStopped = false;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+        {
+            col.enabled = true; // 충돌 다시 활성화
+            Debug.Log("Collider 초기 활성화됨");
+        }
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = false;
+        }
+
     }
 
     void Update()
     {
-        //if (gameState == "gameClear")
-        //{
-            
-        //}
-
-
-
-        //if (GameManager.gameState != "game" || isStopped) return;
+        
         if (isStopped) return;
         // --- 마우스 클릭으로 목적지 설정 ---
         if (Input.GetMouseButtonDown(0))
@@ -136,33 +148,54 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("TriggerEnter2D 호출됨! 충돌 대상: " + collision.name + ", 태그: " + collision.tag);
+
         if (collision.CompareTag("Patient"))
         {
+            Debug.Log("Patient와 충돌 확인됨!");
             animator.Play(stopUPAni);
 
-
-            GameManager.gameState = "gamestart";
-
-            // 타이머 시작 호출
-            TimerController timer = FindObjectOfType<TimerController>();
-            if (timer != null)
+            Debug.Log("123GameManager.gameState :" + GameManager.gameState);
+            if (GameManager.gameState == null)
             {
-                timer.StartTimerDirectly(); // <- 직접 호출 메서드 추가 필요
+                
+               
+                Debug.Log("타이머 시작");
+
+
+                // 타이머 시작 호출
+                TimerController timer = FindObjectOfType<TimerController>();
+                if (timer != null)
+                {
+                    timer.StartTimerDirectly(); // <- 직접 호출 메서드 추가 필요
+                }
+
+                Gamestop(); // <- 타이머 시작한 뒤 충돌 비활성화
+
+                CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+                if (camFollow != null)
+                {
+                    camFollow.enabled = true;
+                    camFollow.SetFollowTarget(transform);
+                }
+
+                CPR1Panel panel = FindObjectOfType<CPR1Panel>();
+                if (panel != null)
+                {
+                    panel.GameP();
+                }
+
+                GameManager.gameState = "gamestart";
             }
 
-            Gamestop(); // <- 타이머 시작한 뒤 충돌 비활성화
-
-            CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
-            if (camFollow != null)
+            if(GameManager.gameState == "StageClear")
             {
-                camFollow.enabled = true;
-                camFollow.SetFollowTarget(transform);
-            }
-
-            CPR1Panel panel = FindObjectOfType<CPR1Panel>();
-            if (panel != null)
-            {
-                panel.GameP();
+                Collider2D col = GetComponent<Collider2D>();
+                if (col != null)
+                {
+                    Debug.Log("출동 방지");
+                    col.enabled = false; // 충돌 꺼서 다른 오브젝트와 상호작용 안 함
+                }
             }
         }
     }
@@ -171,6 +204,7 @@ public class PlayerController : MonoBehaviour
     void Gamestop()
     {
         isStopped = true;
+
         // 충돌 비활성화
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)

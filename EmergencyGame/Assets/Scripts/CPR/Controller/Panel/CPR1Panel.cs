@@ -48,7 +48,7 @@ public class CPR1Panel : MonoBehaviour
     
     public void AgainClick()
     {
-        GameManager.gameState = "game";
+        GameManager.gameState = null;
         TimerText.SetActive(false);
         SM.ClearSaved();
         SceneManager.LoadScene("CPR");
@@ -57,6 +57,8 @@ public class CPR1Panel : MonoBehaviour
     public void BackClick()
     {
         SceneManager.LoadScene("Title");
+        GameManager.gameState = null;
+        SM.ClearSaved();
     }
 
 

@@ -24,7 +24,7 @@ public class CPRCanvasController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GameManager.gameState);
+        //Debug.Log(GameManager.gameState);
         //timer.TR();
         timer.TimerSave();
     }

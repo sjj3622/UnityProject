@@ -7,8 +7,9 @@ public class BDTimerController : MonoBehaviour
 {
     public Text timerText;
     public float timerDuration = 180f;
-    public float timer;
+    public float totalTimer = 0f;
 
+    public float timer;
     public bool timerRunning = false;
 
     public static BDTimerController Instance { get; private set; }
@@ -53,6 +54,7 @@ public class BDTimerController : MonoBehaviour
         {
             timerRunning = false;
 
+            totalTimer = timer;
         }
 
     }

@@ -15,12 +15,12 @@ public class CanvasController : MonoBehaviour
     public Text OP2Text;
 
     private LegacyText legacyText;
-    private BDSceneStateManager sceneStateManager;
+    
 
     void Start()
     {
         legacyText = textObject.GetComponent<LegacyText>();
-        sceneStateManager = FindAnyObjectByType<BDSceneStateManager>();
+      
     }
 
     public void OPBtn1Click()
@@ -95,6 +95,8 @@ public class CanvasController : MonoBehaviour
     public void Exit()
     {
         Debug.Log("클릭");
+        BDSceneStateManager.instance.ClearSaved();
+        BDgpManager.gameState = "";
         SceneManager.LoadScene("Title");
     }
 }

@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         timerController = GetComponent<TimerController>();
-        
+        TimerController timer = FindObjectOfType<TimerController>();
+
         Debug.Log("게임 스테이지 :" + gameState);
 
         if (panel == null)
@@ -86,6 +87,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        //Debug.Log("스테이지 :"+GameManager.gameState);
         //Debug.Log("TimerController.timerText.text: " + timer.timerText.text);
 
         if (GameObject.FindGameObjectWithTag("Patient") == null)
@@ -104,7 +107,11 @@ public class GameManager : MonoBehaviour
             ShowQuestion(currentStep);
         }
 
-
+        //Debug.Log("시간 :"+ timer.timer + ", 패널 : "+ panel.GamePanel.activeSelf);
+        if(timer.timer <= 0 && panel.GamePanel.activeSelf)
+        {
+            StartCoroutine(GameOver());
+        }
 
     }
 
@@ -184,18 +191,25 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            TimerController timer = FindObjectOfType<TimerController>();
             Debug.Log("오답시");
             if (selected == WrongAnswer1[currentStep])
             {
                 StartCoroutine(ShowWrongAnswerMessage("잠깐 구경만 해볼까?", "내가 할수 있는게 아니야", "아니야 다시 생각해보자"));
+                timer.timer -= 10f;
+                Debug.Log("timer.timer :" + timer.timer);
             }
             else if (selected == WrongAnswer2[currentStep])
             {
                 StartCoroutine(ShowWrongAnswerMessage("그냥 지나가자...", "난 할 수 없어..", "아니야 다시 생각해보자"));
+                timer.timer -= 10f;
+                Debug.Log("timer.timer :" + timer.timer);
             }
             else if (selected == WrongAnswer3[currentStep])
             {
                 StartCoroutine(ShowWrongAnswerMessage("누군가가 하겠지?", "...", "아니야 다시 생각해보자"));
+                timer.timer -= 10f;
+                Debug.Log("timer.timer :" + timer.timer);
             }
         }
     }
@@ -239,6 +253,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator GameOver()
+    {
+        messageText.text = "사람을 살리지 못했습니다.";
+        SetButtonsInteractable(false);
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Title");
 
+
+
+    }
 
 }

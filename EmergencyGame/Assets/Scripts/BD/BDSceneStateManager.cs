@@ -16,6 +16,7 @@ public class BDSceneStateManager : MonoBehaviour
 
     private float savedTimerValue;
     private bool savedTimerRunning;
+    public string savedTimerText = "";
 
     private bool playerSaved = false;
     private bool patientSaved = false;
@@ -107,6 +108,12 @@ public class BDSceneStateManager : MonoBehaviour
                     if (timerRunningSaved && timerCtrl != null)
                         timerCtrl.SetTimerRunning(savedTimerRunning);
 
+                    if (timerCtrl != null && timerCtrl.timerText != null)
+                    {
+                        timerCtrl.timerText.text = savedTimerText; // 텍스트 복원
+                        Debug.Log("Timer 텍스트 복원: " + savedTimerText);
+                    }
+
                     Timer.SetActive(true);
                 }
             }
@@ -164,6 +171,8 @@ public class BDSceneStateManager : MonoBehaviour
 
                 savedTimerRunning = timerCtrl.timerRunning;
                 timerRunningSaved = true;
+
+                savedTimerText = timerCtrl.timerText.text; // 텍스트 저장
             }
         }
     }
@@ -185,22 +194,24 @@ public class BDSceneStateManager : MonoBehaviour
         savedCameraPosition = Vector3.zero;
         savedTimerPosition = Vector3.zero;
 
+        savedTimerText = "";
+
         Debug.Log("저장된 상태 모두 초기화됨.");
 
 
-        GameObject timerObj = GameObject.Find("Timer");
-        if (timerObj != null)
-        {
-            BDTimerController timerCtrl = timerObj.GetComponent<BDTimerController>();
+        //GameObject timerObj = GameObject.Find("Timer");
+        //if (timerObj != null)
+        //{
+        //    BDTimerController timerCtrl = timerObj.GetComponent<BDTimerController>();
 
-            if (timerCtrl != null)
-            {
-                // 기본 시간으로 되돌림 (예: 180초)
-                timerCtrl.SetCurrentTime(timerCtrl.timerDuration);
+        //    if (timerCtrl != null)
+        //    {
+        //        // 기본 시간으로 되돌림 (예: 180초)
+        //        timerCtrl.SetCurrentTime(timerCtrl.timerDuration);
 
-                // 타이머 정지
-                timerCtrl.SetTimerRunning(false);
-            }
-        }
+        //        // 타이머 정지
+        //        timerCtrl.SetTimerRunning(false);
+        //    }
+        //}
     }
 }

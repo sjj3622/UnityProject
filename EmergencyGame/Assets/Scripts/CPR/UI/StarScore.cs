@@ -20,6 +20,7 @@ public class StarScore : MonoBehaviour
 
     public TimerController timerController;
 
+    public int sceneIndex =0;
 
     void Start()
     {
@@ -54,45 +55,49 @@ public class StarScore : MonoBehaviour
     void UpdateStarAnimation()
     {
         float timeValue = timerController.totalTimer;
-        Debug.Log("totalTimer 값: " + timeValue);
+        //Debug.Log("totalTimer 값: " + timeValue);
         StarScroe();
 
     }
 
     public void StarScroe()
     {
-        Debug.Log("별 스코어");
-        float timeValue = timerController.totalTimer; // totalTimer 값 가져오기
-        Debug.Log("totalTimer 값: " + timeValue);
+        float timeValue = timerController.totalTimer;
+
+        int starCount = 0;
 
         if (timeValue <= 180 && timeValue > 144)
         {
-            Debug.Log("별4");
             nowAni = Star4;
+            starCount = 4;
         }
         else if (timeValue <= 144 && timeValue > 108)
         {
-            Debug.Log("별3");
             nowAni = Star3;
+            starCount = 3;
         }
         else if (timeValue <= 108 && timeValue > 72)
         {
-            Debug.Log("별2");
             nowAni = Star2;
+            starCount = 2;
         }
         else if (timeValue <= 72 && timeValue > 36)
         {
-            Debug.Log("별1");
             nowAni = Star1;
+            starCount = 1;
         }
         else
         {
-            Debug.Log("별0");
             nowAni = Star0;
+            starCount = 0;
         }
 
         ChangeAnimation();
+
+        // 별점 저장
+        GameDataManager.Instance.SetStar(sceneIndex, starCount);
     }
+
 
     void ChangeAnimation()
     {
@@ -100,6 +105,18 @@ public class StarScore : MonoBehaviour
         {
             oldAni = nowAni;
             animator.Play(nowAni);
+        }
+    }
+
+    public void SetStarAnimation(int starCount)
+    {
+        switch (starCount)
+        {
+            case 4: animator.Play(Star4); break;
+            case 3: animator.Play(Star3); break;
+            case 2: animator.Play(Star2); break;
+            case 1: animator.Play(Star1); break;
+            default: animator.Play(Star0); break;
         }
     }
 }

@@ -1,0 +1,887 @@
+fileFormatVersion: 2
+guid: d36789de2209e7e4491f4a9e6ecfc287
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_1
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d7809889eea294d99b3f665d62ebda
+      internalID: -696517116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_5
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67314383ca8805f42a9ae15411d098d0
+      internalID: 1502972665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_6
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2d0c206c207e74e8fa8779f00bb917
+      internalID: 1800810101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 104
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a3fe7bd14b26f4fbc1c8556695f18b
+      internalID: -1955415001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_8
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 104
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b603d6bc5ca2d245a559008123834c4
+      internalID: 1997182008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_9
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 104
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28196859c957c2640b54f4491d8a0fcd
+      internalID: 919003703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_10
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 102
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37a2d3e0787e8c541a34e47469196cb7
+      internalID: -506852245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_11
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 99
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed80a9e9e6ef2649b17b7ada2b5e0be
+      internalID: 328593143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_13
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 98
+        width: 31
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0f3ed636a49ec54aa50b0706c091fa8
+      internalID: 1089203987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_17
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 98
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e9fcd4efe6597b458f862af4d65fc9f
+      internalID: -530330599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_24
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 97
+        width: 32
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08e8d7295ad11894ab07b978a0a19200
+      internalID: -747525227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_27
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 97
+        width: 47
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1e13399219205940a33f19767d91ed0
+      internalID: -1101341249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_28
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 98
+        width: 45
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f11198eb501f1b54b96127a82409bdda
+      internalID: -2031782397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_29
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 102
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e45cb32876fc90b46987cd1a5082db76
+      internalID: -834991542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_30
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 103
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4d9418c7ef618e4596a9ef5036c00cf
+      internalID: -64765416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_31
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 103
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b0f85d0e6d3804f9500e6dc4da247e
+      internalID: 1831689125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_32
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 103
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db48e601a7e2d764690c5e33aba48e68
+      internalID: -1961663257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_33
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 103
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b691edc5c868d6f42a2c9478669b8857
+      internalID: -578118393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_34
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 103
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9922ba96c7632a646aef8d21e1bdb60b
+      internalID: -873650567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_35
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 104
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b961a87f88ea848ad67dd8059f3235
+      internalID: 1357015503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_39
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 96
+        width: 26
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b753e6898b82046842f88a456447f5
+      internalID: -45777124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_47
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 16
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79366fd559419d439edffe06d22b818
+      internalID: -1788025758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_48
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 16
+        width: 42
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8af1454a0a094e46840cffeab1234d6
+      internalID: -1531135315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_49
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 16
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 858ea7abfed20944bafa1b05a79df57e
+      internalID: 935762938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_53
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 16
+        width: 62
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a31cb9aaff17d99478be9fb97e3988fc
+      internalID: -2063924687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_54
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 16
+        width: 69
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 673ccb0890b171244b52b5686a986240
+      internalID: 516389269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_55
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 16
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be48caf89e23f704282018d3f7a54280
+      internalID: -1793446237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_57
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 23
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b04158d65fa9da24992593b4b30ed339
+      internalID: 987866772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_58
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 22
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eca1d4e00029c96488f7230aec0968df
+      internalID: -718479312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_61
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 16
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb533618e2137974ca06b48d2a1c8903
+      internalID: -1586989764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_62
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 16
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f64fae88df7fd34c95267745ba61ca8
+      internalID: -736015887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_63
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 16
+        width: 39
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 803c39a002c426946a166a823c2f3b20
+      internalID: 1387597429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - Police Stories - Miscellaneous - Smoke_0
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 103
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b3de73b33f1ccc42ae9f08801dc9778
+      internalID: 789431441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_0: 789431441
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_1: -696517116
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_10: -506852245
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_11: 328593143
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_12: 1951342595
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_13: 1089203987
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_14: -2076720699
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_15: -659730452
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_16: 1807509753
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_17: -530330599
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_18: 1058022239
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_19: 1258603426
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_2: -2056391924
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_20: 633685935
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_21: 1084757310
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_22: 93217445
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_23: -993551765
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_24: -747525227
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_25: -47334281
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_26: 1742607994
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_27: -1101341249
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_28: -2031782397
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_29: -834991542
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_3: 108002701
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_30: -64765416
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_31: 1831689125
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_32: -1961663257
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_33: -578118393
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_34: -873650567
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_35: 1357015503
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_36: 1521613326
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_37: -1463947499
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_38: -766871756
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_39: -45777124
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_4: -227569908
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_40: -1742452107
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_41: 782843463
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_42: 1343228302
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_43: -1159472605
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_44: -1642321597
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_45: 367647199
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_46: 1294283436
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_47: -1788025758
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_48: -1531135315
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_49: 935762938
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_5: 1502972665
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_50: 859220812
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_51: -1000170231
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_52: 539170963
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_53: -2063924687
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_54: 516389269
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_55: -1793446237
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_56: 887480043
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_57: 987866772
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_58: -718479312
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_59: 1146783872
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_6: 1800810101
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_60: 1102756521
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_61: -1586989764
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_62: -736015887
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_63: 1387597429
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_64: -804807886
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_65: 1313000761
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_66: -1255688511
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_7: -1955415001
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_8: 1997182008
+      PC _ Computer - Police Stories - Miscellaneous - Smoke_9: 919003703
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,7 +11,7 @@ public class BDStarScore : MonoBehaviour
     public string Star3 = "StarImg3";
     public string Star4 = "StarImg4";
 
-    string nowAni = "", oldAni = "";
+    //string nowAni = "", oldAni = "";
 
     public int sceneIndex = 2; // 씬 인덱스 지정
     private BDTimerController bdtimerController;

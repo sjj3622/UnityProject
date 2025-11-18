@@ -3951,10 +3951,10 @@ MonoBehaviour:
   - {fileID: 1601744391357159510, guid: 693a253e3bd84d743978beae56b13da7, type: 3}
   - {fileID: 5432249418881193853, guid: 8379a665a78b9ac49a8cc6e7179acd86, type: 3}
   bleedProbabilities:
-  - 70
-  - 25
-  - 14
-  - 1
+  - 60
+  - 20
+  - 15
+  - 5
   targetSprite: {fileID: 1229048682}
   initialBleedCount: 10
 --- !u!4 &2123191042

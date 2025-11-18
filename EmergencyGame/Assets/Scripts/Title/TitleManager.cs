@@ -7,11 +7,14 @@ public class TitleManager : MonoBehaviour
 {
     public GameObject StagePanel;
     public GameObject PlayerPanel;
+    public GameObject SettingPanel;
+    public GameObject SettingsBtn;
     public GameObject PlayBtn;
     public GameObject LevelsBtn;
     public GameObject ExitBtn;
     public GameObject backLight;
     public GameObject backNight;
+    public WindowSetting camSize;
 
     private Dictionary<GameObject, Vector2> originalPositions = new Dictionary<GameObject, Vector2>();
     private Dictionary<GameObject, bool> isMoved = new Dictionary<GameObject, bool>();
@@ -20,8 +23,10 @@ public class TitleManager : MonoBehaviour
 
     void Start()
     {
+        SetFullscreen1080p();
         StagePanel.SetActive(false);
         PlayerPanel.SetActive(false);
+        SettingPanel.SetActive(false);
 
         panelImage = StagePanel.GetComponent<Image>();
 
@@ -74,11 +79,53 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    public void SettingClick()
+    {
+        if (!SettingPanel.activeSelf) SettingPanel.SetActive(true);
+        else SettingPanel.SetActive(false);
+
+        PlayerPanel.SetActive(false);
+
+    }
+
+    public void ScreenSize()
+    {
+        if (!Screen.fullScreen)
+        {
+            Screen.fullScreen = true;
+        }
+        else
+        {
+            Screen.fullScreen = false;
+        }
+    }
+
+    public void SetWindow720p()
+    {
+        Screen.SetResolution(1280, 720, false);
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+
+    }
+
+    public void SetFullscreen1080p()
+    {
+        Screen.SetResolution(1920, 1080, true);
+        Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+    }
+
+    public void SetBorderless()
+    {
+        Screen.fullScreen = true;
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+    }
+
+
     public void LevelsClick()
     {
         //MoveButton(PlayBtn);
+        SettingPanel.SetActive(false);
 
-        if(PlayBtn.activeSelf)
+        if (PlayBtn.activeSelf)
             PlayBtn.SetActive(false);
         else PlayBtn.SetActive(true);
 
@@ -90,6 +137,14 @@ public class TitleManager : MonoBehaviour
         MoveButton(LevelsBtn);
         MoveButton(ExitBtn);
 
+        if (SettingsBtn.activeSelf)
+        {
+            SettingsBtn.SetActive(false);
+        }
+        else 
+        {
+            SettingsBtn.SetActive(true);
+        }
 
     }
 
@@ -98,7 +153,8 @@ public class TitleManager : MonoBehaviour
 
         if (!PlayerPanel.activeSelf) PlayerPanel.SetActive(true);
         else PlayerPanel.SetActive(false);
-        
+
+        SettingPanel.SetActive(false);
     }
 
     public void ExitClick()
@@ -114,3 +170,5 @@ public class TitleManager : MonoBehaviour
     public void BleedingClick() => SceneManager.LoadScene("Bleeding");
     public void BurnClick() => SceneManager.LoadScene("Burn");
 }
+
+

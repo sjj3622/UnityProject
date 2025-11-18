@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
 using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class TimerController : MonoBehaviour
     [Header("Timer Settings")]
     public Text timerText;
     public float timerDuration = 180f;
-    public float totalTimer = 0f;
+    public float totalTimer;
 
 
     public float timer;
@@ -18,11 +19,49 @@ public class TimerController : MonoBehaviour
 
     void Awake()
     {
-        //if (transform.parent != null)
-        //    transform.SetParent(null); // 부모에서 분리해서 루트로 이동
+        string currentScene = SceneManager.GetActiveScene().name;
 
-        DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
+        // 씬이 "Title"이면 삭제
+        if (currentScene == "Title")
+        {
+            //부모가 있다면 루트로 분리
+            if (transform.parent != null)
+                transform.SetParent(null, true); // true는 위치/회전 유지
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
+
+            if (currentScene == "CPR" && GameManager.gameState == "GameClear")
+            {
+                Destroy(gameObject);
+                Debug.Log("삭제");
+            }
+
+        }
     }
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Title")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
+
 
 
     void Start()
@@ -40,14 +79,14 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("시간 :"+timer);
+        
         //Debug.Log(gameObject.name + " 위치: " + transform.position +
         //      ", 활성화: " + gameObject.activeSelf);
 
-        if (GameManager.gameState == "StageClear")
+        if (GameManager.gameState == "GameClear")
         {
             timerRunning = false;
-
+            
         }
 
         if (timerRunning)
@@ -105,7 +144,7 @@ public class TimerController : MonoBehaviour
                 }
             }
         }
-        if (GameManager.gameState == "StageClear")
+        if (GameManager.gameState == "GameClear")
         {
             
             
@@ -148,8 +187,5 @@ public class TimerController : MonoBehaviour
         Debug.Log("타이머 시작");
     }
 
-    internal void SetCurrentTime(float timerValue)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

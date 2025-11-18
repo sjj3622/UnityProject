@@ -2129,7 +2129,7 @@ MonoBehaviour:
   Star1: Star1
   Star2: Star2
   Star3: Star3
-  Star4: Star
+  Star4: Star4
   timerController: {fileID: 854642455}
   sceneIndex: 0
 --- !u!1001 &1047054727

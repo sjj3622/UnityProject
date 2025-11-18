@@ -81,7 +81,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
         if (score >= 100)
         {
             animator.speed = maxSpeed;
-            GameManager.gameState = "StageClear";
+            GameManager.gameState = "GameClear";
             Debug.Log("게임스테이지"+GameManager.gameState);
             SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
             SceneManager.LoadScene("CPR");
@@ -133,8 +133,6 @@ public class HeartSpeedControllerOne : MonoBehaviour
                 isCollidingWithHandle = false;
                 UpdateScoreAndStageMessage();
 
-                //  일정 확률로 하락 시도
-                TryStageDowngrade();
             }
         }
         else if (!isCollidingWithHandle && Input.GetKeyDown(KeyCode.Space) && score > 5)
@@ -146,7 +144,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             TryStageDowngrade();
         }
 
-        if (score > 50 && boxCollider != null && colliderChanged)
+        if (score >= 50 && boxCollider != null && colliderChanged)
         {
             boxCollider.size = originalColliderSize;
             colliderChanged = false;
@@ -177,8 +175,6 @@ public class HeartSpeedControllerOne : MonoBehaviour
                 score += 10;
                 UpdateScoreAndStageMessage();
 
-                //  올바른 입력 후에도 낮은 확률로 하락 가능
-                TryStageDowngrade();
             }
             else
             {

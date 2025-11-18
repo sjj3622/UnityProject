@@ -8,7 +8,7 @@ public class BleedController : MonoBehaviour
     public GameObject[] bleedPrefabs;
 
     [Header("각 피 프리팹의 생성 확률 (%) — 총합 100")]
-    public float[] bleedProbabilities = { 60f, 25f, 14f, 1f };
+    public float[] bleedProbabilities = { 60f, 20f, 15f, 5f };
 
     [Header("피를 생성할 기준 오브젝트 (SpriteRenderer 포함)")]
     public SpriteRenderer targetSprite;

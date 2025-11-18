@@ -107,9 +107,11 @@ public class RedHoodController : MonoBehaviour
 
             isRunning = false;
             //GetComponent<Collider2D>().enabled = false; // 충돌 비활성화
-            
+            if (BDgpManager.gameState == null) 
+            {
                 StartCoroutine(JumpAndDie());
                 Textupdate();
+            }
             
         }
     }

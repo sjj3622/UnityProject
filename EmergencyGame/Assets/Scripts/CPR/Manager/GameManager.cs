@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             optionButtons[i].onClick.AddListener(() => StartCoroutine(OnOptionSelected(index)));
         }
 
-        if (gameState == "StageClear")
+        if (gameState == "GameClear")
         {
             Debug.Log("구급대원 출동");
             gate.SpawnMedic(patient);

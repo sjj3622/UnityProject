@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class StarScore : MonoBehaviour
 {
@@ -13,14 +14,14 @@ public class StarScore : MonoBehaviour
     public string Star1 = "Star1";
     public string Star2 = "Star2";
     public string Star3 = "Star3";
-    public string Star4 = "Star";
+    public string Star4 = "Star4";
 
-    string nowAni = "", oldAni = "";
+    //string nowAni = "", oldAni = "";
 
 
     public TimerController timerController;
 
-    public int sceneIndex =0;
+    public int sceneIndex = 0;
 
     void Start()
     {
@@ -40,11 +41,12 @@ public class StarScore : MonoBehaviour
 
     void Update()
     {
-
+        float timeValue = timerController.totalTimer;
+        Debug.Log("timeValue :" + timeValue);
         gameObject.SetActive(true);
 
         if (timerController != null)
-            UpdateStarAnimation();
+            StarScroe();
         else
             Debug.LogWarning("TimerController가 연결되지 않았습니다!");
 
@@ -52,71 +54,51 @@ public class StarScore : MonoBehaviour
 
     }
 
-    void UpdateStarAnimation()
-    {
-        float timeValue = timerController.totalTimer;
-        //Debug.Log("totalTimer 값: " + timeValue);
-        StarScroe();
-
-    }
-
     public void StarScroe()
     {
         float timeValue = timerController.totalTimer;
 
+        
         int starCount = 0;
 
         if (timeValue <= 180 && timeValue > 144)
         {
-            nowAni = Star4;
+            Debug.Log("별4");
+            animator.Play(Star4);
             starCount = 4;
         }
         else if (timeValue <= 144 && timeValue > 108)
         {
-            nowAni = Star3;
+            Debug.Log("별3");
+            animator.Play(Star3);
             starCount = 3;
         }
         else if (timeValue <= 108 && timeValue > 72)
         {
-            nowAni = Star2;
+            Debug.Log("별2");
+            animator.Play(Star2);
             starCount = 2;
         }
         else if (timeValue <= 72 && timeValue > 36)
         {
-            nowAni = Star1;
+            Debug.Log("별1");
+            animator.Play(Star1);
             starCount = 1;
         }
         else
         {
-            nowAni = Star0;
+            Debug.Log("별0");
+            animator.Play(Star0);
             starCount = 0;
         }
 
-        ChangeAnimation();
+
 
         // 별점 저장
         GameDataManager.Instance.SetStar(sceneIndex, starCount);
     }
 
 
-    void ChangeAnimation()
-    {
-        if (nowAni != oldAni)
-        {
-            oldAni = nowAni;
-            animator.Play(nowAni);
-        }
-    }
 
-    public void SetStarAnimation(int starCount)
-    {
-        switch (starCount)
-        {
-            case 4: animator.Play(Star4); break;
-            case 3: animator.Play(Star3); break;
-            case 2: animator.Play(Star2); break;
-            case 1: animator.Play(Star1); break;
-            default: animator.Play(Star0); break;
-        }
-    }
+
 }

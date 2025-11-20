@@ -23,7 +23,6 @@ public class TitleManager : MonoBehaviour
 
     void Start()
     {
-        SetFullscreen1080p();
         StagePanel.SetActive(false);
         PlayerPanel.SetActive(false);
         SettingPanel.SetActive(false);
@@ -53,7 +52,7 @@ public class TitleManager : MonoBehaviour
         if (!isMoved[button])
         {
             Vector3 pos = rect.anchoredPosition;
-            pos.x = 250f;
+            pos.x = 0f;
             rect.anchoredPosition = pos;
 
             StagePanel.SetActive(true);
@@ -100,25 +99,6 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    public void SetWindow720p()
-    {
-        Screen.SetResolution(1280, 720, false);
-        Screen.fullScreenMode = FullScreenMode.Windowed;
-
-    }
-
-    public void SetFullscreen1080p()
-    {
-        Screen.SetResolution(1920, 1080, true);
-        Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-    }
-
-    public void SetBorderless()
-    {
-        Screen.fullScreen = true;
-        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-    }
-
 
     public void LevelsClick()
     {
@@ -163,7 +143,14 @@ public class TitleManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+
     }
+    void OnApplicationQuit()
+    {
+        if (GameDataManager.Instance != null)
+            GameDataManager.Instance.UploadGameData();
+    }
+
 
     public void CPRClick() => SceneManager.LoadScene("CPR");
     public void HMClick() => SceneManager.LoadScene("HM");

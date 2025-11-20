@@ -75,6 +75,8 @@ public class BDStarScore : MonoBehaviour
         if (GameDataManager.Instance != null)
             GameDataManager.Instance.SetStar(sceneIndex, starCount);
         Debug.Log("starCount :" + starCount);
+
+        GameDataManager.Instance.UploadGameData();
     }
 
     //void ChangeAnimation()

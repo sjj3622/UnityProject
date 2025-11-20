@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager Instance { get; private set; }
 
-    public GameData gameData = new GameData(); // GameData¸¦ ½Ì±ÛÅæ¿¡¼­ »ç¿ë
+    public GameData gameData = new GameData(); // GameDataë¥¼ ì‹±ê¸€í†¤ì—ì„œ ì‚¬ìš©
 
     private void Awake()
     {
@@ -22,7 +24,7 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    // Å¸ÀÌÆ² ¾À¿¡¼­ Instance°¡ ¾øÀ» ¶§ »ı¼º
+    // íƒ€ì´í‹€ ì”¬ì—ì„œ Instanceê°€ ì—†ì„ ë•Œ ìƒì„±
     public static void EnsureExists()
     {
         if (Instance == null)
@@ -39,6 +41,7 @@ public class GameDataManager : MonoBehaviour
             gameData.starLevels[sceneIndex] = stars;
             if (sceneIndex >= gameData.starLevelsSavedCount)
                 gameData.starLevelsSavedCount = sceneIndex + 1;
+
         }
     }
 
@@ -51,8 +54,37 @@ public class GameDataManager : MonoBehaviour
         return 0;
     }
 
-    internal void SetStar(int sceneIndex, object starCount)
+
+    public IEnumerator UploadGameData()
     {
-        throw new NotImplementedException();
+        Debug.Log("ì €ì¥ì‹œì‘");
+        string url = "http://localhost:8080/game/save";
+
+        string json = JsonConvert.SerializeObject(gameData); // ë°°ì—´ í¬í•¨ ì‹œ ì•ˆì •ì 
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+#if UNITY_2020_1_OR_NEWER
+            if (request.result != UnityWebRequest.Result.Success)
+#else
+        if (request.isNetworkError || request.isHttpError)
+#endif
+            {
+                Debug.Log("ì „ì†¡ ì‹¤íŒ¨: " + request.error);
+            }
+            else
+            {
+                Debug.Log("ì „ì†¡ ì„±ê³µ: " + request.downloadHandler.text);
+            }
+        }
+        Debug.Log("ì €ì¥ë");
     }
+
 }

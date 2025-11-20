@@ -3,20 +3,21 @@ using UnityEngine.UI;
 
 public class TitleUIManager : MonoBehaviour
 {
-    public Image[] starImages; // °¢ ¾Àº° º° ÀÌ¹ÌÁö
-    public Sprite[] starSprites; // 0,1,2,3,4 µî º° »óÅÂ¿¡ µû¸¥ ½ºÇÁ¶óÀÌÆ®
+    public Image[] starImages; // ê° ì”¬ë³„ ë³„ ì´ë¯¸ì§€
+    public Sprite[] starSprites; // 0,1,2,3,4 ë“± ë³„ ìƒíƒœì— ë”°ë¥¸ ìŠ¤í”„ë¼ì´íŠ¸
 
     void Start()
     {
         GameDataManager.EnsureExists();
 
-        // ÃÊ±âÈ­¿ë µğ¹ö±×
+        // ì´ˆê¸°í™”ìš© ë””ë²„ê·¸
         //for (int i = 0; i < GameDataManager.Instance.gameData.starLevels.Length; i++)
         //{
         //    Debug.Log($"Initial star[{i}] = {GameDataManager.Instance.gameData.starLevels[i]}");
         //}
 
         UpdateStars();
+        StartCoroutine(GameDataManager.Instance.UploadGameData());
     }
 
 
@@ -24,7 +25,7 @@ public class TitleUIManager : MonoBehaviour
     {
         if (GameDataManager.Instance == null || GameDataManager.Instance.gameData == null)
         {
-            Debug.LogWarning("GameDataManager ¶Ç´Â gameData°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù! ±âº»°ª »ç¿ë");
+            Debug.LogWarning("GameDataManager ë˜ëŠ” gameDataê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤! ê¸°ë³¸ê°’ ì‚¬ìš©");
             foreach (var img in starImages)
                 img.sprite = starSprites[0];
             return;

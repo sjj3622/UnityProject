@@ -1539,7 +1539,7 @@ GameObject:
   - component: {fileID: 328083198}
   m_Layer: 0
   m_Name: playermove1-1
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5865,6 +5865,7 @@ GameObject:
   - component: {fileID: 1941402461}
   - component: {fileID: 1941402463}
   - component: {fileID: 1941402462}
+  - component: {fileID: 1941402464}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -5913,8 +5914,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Timer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1fdbe9cf7e82c524f9228023267c4640, type: 2}
+  m_sharedMaterial: {fileID: -5242213911619934616, guid: 1fdbe9cf7e82c524f9228023267c4640, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5938,8 +5939,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5988,6 +5989,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941402460}
   m_CullTransparentMesh: 1
+--- !u!114 &1941402464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941402460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dca7a8e999f8124793fbd4099b90e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1941402462}
+  timerDuration: 300
+  totalTimer: 0
+  timer: 0
+  timerRunning: 0
 --- !u!1 &1947580189
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerGate_HouseFire : MonoBehaviour
 {
     public GameObject[] PlayerGates; // 0~7번 게이트
+    public GameObject burnGate; // "playermove1-1" 인스펙터에서 연결
     public float teleportOffset = 1f;
     public float teleportCooldown = 1f;
 
@@ -16,15 +17,14 @@ public class PlayerGate_HouseFire : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
 
-        // HouseFire 씬에는 gate0 없음
+        // gateConnections 초기화
         if (sceneName == "HouseFire")
         {
             gateConnections[PlayerGates[0]] = null; // gate0 없음
         }
         else
         {
-            // Burn 씬에서 gate0 연결
-            gateConnections[PlayerGates[0]] = GameObject.Find("playermove1-1");
+            gateConnections[PlayerGates[0]] = burnGate; // Burn 씬용
         }
 
         // 나머지 게이트 연결
@@ -40,7 +40,6 @@ public class PlayerGate_HouseFire : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
-
         if (PlayerGates == null || PlayerGates.Length == 0) return;
 
         // 플레이어와 가장 가까운 게이트 찾기
@@ -48,7 +47,7 @@ public class PlayerGate_HouseFire : MonoBehaviour
         float minDist = Mathf.Infinity;
         foreach (GameObject gate in PlayerGates)
         {
-            if (gate == null) continue; // null 체크
+            if (gate == null) continue;
             float dist = Vector3.Distance(collision.transform.position, gate.transform.position);
             if (dist < minDist)
             {
@@ -63,16 +62,14 @@ public class PlayerGate_HouseFire : MonoBehaviour
         {
             GameObject targetGate = gateConnections[collidedGate];
             if (targetGate == null) return; // 연결된 게이트가 없으면 리턴
-            Debug.Log("여기1");
+
             // Burn 씬으로 이동
-            if (targetGate.name == "playermove1-1")
+            if (targetGate == burnGate)
             {
-                Debug.Log("targetGate.name:" + targetGate.name);
-                StartCoroutine(TeleportToBurn(collision.gameObject, targetGate));
+                StartCoroutine(TeleportToBurn(collision.gameObject));
             }
             else
             {
-                Debug.Log("여기3");    
                 // 일반 게이트 순간이동
                 Vector3 offset = new Vector3(teleportOffset, 0, 0);
                 collision.transform.position = targetGate.transform.position + offset;
@@ -81,27 +78,27 @@ public class PlayerGate_HouseFire : MonoBehaviour
         }
     }
 
-    private IEnumerator TeleportToBurn(GameObject player, GameObject targetGate)
+    private IEnumerator TeleportToBurn(GameObject player)
     {
-        cooldownGates.Add(targetGate);
-        SceneManager.LoadScene("Burn");
-        yield return null;
+        // 쿨다운 적용
+        cooldownGates.Add(PlayerGates[0]);
 
-        GameObject gate0InScene = GameObject.Find("playermove1-1");
-        Debug.Log(gate0InScene);
-        if (gate0InScene != null)
+        // 씬 로드
+        SceneManager.LoadScene("Burn");
+
+        // 씬이 로드될 때까지 기다림
+        yield return new WaitUntil(() => GameObject.Find(burnGate.name) != null);
+
+        // 플레이어 위치 이동
+        GameObject gateInScene = GameObject.Find(burnGate.name);
+        if (gateInScene != null)
         {
             Vector3 offset = new Vector3(teleportOffset, 0, 0);
-            player.transform.position = gate0InScene.transform.position + offset;
+            player.transform.position = gateInScene.transform.position + offset;
         }
 
         yield return new WaitForSeconds(teleportCooldown);
-        cooldownGates.Remove(targetGate);
-    }
-
-    public void StartCooldownTemp(GameObject gate)
-    {
-        StartCoroutine(StartCooldown(gate));
+        cooldownGates.Remove(PlayerGates[0]);
     }
 
     private IEnumerator StartCooldown(GameObject gate)
@@ -109,5 +106,9 @@ public class PlayerGate_HouseFire : MonoBehaviour
         cooldownGates.Add(gate);
         yield return new WaitForSeconds(teleportCooldown);
         cooldownGates.Remove(gate);
+    }
+    public void StartCooldownTemp(GameObject gate)
+    {
+        StartCoroutine(StartCooldown(gate));
     }
 }

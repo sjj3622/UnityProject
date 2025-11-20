@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerGate_Burn : MonoBehaviour
 {
-    public GameObject gate0; // Burn ¾À¿¡ ÀÖ´Â °ÔÀÌÆ® 0
-    public GameObject gate1; // HouseFire ¾À¿¡ ÀÖ´Â °ÔÀÌÆ® 1 À§Ä¡¸¦ ¹Ì¸® ÂüÁ¶ÇÏ°Å³ª ·Îµù ÈÄ ¼³Á¤
+    public GameObject gate0; // Burn ì”¬ì— ìˆëŠ” ê²Œì´íŠ¸ 0
     public float teleportOffset = 1f;
     public float teleportCooldown = 1f;
 
@@ -14,7 +13,7 @@ public class PlayerGate_Burn : MonoBehaviour
 
     private void Start()
     {
-        // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® ¾À ÀüÈ¯ À¯Áö
+        // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ì”¬ ì „í™˜ ìœ ì§€
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -24,40 +23,34 @@ public class PlayerGate_Burn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        Debug.Log(collision.CompareTag("Player"));
-        
         if (!collision.CompareTag("Player")) return;
-        
         if (cooldownGates.Contains(gate0)) return;
-        
-        Debug.Log(cooldownGates.Contains(gate0));
-
 
         StartCoroutine(TeleportToHouseFire(collision.gameObject));
     }
 
     private IEnumerator TeleportToHouseFire(GameObject player)
     {
-
-        
+        // gate0 ì¿¨ë‹¤ìš´ ë“±ë¡
         cooldownGates.Add(gate0);
 
-        // ¾À ÀüÈ¯
+        // ì”¬ ì „í™˜ ì „ ìƒíƒœ ì €ì¥
         BurngpManager.gameState = "BStart";
+
+        // HouseFire ì”¬ìœ¼ë¡œ ì´ë™
         SceneManager.LoadScene("HouseFire");
 
-        // ¾À ÀüÈ¯ ÈÄ ÇÁ·¹ÀÓ ÇÑ ¹ø ´ë±â
-        yield return null;
+        // ì”¬ ë¡œë“œê°€ ì™„ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
+        yield return new WaitUntil(() => GameObject.Find("playermove1-2") != null);
 
-        // »õ ¾À¿¡¼­ °ÔÀÌÆ®1 À§Ä¡ Ã£±â
+        // ìƒˆ ì”¬ì—ì„œ gate1 ìœ„ì¹˜ ì°¾ê¸°
         GameObject gate1InScene = GameObject.Find("playermove1-2");
         if (gate1InScene != null)
         {
             Vector3 offset = new Vector3(teleportOffset, 0, 0);
             player.transform.position = gate1InScene.transform.position + offset;
 
-            // gate1 Äğ´Ù¿î µî·Ï
+            // gate1 ì¿¨ë‹¤ìš´ ë“±ë¡
             PlayerGate_HouseFire houseFireScript = gate1InScene.GetComponentInParent<PlayerGate_HouseFire>();
             if (houseFireScript != null)
             {
@@ -65,7 +58,7 @@ public class PlayerGate_Burn : MonoBehaviour
             }
         }
 
-        // gate0 Äğ´Ù¿î
+        // gate0 ì¿¨ë‹¤ìš´ í•´ì œ
         yield return new WaitForSeconds(teleportCooldown);
         cooldownGates.Remove(gate0);
     }

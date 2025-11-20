@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public int[] starLevels = new int[4]; // ¾À 4°³ÀÇ º°Á¡ ÀúÀå
-    public int starLevelsSavedCount = 0; // ½ÇÁ¦ ÀúÀåµÈ º°Á¡ °³¼ö
+    public int[] starLevels = new int[4]; // ì”¬ 4ê°œì˜ ë³„ì  ì €ì¥
+    public int starLevelsSavedCount = 0; // ì‹¤ì œ ì €ì¥ëœ ë³„ì  ê°œìˆ˜
 }
-

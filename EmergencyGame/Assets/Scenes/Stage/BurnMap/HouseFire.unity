@@ -11076,7 +11076,7 @@ GameObject:
   - component: {fileID: 102647671}
   m_Layer: 0
   m_Name: playermove4-2
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11143,7 +11143,7 @@ GameObject:
   - component: {fileID: 149561266}
   m_Layer: 0
   m_Name: playermove4-1
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11210,7 +11210,7 @@ GameObject:
   - component: {fileID: 204638047}
   m_Layer: 0
   m_Name: playermove2-2
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11413,7 +11413,7 @@ GameObject:
   - component: {fileID: 661351269}
   m_Layer: 0
   m_Name: playermove1-2
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11649,7 +11649,7 @@ GameObject:
   - component: {fileID: 1417537045}
   m_Layer: 0
   m_Name: playermove2-1
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17970,7 +17970,7 @@ GameObject:
   - component: {fileID: 2019777222}
   m_Layer: 0
   m_Name: playermove3-1
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18037,7 +18037,7 @@ GameObject:
   - component: {fileID: 2066815632}
   m_Layer: 0
   m_Name: playermove3-2
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

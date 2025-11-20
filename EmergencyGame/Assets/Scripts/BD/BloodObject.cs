@@ -39,7 +39,7 @@ public class BloodObject : MonoBehaviour
             
             requiredMouseType = 0;
             clickType = ClickType.SingleClick;
-            score =10;
+            score =1;
         }
         else if (name.Contains("blood2"))
         {

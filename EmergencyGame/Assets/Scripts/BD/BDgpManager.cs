@@ -74,6 +74,7 @@ public class BDgpManager : MonoBehaviour
             BDgpManager.gameState = "BDClear";
 
             AllStop();
+            
 
         }
 
@@ -85,7 +86,7 @@ public class BDgpManager : MonoBehaviour
             //Debug.Log("BDgpManager.gameState :" + BDgpManager.gameState);
             AllStop();
 
-
+            
 
         }
 

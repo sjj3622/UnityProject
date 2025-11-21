@@ -3,16 +3,16 @@ using System.Collections;
 
 public class AmbulanceController : MonoBehaviour
 {
-    public GameObject player;      // ¾À¿¡ ÀÖ´Â ÇÃ·¹ÀÌ¾î
-    public float speed = 2f;       // ¾Úºæ·±½º ÀÌµ¿ ¼Óµµ
-    public float targetX = -7f;    // ¸ñÇ¥ X À§Ä¡
-    public float returnX = -20f;   // µ¹¾Æ°¥ X À§Ä¡
+    public GameObject player;      // ì”¬ì— ìˆëŠ” í”Œë ˆì´ì–´
+    public float speed = 2f;       // ì•°ë·¸ëŸ°ìŠ¤ ì´ë™ ì†ë„
+    public float targetX = -7f;    // ëª©í‘œ X ìœ„ì¹˜
+    public float returnX = -20f;   // ëŒì•„ê°ˆ X ìœ„ì¹˜
 
-    private bool isMovingToTarget = true;  // ¸ñÇ¥ ÁÂÇ¥·Î ÀÌµ¿ Áß
-    private bool isReturning = false;      // µÇµ¹¾Æ°¡´Â Áß
-    private Vector3 originalScale;         // ¿ø·¡ ½ºÄÉÀÏ ÀúÀå
+    private bool isMovingToTarget = true;  // ëª©í‘œ ì¢Œí‘œë¡œ ì´ë™ ì¤‘
+    private bool isReturning = false;      // ë˜ëŒì•„ê°€ëŠ” ì¤‘
+    private Vector3 originalScale;         // ì›ë˜ ìŠ¤ì¼€ì¼ ì €ì¥
 
-    private SpriteRenderer sr;             // ¾Úºæ·±½º SpriteRenderer
+    private SpriteRenderer sr;             // ì•°ë·¸ëŸ°ìŠ¤ SpriteRenderer
 
     void Start()
     {
@@ -21,20 +21,20 @@ public class AmbulanceController : MonoBehaviour
 
         if (player == null)
         {
-            player = GameObject.FindWithTag("Player"); // ÇÃ·¹ÀÌ¾î ÅÂ±×·Î ÀÚµ¿ ÂüÁ¶
+            player = GameObject.FindWithTag("Player"); // í”Œë ˆì´ì–´ íƒœê·¸ë¡œ ìë™ ì°¸ì¡°
             if (player == null)
             {
-                Debug.LogError("¾À¿¡ Player ¿ÀºêÁ§Æ®°¡ ¾ø½À´Ï´Ù!");
+                Debug.LogError("ì”¬ì— Player ì˜¤ë¸Œì íŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤!");
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î¸¦ ¾Úºæ·±½º À§Ä¡·Î ÀÌµ¿
+        // í”Œë ˆì´ì–´ë¥¼ ì•°ë·¸ëŸ°ìŠ¤ ìœ„ì¹˜ë¡œ ì´ë™
         if (player != null)
         {
             player.transform.position = transform.position;
         }
 
-        // ÀÌµ¿ Áß¿¡´Â ¾Úºæ·±½º°¡ ÇÃ·¹ÀÌ¾îº¸´Ù À§
+        // ì´ë™ ì¤‘ì—ëŠ” ì•°ë·¸ëŸ°ìŠ¤ê°€ í”Œë ˆì´ì–´ë³´ë‹¤ ìœ„
         if (sr != null) sr.sortingOrder = 1;
     }
 
@@ -44,47 +44,47 @@ public class AmbulanceController : MonoBehaviour
 
         if (isMovingToTarget)
         {
-            // ¾Úºæ·±½º ÀÌµ¿
+            // ì•°ë·¸ëŸ°ìŠ¤ ì´ë™
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), step);
 
-            // ÇÃ·¹ÀÌ¾îµµ °°ÀÌ ÀÌµ¿
+            // í”Œë ˆì´ì–´ë„ ê°™ì´ ì´ë™
             if (player != null)
                 player.transform.position = transform.position;
 
-            // ¸ñÇ¥ À§Ä¡ µµÂø
+            // ëª©í‘œ ìœ„ì¹˜ ë„ì°©
             if (Mathf.Approximately(transform.position.x, targetX))
             {
                 isMovingToTarget = false;
 
-                // ¸ñÇ¥ µµÂø ½Ã ¾Úºæ·±½º°¡ ÇÃ·¹ÀÌ¾îº¸´Ù ¾Æ·¡·Î ¼³Á¤
+                // ëª©í‘œ ë„ì°© ì‹œ ì•°ë·¸ëŸ°ìŠ¤ê°€ í”Œë ˆì´ì–´ë³´ë‹¤ ì•„ë˜ë¡œ ì„¤ì •
                 if (sr != null) sr.sortingOrder = -1;
 
-                StartCoroutine(WaitAndReturn(1f)); // 1ÃÊ ´ë±â ÈÄ µ¹¾Æ°¡±â
+                StartCoroutine(WaitAndReturn(1f)); // 1ì´ˆ ëŒ€ê¸° í›„ ëŒì•„ê°€ê¸°
             }
         }
         else if (isReturning)
         {
-            // µ¹¾Æ°¥ ¶§´Â ¾Úºæ·±½º¸¸ ÀÌµ¿
+            // ëŒì•„ê°ˆ ë•ŒëŠ” ì•°ë·¸ëŸ°ìŠ¤ë§Œ ì´ë™
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(returnX, transform.position.y, transform.position.z), step);
 
             if (Mathf.Approximately(transform.position.x, returnX))
             {
                 isReturning = false;
-                gameObject.SetActive(false); // ÇÊ¿ä ½Ã ºñÈ°¼ºÈ­
+                gameObject.SetActive(false); // í•„ìš” ì‹œ ë¹„í™œì„±í™”
             }
         }
     }
 
     IEnumerator WaitAndReturn(float waitTime)
     {
-        // 1ÃÊ ´ë±â
+        // 1ì´ˆ ëŒ€ê¸°
         yield return new WaitForSeconds(waitTime);
 
-        // ¾Úºæ·±½º ¹İÀü
+        // ì•°ë·¸ëŸ°ìŠ¤ ë°˜ì „
         FlipDirection();
         isReturning = true;
 
-        // µ¹¾Æ°¥ ¶§µµ ¾Úºæ·±½º°¡ ÇÃ·¹ÀÌ¾îº¸´Ù À§
+        // ëŒì•„ê°ˆ ë•Œë„ ì•°ë·¸ëŸ°ìŠ¤ê°€ í”Œë ˆì´ì–´ë³´ë‹¤ ìœ„
         if (sr != null) sr.sortingOrder = -1;
     }
 

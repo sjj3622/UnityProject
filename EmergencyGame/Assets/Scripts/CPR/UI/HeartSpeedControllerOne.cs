@@ -105,6 +105,13 @@ public class HeartSpeedControllerOne : MonoBehaviour
                 isCollidingWithHandle = false;
                 UpdateScoreAndStageMessage();
             }
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                animator.speed += speedIncreaseRate;
+                score += 100;
+                isCollidingWithHandle = false;
+                UpdateScoreAndStageMessage();
+            }
         }
 
         if (score >= 5)

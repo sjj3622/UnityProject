@@ -121,7 +121,7 @@ public class TitleManager : MonoBehaviour
         {
             SettingsBtn.SetActive(false);
         }
-        else 
+        else
         {
             SettingsBtn.SetActive(true);
         }
@@ -157,5 +157,3 @@ public class TitleManager : MonoBehaviour
     public void BleedingClick() => SceneManager.LoadScene("Bleeding");
     public void BurnClick() => SceneManager.LoadScene("Burn");
 }
-
-

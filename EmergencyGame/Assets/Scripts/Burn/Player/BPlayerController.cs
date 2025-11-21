@@ -32,48 +32,44 @@ public class BPlayerController : MonoBehaviour
 
     void Start()
     {
-        //나중에 지울것
-        BurngpManager.gameState = "BReady";
+        isStopped = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        // 바닥에 붙도록 y좌표 조정
+        // 초기 위치 Y값 조정
         Vector3 pos = transform.position;
         pos.y += groundOffsetY;
         transform.position = pos;
 
+        // 초기 애니메이션
         nowAni = stopDOWNAni;
         oldAni = nowAni;
         animator.Play(nowAni);
+
+        // 바닥에 떨어지도록 중력 세팅 (강하게)
+        rb.gravityScale = 2f;
     }
 
-    void Update()
+    private void Update()
     {
-        if (isStopped) return;
+        Debug.Log("중력 크기 :"+rb.gravityScale);
+        Debug.Log("isStopped :" + isStopped);
+        Debug.Log("게임 사태 :"+BurngpManager.gameState);
+        if (isStopped) return;   // 바닥 충돌 전 이동 금지
 
-        // --- 게임 상태별 중력 설정 ---
+        // 플레이어 이동
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
         if (BurngpManager.gameState == "BReady")
-        {
-            rb.gravityScale = 1f; // BReady 상태일 때 중력 적용
-        }
-        else if (BurngpManager.gameState == "BStart")
+            v = 0;
+        if(BurngpManager.gameState == "BStart")
         {
             rb.gravityScale = 0f; // BStart 상태일 때 중력 제거
         }
 
-        // --- 키보드 입력 받기 ---
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        // BReady 상태에서는 상하 이동 제한
-        if (BurngpManager.gameState == "BReady")
-        {
-            v = 0;
-        }
-
         moveDir = new Vector2(h, v).normalized;
 
-        // --- 이동 ---
         if (moveDir != Vector2.zero)
         {
             rb.velocity = moveDir * speed;
@@ -85,6 +81,20 @@ public class BPlayerController : MonoBehaviour
             SetIdleAnimation();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Ground") && isStopped)
+    {
+        Debug.Log("플레이어 바닥 착지");
+        isStopped = false;           // 이동 허용
+        BurngpManager.gameState = "BReady";
+
+        rb.gravityScale = 1f;        // 바닥에서는 중력 낮추기
+        rb.velocity = Vector2.zero;  // 순간 속도 초기화
+    }
+}
+
 
 
     void SetMoveAnimation(Vector2 dir)

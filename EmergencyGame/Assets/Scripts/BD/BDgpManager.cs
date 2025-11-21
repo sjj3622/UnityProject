@@ -67,7 +67,16 @@ public class BDgpManager : MonoBehaviour
 
         if (bdtimerController.timer == 180) isTimer = true;
 
-        if (bdscoreController.score >= bdscoreController.goalScore)
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            BDgpManager.gameState = "BDClear";
+
+            AllStop();
+        }
+
+
+
+            if (bdscoreController.score >= bdscoreController.goalScore)
         {
             // 스코어가 100점 이상시 게임 클리어
             //Debug.Log("스코어 100점");

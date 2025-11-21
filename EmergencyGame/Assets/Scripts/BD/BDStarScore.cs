@@ -37,7 +37,7 @@ public class BDStarScore : MonoBehaviour
         int starCount = 0;
 
         float timer = bdtimerController.totalTimer;
-        
+
         if (timer <= 180 && timer > 144)
         {
             animator.Play(Star4);
@@ -64,7 +64,7 @@ public class BDStarScore : MonoBehaviour
         }
         else
         {
-            animator.Play(Star0); 
+            animator.Play(Star0);
             starCount = 0;
             Debug.Log("별0");
         }
@@ -83,7 +83,7 @@ public class BDStarScore : MonoBehaviour
     //{
     //    if (nowAni != oldAni)
     //    {
-            
+
     //        oldAni = nowAni;
     //        animator.Play(nowAni);
     //        Debug.Log("별이미지 변경");

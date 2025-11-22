@@ -1,24 +1,77 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using Newtonsoft.Json;
 
 public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager Instance { get; private set; }
-
-    //public GameData gameData = new GameData(); // GameData를 싱글톤에서 사용
     public GameData gameData;
+
+
+    private string apiUrl = "http://localhost:8080/api/game/data/";
+    public void LoadGameData(int userId)
+    {
+        StartCoroutine(GetGameDataCoroutine(userId));
+    }
+
+    private IEnumerator GetGameDataCoroutine(int userId)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(apiUrl + userId);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            string json = request.downloadHandler.text;
+            GameData data = JsonUtility.FromJson<GameData>(json);
+            gameData.userId = data.userId;
+            gameData.starLevels = data.starLevels;
+            gameData.starLevelsSavedCount = data.starLevelsSavedCount;
+
+            Debug.Log("User ID: " + data.userId);
+            Debug.Log("Star Levels: " + string.Join(",", data.starLevels));
+            Debug.Log("Saved Count: " + data.starLevelsSavedCount);
+
+            // 이제 data.starLevels와 data.starLevelsSavedCount를 게임에 적용 가능
+        }
+        else
+        {
+            Debug.LogError("Error fetching game data: " + request.error);
+        }
+    }
+
+
 
 
     private void Awake()
     {
+
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // gameData 초기화
+            if (gameData == null)
+            {
+                gameData = new GameData();
+                gameData.starLevels = new int[4]; // 예: 씬 4개라면
+            }
+
+            // 커맨드라인에서 userId 읽기
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1 && int.TryParse(args[1], out int userId))
+            {
+                gameData.userId = userId;
+                Debug.Log("서버에서 전달받은 userId: " + userId);
+            }
+            else
+            {
+                gameData.userId = 0; // 기본값
+                Debug.Log("userId가 전달되지 않았습니다.");
+            }
+
+            LoadGameData(gameData.userId);
         }
         else
         {
@@ -26,7 +79,6 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    // 타이틀 씬에서 Instance가 없을 때 생성
     public static void EnsureExists()
     {
         if (Instance == null)
@@ -43,102 +95,21 @@ public class GameDataManager : MonoBehaviour
             gameData.starLevels[sceneIndex] = stars;
             if (sceneIndex >= gameData.starLevelsSavedCount)
                 gameData.starLevelsSavedCount = sceneIndex + 1;
-
         }
     }
 
     public int GetStar(int sceneIndex)
     {
         if (sceneIndex >= 0 && sceneIndex < gameData.starLevels.Length)
-        {
             return gameData.starLevels[sceneIndex];
-        }
         return 0;
     }
 
-
-    private void Start()
-    {
-        // 게임 시작 시 세션 확인 → toss → 나중에 게임 종료 시 Upload 준비
-        StartCoroutine(InitializeGame());
-    }
-
-    // 1️⃣ 게임 시작 초기화 코루틴 (모든 시작용 코루틴 연결)
-    private IEnumerator InitializeGame()
-    {
-        // 1. 세션에서 userId 가져오기
-        yield return StartCoroutine(GetUserIdFromSession());
-
-        // 2. Toss 호출 (userId 전달)
-        yield return StartCoroutine(TossUserId(sessionUserId));
-
-        // 이제 게임 진행 가능, 게임 종료 후 UploadGameData() 호출
-    }
-
-    private string sessionUserId; // 세션에서 가져온 userId 저장
-
-
-
-
-
-
-    public IEnumerator GetUserIdFromSession()
+    public IEnumerator UploadGameData()
     {
         string url = "http://localhost:8080/game/save";
 
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            yield return request.SendWebRequest();
-
-#if UNITY_2020_1_OR_NEWER
-            if (request.result != UnityWebRequest.Result.Success)
-#else
-            if (request.isNetworkError || request.isHttpError)
-#endif
-            {
-                Debug.Log("세션 확인 실패: " + request.error);
-            }
-            else
-            {
-                string userId = request.downloadHandler.text;
-                Debug.Log("세션 userId: " + userId);
-                // 이후 game/toss 호출 가능
-                StartCoroutine(TossUserId(userId));
-            }
-        }
-    }
-
-    // 2️⃣ game/toss 호출 (단순 userId 전달)
-    private IEnumerator TossUserId(string userId)
-    {
-        string url = "http://localhost:8080/game/toss";
-
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            yield return request.SendWebRequest();
-
-#if UNITY_2020_1_OR_NEWER
-            if (request.result != UnityWebRequest.Result.Success)
-#else
-            if (request.isNetworkError || request.isHttpError)
-#endif
-            {
-                Debug.Log("Toss 실패: " + request.error);
-            }
-            else
-            {
-                Debug.Log("Toss 성공, userId: " + request.downloadHandler.text);
-                // 이제 게임 종료 후 loadGameData 호출 가능
-            }
-        }
-    }
-
-    // 3️⃣ 게임 종료 후 실제 데이터 서버에 저장 (/game/load)
-    public IEnumerator UploadGameData()
-    {
-        string url = "http://localhost:8080/game/load";
-
-        string json = JsonConvert.SerializeObject(gameData);
+        string json = JsonUtility.ToJson(gameData);
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
@@ -149,10 +120,11 @@ public class GameDataManager : MonoBehaviour
 
             yield return request.SendWebRequest();
 
+
 #if UNITY_2020_1_OR_NEWER
             if (request.result != UnityWebRequest.Result.Success)
 #else
-            if (request.isNetworkError || request.isHttpError)
+if (request.isNetworkError || request.isHttpError)
 #endif
             {
                 Debug.Log("게임 데이터 전송 실패: " + request.error);
@@ -163,9 +135,9 @@ public class GameDataManager : MonoBehaviour
             }
         }
 
+
         Debug.Log("전송 JSON: " + json);
     }
-
 
 
 }

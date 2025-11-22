@@ -1774,6 +1774,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData:
+    gameId: 0
+    userId: 0
     starLevels: 00000000000000000000000000000000
     starLevelsSavedCount: 0
 --- !u!4 &514932042

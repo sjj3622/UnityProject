@@ -19,6 +19,8 @@ public class AmbulanceController : MonoBehaviour
         originalScale = transform.localScale;
         sr = GetComponent<SpriteRenderer>();
 
+
+
         if (player == null)
         {
             player = GameObject.FindWithTag("Player"); // 플레이어 태그로 자동 참조
@@ -40,6 +42,65 @@ public class AmbulanceController : MonoBehaviour
 
     void Update()
     {
+        if (BurngpManager.gameState == null)
+        {
+            recall();
+        }
+        else if (BurngpManager.gameState == "RescuerClear")
+        {
+            Debug.Log("출발");
+
+            // 출발 전에 위치 초기화 (한 번만)
+            if (!isMovingToTarget && !isReturning)
+            {
+                GameObject ground = GameObject.FindWithTag("Ground");
+                if (ground != null)
+                {
+                    float leftX = ground.GetComponent<Renderer>().bounds.min.x;
+                    float yPos = transform.position.y; // 원래 y 위치 유지
+                    transform.position = new Vector3(leftX, yPos, transform.position.z);
+
+                    if (player != null)
+                        player.transform.position = transform.position;
+                }
+                else
+                {
+                    Debug.LogError("씬에 Ground 오브젝트가 없습니다!");
+                }
+
+                // 상태 초기화
+                isMovingToTarget = true;
+                isReturning = false;
+
+                // 스프라이트 정렬 초기화
+                if (sr != null)
+                    sr.sortingOrder = 1;
+
+                // 스케일 초기화
+                transform.localScale = originalScale;
+            }
+
+            // recall() 계속 호출
+            recall();
+        }
+        else if (BurngpManager.gameState == "Rescuer")
+        {
+            if (player != null) player.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else if (BurngpManager.gameState == "FireFighter")
+        {
+            if (player != null) player.SetActive(false);
+            gameObject.SetActive(false);
+        }
+    }
+
+
+
+
+
+    void recall()
+    {
         float step = speed * Time.deltaTime;
 
         if (isMovingToTarget)
@@ -47,8 +108,8 @@ public class AmbulanceController : MonoBehaviour
             // 앰뷸런스 이동
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, transform.position.y, transform.position.z), step);
 
-            // 플레이어도 같이 이동
-            if (player != null)
+            // 목표 이동 중일 때만 플레이어도 이동
+            if (player != null && !isReturning)
                 player.transform.position = transform.position;
 
             // 목표 위치 도착
@@ -56,10 +117,9 @@ public class AmbulanceController : MonoBehaviour
             {
                 isMovingToTarget = false;
 
-                // 목표 도착 시 앰뷸런스가 플레이어보다 아래로 설정
                 if (sr != null) sr.sortingOrder = -1;
 
-                StartCoroutine(WaitAndReturn(1f)); // 1초 대기 후 돌아가기
+                StartCoroutine(WaitAndReturn(1f));
             }
         }
         else if (isReturning)
@@ -70,10 +130,11 @@ public class AmbulanceController : MonoBehaviour
             if (Mathf.Approximately(transform.position.x, returnX))
             {
                 isReturning = false;
-                gameObject.SetActive(false); // 필요 시 비활성화
+                gameObject.SetActive(false);
             }
         }
     }
+
 
     IEnumerator WaitAndReturn(float waitTime)
     {

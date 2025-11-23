@@ -13,6 +13,7 @@ public class Firecamera : MonoBehaviour
         if (player == null)
         {
             GameObject playerObj = GameObject.FindWithTag("Player");
+            
             if (playerObj != null)
                 player = playerObj.transform;
             else

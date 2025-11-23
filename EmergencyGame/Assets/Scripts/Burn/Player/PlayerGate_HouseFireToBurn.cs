@@ -38,7 +38,7 @@ public class PlayerGate_HouseFireToBurn : MonoBehaviour
         cooldownSet.Add(houseGate0);
 
         // 상태 저장(필요하다면)
-        BurngpManager.gameState = "BStart"; // 필요시 수정
+        BurngpManager.gameState = "FireFighter"; // 필요시 수정
 
         // Burn 씬으로 전환
         SceneManager.LoadScene("Burn");

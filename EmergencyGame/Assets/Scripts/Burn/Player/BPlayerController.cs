@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BPlayerController : MonoBehaviour
 {
+    BurnCanvas burnCanvas;
+
     Rigidbody2D rb;
     Animator animator;
 
     [Header("MOVE")]
     public float speed = 3.0f;
+    bool isGame = false;
     bool isStopped = false;
 
     Vector2 moveDir;
-    Vector2 lastDir = Vector2.down;
+    public Vector2 lastDir = Vector2.down;
 
     [Header("Spawn Position Fix")]
     public float groundOffsetY = -0.1f; // 소환 시 Y값 미세 조정
@@ -35,6 +40,7 @@ public class BPlayerController : MonoBehaviour
         isStopped = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        burnCanvas = FindAnyObjectByType<BurnCanvas>();
 
         // 초기 위치 Y값 조정
         Vector3 pos = transform.position;
@@ -52,21 +58,34 @@ public class BPlayerController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("중력 크기 :"+rb.gravityScale);
-        Debug.Log("isStopped :" + isStopped);
-        Debug.Log("게임 사태 :"+BurngpManager.gameState);
-        if (isStopped) return;   // 바닥 충돌 전 이동 금지
+
 
         // 플레이어 이동
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (BurngpManager.gameState == "BReady")
-            v = 0;
-        if(BurngpManager.gameState == "BStart")
+        if (BurngpManager.gameState == "Rescuer")
         {
-            rb.gravityScale = 0f; // BStart 상태일 때 중력 제거
+            isStopped = false;
+            v = 0;
         }
+        if(BurngpManager.gameState == "RescuerGame" && !isGame)
+        {
+            isStopped = false;
+            isGame = true;
+            v = 0;
+            speed = 5.0f;
+        }
+
+        if (BurngpManager.gameState == "FireFighter")
+        {
+            Destroy(gameObject);
+
+            //rb.gravityScale = 0f; // BStart 상태일 때 중력 제거
+        }
+
+        if (isStopped) return;  // 바닥 충돌 전 이동 금지
+
 
         moveDir = new Vector2(h, v).normalized;
 
@@ -81,19 +100,45 @@ public class BPlayerController : MonoBehaviour
             SetIdleAnimation();
         }
     }
+    private void LateUpdate()
+    {
+        ClampToCamera();
+    }
+
+    void ClampToCamera()
+    {
+        if (Camera.main == null) return;
+
+        Vector3 pos = transform.position;
+
+        // 카메라 좌표 변환
+        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
+        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane));
+
+        // 플레이어 스프라이트 반영
+        float halfWidth = GetComponent<SpriteRenderer>().bounds.extents.x;
+        float halfHeight = GetComponent<SpriteRenderer>().bounds.extents.y;
+
+        pos.x = Mathf.Clamp(pos.x, min.x + halfWidth, max.x - halfWidth);
+        pos.y = Mathf.Clamp(pos.y, min.y + halfHeight, max.y - halfHeight);
+
+        transform.position = pos;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
-{
-    if (collision.gameObject.CompareTag("Ground") && isStopped)
     {
-        Debug.Log("플레이어 바닥 착지");
-        isStopped = false;           // 이동 허용
-        BurngpManager.gameState = "BReady";
-
-        rb.gravityScale = 1f;        // 바닥에서는 중력 낮추기
-        rb.velocity = Vector2.zero;  // 순간 속도 초기화
+        if (collision.gameObject.CompareTag("Ground") && isStopped)
+        {
+            Debug.Log("플레이어 바닥 착지");
+           
+            if (BurngpManager.gameState == null)
+            {
+                burnCanvas.selectPanel.SetActive(true);
+            }
+            rb.gravityScale = 1f;        // 바닥에서는 중력 낮추기
+            rb.velocity = Vector2.zero;  // 순간 속도 초기화
+        }
     }
-}
 
 
 

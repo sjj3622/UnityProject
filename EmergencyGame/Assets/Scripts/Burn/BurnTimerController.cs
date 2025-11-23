@@ -8,7 +8,7 @@ using TMPro;
 public class BurnTimerController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    public float timerDuration = 300f;
+    public float timerDuration = 180f;
     public float totalTimer;
 
     public float timer;
@@ -23,9 +23,9 @@ public class BurnTimerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         // 게임 시작 시 실행
-        if (BDgpManager.gameState == "BDStart" && !timerRunning)
+        if (BurngpManager.gameState == "Rescuer" && !timerRunning)
         {
             timerRunning = true;
 
@@ -33,17 +33,20 @@ public class BurnTimerController : MonoBehaviour
 
         if (timerRunning)
         {
+           
             timer -= Time.deltaTime;
+
             if (timer <= 0)
             {
                 timer = 0;
                 timerRunning = false;
+                BDgpManager.gameState = "BOver";
             }
 
 
             UpdateTimerText();
         }
-        if (BDgpManager.gameState == "BDClear")
+        if (BDgpManager.gameState == "RescuerClear")
         {
             timerRunning = false;
 

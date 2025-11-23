@@ -8,6 +8,7 @@ public class PlayerGate_Burn : MonoBehaviour
     [Header("Gate Settings")]
     public string houseFireGateName = "playermove1-2";    // HouseFire 씬 도착 게이트 이름
     public GameObject burnGate0;                          // Burn 씬에서 플레이어가 충돌하는 게이트
+    public GameObject playerPrefab;
 
     [Header("Teleport Settings")]
     public float offsetX = 1f;
@@ -16,14 +17,26 @@ public class PlayerGate_Burn : MonoBehaviour
     private HashSet<GameObject> cooldownSet = new HashSet<GameObject>();
 
 
-    private void Start()
+
+    private void Awake()
     {
         // 플레이어를 씬 전환 후에도 유지
         GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
+
+        Debug.Log(player);
+        if (player == null)
         {
-            DontDestroyOnLoad(player);
+            // 없으면 생성
+            player = Instantiate(playerPrefab);
+            player.tag = "Player"; // 태그 보장
         }
+
+        DontDestroyOnLoad(player);
+    }
+
+    private void Start()
+    {
+        
     }
 
 
@@ -31,6 +44,7 @@ public class PlayerGate_Burn : MonoBehaviour
     {
         if (!col.CompareTag("Player")) return;
         if (cooldownSet.Contains(burnGate0)) return;
+        if (col.gameObject != playerPrefab) return;
 
         StartCoroutine(TeleportToHouseFire(col.gameObject));
     }
@@ -41,7 +55,7 @@ public class PlayerGate_Burn : MonoBehaviour
         cooldownSet.Add(burnGate0);
 
         // 상태 저장(필요하다면)
-        BurngpManager.gameState = "BStart";
+        BurngpManager.gameState = "FFStart";
 
         // HouseFire 씬으로 전환
         SceneManager.LoadScene("HouseFire");

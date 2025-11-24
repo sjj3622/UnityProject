@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BurnCanvas : MonoBehaviour
 {
     public GameObject fireFighterPrefab;
     public GameObject selectPanel;
 
+    BurngpManager burngpManager;
+
     void Start()
     {
+        burngpManager = FindAnyObjectByType<BurngpManager>();
         selectPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -27,19 +31,19 @@ public class BurnCanvas : MonoBehaviour
         BurngpManager.gameState = "FireFighter";
         Debug.Log(BurngpManager.gameState);
 
-        // ÇöÀç BPlayer Ã£±â
-        GameObject bPlayer = GameObject.Find("BPlayer");  // ÀÌ¸§ Á¤È®È÷ ¸ÂÃç¾ß ÇÔ
+        // í˜„ì¬ BPlayer ì°¾ê¸°
+        GameObject bPlayer = GameObject.Find("BPlayer(Clone)");  // ì´ë¦„ ì •í™•íˆ ë§ì¶°ì•¼ í•¨
 
         if (bPlayer != null)
         {
-            // À§Ä¡ ÀúÀå
+            // ìœ„ì¹˜ ì €ì¥
             Vector3 spawnPos = bPlayer.transform.position;
             Quaternion spawnRot = bPlayer.transform.rotation;
 
-            // ±âÁ¸ ÇÃ·¹ÀÌ¾î »èÁ¦
+            // ê¸°ì¡´ í”Œë ˆì´ì–´ ì‚­ì œ
             Destroy(bPlayer);
 
-            // FireFighter ÇÁ¸®ÆË »ı¼º
+            // FireFighter í”„ë¦¬íŒ ìƒì„±
             GameObject ff = Instantiate(fireFighterPrefab, spawnPos, spawnRot);
             ff.tag = "Player";
             DontDestroyOnLoad(ff);
@@ -52,5 +56,19 @@ public class BurnCanvas : MonoBehaviour
         BurngpManager.gameState = "Rescuer";
         Debug.Log(BurngpManager.gameState);
         selectPanel.SetActive(false);
+    }
+
+
+    public void AgainClick()
+    {
+        burngpManager.ClearPanel.SetActive(false);
+        BurngpManager.gameState = null;
+        SceneManager.LoadScene("Burn");
+    }
+
+    public void ExitClick()
+    {
+        BurngpManager.gameState = null;
+        SceneManager.LoadScene("Title");
     }
 }

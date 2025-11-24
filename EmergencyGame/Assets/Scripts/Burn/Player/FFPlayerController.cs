@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +17,7 @@ public class FFPlayerController : MonoBehaviour
     Vector2 lastDir = Vector2.down;
 
     [Header("Spawn Position Fix")]
-    public float groundOffsetY = -0.1f; // ¼ÒÈ¯ ½Ã Y°ª ¹Ì¼¼ Á¶Á¤
+    public float groundOffsetY = -0.1f; // ì†Œí™˜ ì‹œ Yê°’ ë¯¸ì„¸ ì¡°ì •
 
     [Header("Animation Names")]
     public string FFIdleF = "FFIdleF";
@@ -40,14 +39,14 @@ public class FFPlayerController : MonoBehaviour
         isStopped = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
 
-        // ÃÊ±â À§Ä¡ Y°ª Á¶Á¤
+
+        // ì´ˆê¸° ìœ„ì¹˜ Yê°’ ì¡°ì •
         Vector3 pos = transform.position;
         pos.y += groundOffsetY;
         transform.position = pos;
 
-        // ÃÊ±â ¾Ö´Ï¸ŞÀÌ¼Ç
+        // ì´ˆê¸° ì• ë‹ˆë©”ì´ì…˜
         nowAni = FFIdleF;
         oldAni = nowAni;
         animator.Play(nowAni);
@@ -61,11 +60,12 @@ public class FFPlayerController : MonoBehaviour
             nowAni = FFIdleRR;
             ChangeAnimation();
             isCollidingWithPatient = true;
+            
         }
 
 
-            // ÇÃ·¹ÀÌ¾î ÀÌµ¿
-            float h = Input.GetAxisRaw("Horizontal");
+        // í”Œë ˆì´ì–´ ì´ë™
+        float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         if (BurngpManager.gameState == "FireFighter")
@@ -73,9 +73,9 @@ public class FFPlayerController : MonoBehaviour
             isStopped = false;
             rb.gravityScale = 1f;
             v = 0;
-            
+
         }
-        if(BurngpManager.gameState == "FFStart")
+        if (BurngpManager.gameState == "FFStart")
         {
             if (SceneManager.GetActiveScene().name == "HouseFire")
             {
@@ -83,7 +83,7 @@ public class FFPlayerController : MonoBehaviour
             }
         }
 
-        if (isStopped) return;  // ¹Ù´Ú Ãæµ¹ Àü ÀÌµ¿ ±İÁö
+        if (isStopped) return;  // ë°”ë‹¥ ì¶©ëŒ ì „ ì´ë™ ê¸ˆì§€
 
 
         moveDir = new Vector2(h, v).normalized;
@@ -108,7 +108,7 @@ public class FFPlayerController : MonoBehaviour
             {
                 nowAni = FFIdleF;
                 ChangeAnimation();
-                rb.velocity = Vector2.zero;         // ÀÌµ¿ ¸ØÃã
+                rb.velocity = Vector2.zero;         // ì´ë™ ë©ˆì¶¤
             }
         }
     }

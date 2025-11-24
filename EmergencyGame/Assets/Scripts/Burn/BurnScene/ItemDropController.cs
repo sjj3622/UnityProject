@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemDropController : MonoBehaviour
 {
     public static ItemDropController instance;
 
 
-public GameObject[] ItemPrefab;
+    public GameObject[] ItemPrefab;
     public Transform[] ItemDrops;
+    public GameObject[] inventory;
     public float spawnInterval = 3f;
-    private int spawnCount = 1; // µ¿½Ã¿¡ »ı¼ºµÇ´Â ¾ÆÀÌÅÛ ¼ö
+    private int spawnCount = 1; // ë™ì‹œì— ìƒì„±ë˜ëŠ” ì•„ì´í…œ ìˆ˜
 
     private bool isStart = false;
     private List<float> itemProbabilities = new List<float>();
@@ -25,7 +27,7 @@ public GameObject[] ItemPrefab;
         for (int i = 0; i < 10; i++)
             itemProbabilities.Add(10f);
 
-        // TimerController ÂüÁ¶
+        // TimerController ì°¸ì¡°
         timerController = FindAnyObjectByType<BurnTimerController>();
     }
 
@@ -36,7 +38,17 @@ public GameObject[] ItemPrefab;
             isStart = true;
             StartCoroutine(SpawnItemRoutine());
             StartCoroutine(SpawnCountRoutine());
-            Debug.Log("¾ÆÀÌÅÛ ½ºÆù ½ÃÀÛ!");
+            Debug.Log("ì•„ì´í…œ ìŠ¤í° ì‹œì‘!");
+
+            foreach (GameObject inv in inventory)
+            {
+                if (inv != null)
+                {
+                    Image img = inv.GetComponent<Image>();
+                    if (img != null)
+                        img.color = new Color(1f, 1f, 1f, 0.3f); // íšŒìƒ‰(í˜¹ì€ ë°˜íˆ¬ëª…)
+                }
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
@@ -59,7 +71,7 @@ public GameObject[] ItemPrefab;
     void SpawnRandomItem()
     {
         int itemIndex = GetRandomItemIndex();
-        if (itemIndex == -1) { Debug.Log("½ºÆù °¡´ÉÇÑ ¾ÆÀÌÅÛ ¾øÀ½"); return; }
+        if (itemIndex == -1) { Debug.Log("ìŠ¤í° ê°€ëŠ¥í•œ ì•„ì´í…œ ì—†ìŒ"); return; }
 
         int dropIndex = Random.Range(0, ItemDrops.Length);
         Vector3 pos = ItemDrops[dropIndex].position;
@@ -70,10 +82,10 @@ public GameObject[] ItemPrefab;
         ItemController ic = obj.GetComponent<ItemController>();
         ic.itemIndex = itemIndex;
 
-        // ÇÃ·¹ÀÌ¾î Ãæµ¹ ½Ã ÀÌº¥Æ® ±¸µ¶
+        // í”Œë ˆì´ì–´ ì¶©ëŒ ì‹œ ì´ë²¤íŠ¸ êµ¬ë…
         ic.OnCollected += HandleItemCollected;
 
-        Debug.Log("»ı¼ºµÊ: Item " + itemIndex + " À§Ä¡: " + pos);
+        Debug.Log("ìƒì„±ë¨: Item " + itemIndex + " ìœ„ì¹˜: " + pos);
     }
 
     int GetRandomItemIndex()
@@ -102,10 +114,26 @@ public GameObject[] ItemPrefab;
         if (index >= 5)
         {
             specialCollected[index - 5] = true;
-            for (int i = 0; i < 5; i++) itemProbabilities[i] += 1;
+
+            // ê¸°ë³¸ ì•„ì´í…œ í™•ë¥  ì¦ê°€
+            for (int i = 0; i < 5; i++)
+                itemProbabilities[i] += 1;
+
+            // í•´ë‹¹ inventory ì•„ì´ì½˜ì„ ì§„í•˜ê²Œ ë³€ê²½
+            int invIndex = index - 5; // 5â†’0, 6â†’1, 7â†’2, 8â†’3, 9â†’4
+
+            if (invIndex >= 0 && invIndex < inventory.Length)
+            {
+                Image img = inventory[invIndex].GetComponent<Image>();
+                if (img != null)
+                    img.color = new Color(1f, 1f, 1f, 1f);  // ì§„í•˜ê²Œ í‘œì‹œ
+            }
+
             CheckSpecialClear();
         }
     }
+
+
 
     void CheckSpecialClear()
     {
@@ -113,10 +141,10 @@ public GameObject[] ItemPrefab;
             if (!specialCollected[i]) return;
 
         BurngpManager.gameState = "RescuerClear";
-        Debug.Log("RescuerClear! ¸ğµç 5~9 ¾ÆÀÌÅÛ ¼öÁı ¿Ï·á");
+        Debug.Log("RescuerClear! ëª¨ë“  5~9 ì•„ì´í…œ ìˆ˜ì§‘ ì™„ë£Œ");
     }
 
-    // ÇÃ·¹ÀÌ¾î ¼Óµµ Áõ°¡/°¨¼Ò Ã³¸®
+    // í”Œë ˆì´ì–´ ì†ë„ ì¦ê°€/ê°ì†Œ ì²˜ë¦¬
     private void HandleItemCollected(int index, BPlayerController player)
     {
         if (player == null) return;
@@ -124,38 +152,38 @@ public GameObject[] ItemPrefab;
 
         if (index >= 0 && index <= 4)
         {
-            player.speed = Mathf.Max(0f, player.speed - 1f); // ÃÖ¼Ò ¼Óµµ 0
-            Debug.Log("½ºÇÇµå -1 :" + player.speed);
+            player.speed = Mathf.Max(0f, player.speed - 1f); // ìµœì†Œ ì†ë„ 0
+            Debug.Log("ìŠ¤í”¼ë“œ -1 :" + player.speed);
         }
         else if (index >= 5 && index <= 9)
         {
             player.speed += 1f;
-            Debug.Log("½ºÇÇµå +1 :"+player.speed);
+            Debug.Log("ìŠ¤í”¼ë“œ +1 :" + player.speed);
         }
-        // speed°¡ 0ÀÌ¸é °ÔÀÓ ¿À¹ö
+        // speedê°€ 0ì´ë©´ ê²Œì„ ì˜¤ë²„
         if (player.speed <= 0f)
         {
             BurngpManager.gameState = "BOver";
-            Debug.Log("ÇÃ·¹ÀÌ¾î ¼Óµµ 0! °ÔÀÓ ¿À¹ö");
+            Debug.Log("í”Œë ˆì´ì–´ ì†ë„ 0! ê²Œì„ ì˜¤ë²„");
         }
 
         OnItemCollected(index);
     }
 
-    // Timer ±âÁØ 20ÃÊ¸¶´Ù spawnCount Áõ°¡
+    // Timer ê¸°ì¤€ 20ì´ˆë§ˆë‹¤ spawnCount ì¦ê°€
     IEnumerator SpawnCountRoutine()
     {
-        float lastTime = timerController.timerDuration; // 180ÃÊ ½ÃÀÛ
+        float lastTime = timerController.timerDuration; // 180ì´ˆ ì‹œì‘
         while (true)
         {
             if (timerController != null)
             {
                 float currentTime = timerController.GetCurrentTime();
-                // 20ÃÊ ´ÜÀ§ °æ°ú È®ÀÎ
+                // 20ì´ˆ ë‹¨ìœ„ ê²½ê³¼ í™•ì¸
                 if (lastTime - currentTime >= 20f)
                 {
-                    spawnCount += 1;  // »ı¼º °³¼ö Áõ°¡
-                    lastTime -= 20f;  // ´ÙÀ½ 20ÃÊ ´ÜÀ§ Ã¼Å©
+                    spawnCount += 1;  // ìƒì„± ê°œìˆ˜ ì¦ê°€
+                    lastTime -= 20f;  // ë‹¤ìŒ 20ì´ˆ ë‹¨ìœ„ ì²´í¬
                 }
             }
             yield return new WaitForSeconds(1f);

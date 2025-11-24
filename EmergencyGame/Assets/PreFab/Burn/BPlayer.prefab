@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6257296657083428794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78, y: -3.42, z: 0}
+  m_LocalPosition: {x: -4.7575064, y: -3.2288098, z: -0.76309997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  lastDir: {x: 0, y: -1}
+  groundOffsetY: -0.1
   stopUPAni: BPlayerIdleBack
   stopDOWNAni: BPlayerIdle
   stopLEFTAni: BPlayerIdleLeft

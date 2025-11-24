@@ -8,15 +8,21 @@ public class BurngpManager : MonoBehaviour
     SmokeGateController smokeGateController;
     BurnTimerController burnTimerController;
     AmbulanceController ambulanceController;
+    
+
     public GameObject patient;
     public GameObject fireFighterPrefab;
     public GameObject ClearPanel;
+    public GameObject IconPanel;
+
 
     public static string gameState;
 
     private bool ispatient = false;
+    private bool isPanel = false;
 
-    private float moveSpeed = 5f;  // fireFighter ÀÌµ¿ ¼Óµµ
+
+    private float moveSpeed = 5f;  // fireFighter ì´ë™ ì†ë„
 
     private void Start()
     {
@@ -24,7 +30,9 @@ public class BurngpManager : MonoBehaviour
         smokeGateController = FindAnyObjectByType<SmokeGateController>();
         burnTimerController = FindAnyObjectByType<BurnTimerController>();
         ambulanceController = FindAnyObjectByType<AmbulanceController>();
+        
         ClearPanel.SetActive(false);
+        IconPanel.SetActive(false);
     }
 
     void Update()
@@ -33,32 +41,40 @@ public class BurngpManager : MonoBehaviour
         {
             StartCoroutine(SpawnSequence());
             ispatient = true;
+            
         }
         if (gameState == "RescuerClear")
         {
-            Debug.Log("gameState :" + gameState);
+            
             burnTimerController.timerRunning = false;
             itemDropController.gameObject.SetActive(false);
             smokeGateController.gameObject.SetActive(false);
-            ambulanceController.gameObject.SetActive(true);
-            //ClearPanel.SetActive(true);
+            IconPanel.SetActive(false);
+
+            if (GameObject.FindWithTag("Ambulance") == null && isPanel)
+            {
+                ClearPanel.SetActive(true);
+            }
+            isPanel = true;
 
         }
+
+
     }
 
     private IEnumerator SpawnSequence()
     {
-        // 1. playermove1-1 Ã£±â
+        // 1. playermove1-1 ì°¾ê¸°
         GameObject playermove = GameObject.Find("playermove1-1");
         if (playermove == null) yield break;
 
-        // 2. BPlayer ±âÁØ X+1 À§Ä¡¿¡ fireFighterPrefab »ı¼º
-        GameObject BPlayer = GameObject.Find("BPlayer");
+        // 2. BPlayer ê¸°ì¤€ X+1 ìœ„ì¹˜ì— fireFighterPrefab ìƒì„±
+        GameObject BPlayer = GameObject.Find("BPlayer(Clone)");
         if (BPlayer == null) yield break;
         Vector3 fireFighterSpawnPos = BPlayer.transform.position + Vector3.right * 1.0f;
         GameObject fireFighter = Instantiate(fireFighterPrefab, fireFighterSpawnPos, Quaternion.identity);
 
-        // 3. fireFighterPrefabÀ» playermove1-1 À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿
+        // 3. fireFighterPrefabì„ playermove1-1 ìœ„ì¹˜ë¡œ ë¶€ë“œëŸ½ê²Œ ì´ë™
         Vector3 targetPos = playermove.transform.position;
         while (Vector3.Distance(fireFighter.transform.position, targetPos) > 0.01f)
         {
@@ -66,18 +82,18 @@ public class BurngpManager : MonoBehaviour
             yield return null;
         }
 
-        // 4. ÀÌµ¿ ¿Ï·á ÈÄ fireFighter Á¦°Å
+        // 4. ì´ë™ ì™„ë£Œ í›„ fireFighter ì œê±°
         Destroy(fireFighter);
 
-        // 5. 3ÃÊ ´ë±â
+        // 5. 3ì´ˆ ëŒ€ê¸°
         yield return new WaitForSeconds(3f);
 
-        // 6. patient¿Í fireFighterPrefabÀ» ÇÃ·¹ÀÌ¾î ¾Õ À§Ä¡(-1 ¹æÇâ)¿¡ ¼ÒÈ¯
+        // 6. patientì™€ fireFighterPrefabì„ í”Œë ˆì´ì–´ ì• ìœ„ì¹˜(-1 ë°©í–¥)ì— ì†Œí™˜
         Vector3 frontPos = playermove.transform.position + playermove.transform.right * -1.0f;
         Instantiate(patient, frontPos, playermove.transform.rotation);
         GameObject fireFighter2 = Instantiate(fireFighterPrefab, frontPos, Quaternion.identity);
 
-        // 7. 1ÃÊ ´ë±â ÈÄ fireFighterPrefab Á¦°Å
+        // 7. 1ì´ˆ ëŒ€ê¸° í›„ fireFighterPrefab ì œê±°
         yield return new WaitForSeconds(1f);
         Destroy(fireFighter2);
     }

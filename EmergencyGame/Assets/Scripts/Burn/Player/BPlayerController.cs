@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BPlayerController : MonoBehaviour
@@ -64,7 +63,7 @@ public class BPlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (BurngpManager.gameState == "Rescuer")
+        if (BurngpManager.gameState == "Rescuer" || BurngpManager.gameState == "RescuerClear")
         {
             isStopped = false;
             v = 0;
@@ -125,20 +124,20 @@ public class BPlayerController : MonoBehaviour
         transform.position = pos;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground") && isStopped)
-        {
-            Debug.Log("플레이어 바닥 착지");
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground") && isStopped)
+    //    {
+    //        Debug.Log("플레이어 바닥 착지");
            
-            if (BurngpManager.gameState == null)
-            {
-                burnCanvas.selectPanel.SetActive(true);
-            }
-            rb.gravityScale = 1f;        // 바닥에서는 중력 낮추기
-            rb.velocity = Vector2.zero;  // 순간 속도 초기화
-        }
-    }
+    //        if (BurngpManager.gameState == null)
+    //        {
+    //            burnCanvas.selectPanel.SetActive(true);
+    //        }
+    //        rb.gravityScale = 1f;        // 바닥에서는 중력 낮추기
+    //        rb.velocity = Vector2.zero;  // 순간 속도 초기화
+    //    }
+    //}
 
 
 

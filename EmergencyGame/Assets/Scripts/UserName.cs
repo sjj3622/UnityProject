@@ -6,24 +6,24 @@ public class UserName : MonoBehaviour
 {
     void Update()
     {
-        // ½ÇÇà ½Ã Àü´ŞµÈ ¸í·É¾î ÀÎÀÚ °¡Á®¿À±â
+        // ì‹¤í–‰ ì‹œ ì „ë‹¬ëœ ëª…ë ¹ì–´ ì¸ì ê°€ì ¸ì˜¤ê¸°
         string[] args = System.Environment.GetCommandLineArgs();
 
-        // args[0]Àº ½ÇÇà ÆÄÀÏ °æ·Î
+        // args[0]ì€ ì‹¤í–‰ íŒŒì¼ ê²½ë¡œ
         string userId = args.Length > 1 ? args[1] : "guest";
-        string Name = args.Length > 2 ? args[2] : "°Ô½ºÆ®";
+        string Name = args.Length > 2 ? args[2] : "ê²ŒìŠ¤íŠ¸";
 
         Debug.Log("UserId: " + userId);
         Debug.Log("UserName: " + Name);
 
-        // TextMeshPro µî ÅØ½ºÆ® ¿ÀºêÁ§Æ®¿¡ Àû¿ë
-        var textObj = GameObject.Find("PlayerName"); // ¾À¿¡ ÀÖ´Â Text ¿ÀºêÁ§Æ® ÀÌ¸§
+        // TextMeshPro ë“± í…ìŠ¤íŠ¸ ì˜¤ë¸Œì íŠ¸ì— ì ìš©
+        var textObj = GameObject.Find("PlayerName"); // ì”¬ì— ìˆëŠ” Text ì˜¤ë¸Œì íŠ¸ ì´ë¦„
         if (textObj != null)
         {
             var textComponent = textObj.GetComponent<UnityEngine.UI.Text>();
             if (textComponent != null)
             {
-                textComponent.text = Name + " ´Ô";
+                textComponent.text = Name + " ë‹˜";
             }
         }
     }

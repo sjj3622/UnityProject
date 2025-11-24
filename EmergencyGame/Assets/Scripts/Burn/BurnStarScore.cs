@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BDStarScore : MonoBehaviour
+public class BurnStarScore : MonoBehaviour
 {
     Animator animator;
 
@@ -13,31 +15,35 @@ public class BDStarScore : MonoBehaviour
 
     //string nowAni = "", oldAni = "";
 
-    public int sceneIndex = 2; // 씬 인덱스 지정
-    private BDTimerController bdtimerController;
+    public int sceneIndex = 3; // 씬 인덱스 지정
+    BurnTimerController burnTimerController;
 
     void Start()
     {
-        bdtimerController = FindObjectOfType<BDTimerController>();
+        burnTimerController = FindObjectOfType<BurnTimerController>();
         animator = GetComponent<Animator>();
 
-        if (bdtimerController == null)
+        if (burnTimerController == null)
             Debug.LogWarning("씬에서 TimerController를 찾을 수 없습니다!");
     }
 
     void Update()
     {
+        Debug.Log(burnTimerController.timer);
+        Debug.Log(burnTimerController.totalTimer);
         UpdateStarScore();
+
     }
 
     void UpdateStarScore()
     {
-        if (bdtimerController == null) return;
+        if (burnTimerController == null) return;
 
         int starCount = 0;
 
-        float timer = bdtimerController.totalTimer;
+        float timer = burnTimerController.totalTimer;
 
+        
         if (timer <= 180 && timer > 144)
         {
             animator.Play(Star4);
@@ -71,22 +77,11 @@ public class BDStarScore : MonoBehaviour
 
         //ChangeAnimation();
 
-        //  GameDataManager에 저장
+        // ⭐ GameDataManager에 저장
         if (GameDataManager.Instance != null)
             GameDataManager.Instance.SetStar(sceneIndex, starCount);
         Debug.Log("starCount :" + starCount);
 
         GameDataManager.Instance.UploadGameData();
     }
-
-    //void ChangeAnimation()
-    //{
-    //    if (nowAni != oldAni)
-    //    {
-
-    //        oldAni = nowAni;
-    //        animator.Play(nowAni);
-    //        Debug.Log("별이미지 변경");
-    //    }
-    //}
 }

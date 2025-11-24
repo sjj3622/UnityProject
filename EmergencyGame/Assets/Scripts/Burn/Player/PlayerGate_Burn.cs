@@ -14,25 +14,27 @@ public class PlayerGate_Burn : MonoBehaviour
     public float offsetX = 1f;
     public float cooldownTime = 1f;
 
+    private GameObject playerInstance;
     private HashSet<GameObject> cooldownSet = new HashSet<GameObject>();
 
 
 
-    private void Awake()
-    {
-        // 플레이어를 씬 전환 후에도 유지
-        GameObject player = GameObject.FindWithTag("Player");
+    //private void Awake()
+    //{
+    //    // 플레이어를 씬 전환 후에도 유지
+    //    GameObject player = GameObject.FindWithTag("Player");
 
-        Debug.Log(player);
-        if (player == null)
-        {
-            // 없으면 생성
-            player = Instantiate(playerPrefab);
-            player.tag = "Player"; // 태그 보장
-        }
+    //    Debug.Log(player);
+    //    if (player == null)
+    //    {
+    //        // 없으면 생성
+    //        player = Instantiate(playerPrefab);
+    //        player.tag = "Player"; // 태그 보장
+    //    }
 
-        DontDestroyOnLoad(player);
-    }
+    //    playerInstance = player;
+    //    DontDestroyOnLoad(player);
+    //}
 
     private void Start()
     {
@@ -42,10 +44,15 @@ public class PlayerGate_Burn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!col.CompareTag("Player")) return;
-        if (cooldownSet.Contains(burnGate0)) return;
-        if (col.gameObject != playerPrefab) return;
 
+        if (!col.CompareTag("Player")) return;
+        
+        if (cooldownSet.Contains(burnGate0)) return;
+        
+        //if (col.gameObject != playerInstance) return;
+        
+        if (BurngpManager.gameState != "FireFighter") return;
+        
         StartCoroutine(TeleportToHouseFire(col.gameObject));
     }
 

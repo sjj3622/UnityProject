@@ -40,17 +40,19 @@ public class BurnTimerController : MonoBehaviour
             {
                 timer = 0;
                 timerRunning = false;
-                BDgpManager.gameState = "BOver";
+                BurngpManager.gameState = "BOver";
             }
 
 
             UpdateTimerText();
         }
-        if (BDgpManager.gameState == "RescuerClear")
+        if (BurngpManager.gameState == "RescuerClear")
         {
             timerRunning = false;
 
             totalTimer = timer;
+
+            
         }
 
     }

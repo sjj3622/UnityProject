@@ -34,11 +34,11 @@ public class TimerController : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
 
-            if (currentScene == "CPR" && GameManager.gameState == "GameClear")
-            {
-                Destroy(gameObject);
-                Debug.Log("삭제");
-            }
+            //if (currentScene == "CPR" && GameManager.gameState == "GameClear")
+            //{
+            //    Destroy(gameObject);
+            //    Debug.Log("삭제");
+            //}
 
         }
     }
@@ -96,6 +96,8 @@ public class TimerController : MonoBehaviour
             {
                 timer = 0;
                 timerRunning = false;
+                GameManager.gameState = "CPROver";
+                Debug.Log(GameManager.gameState);
             }
 
             if (timerText != null)

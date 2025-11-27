@@ -116,5 +116,28 @@ public class PlayerControllerKey : MonoBehaviour
         if (animator != null)
             animator.Play(nowAni); // 안전하게 호출
     }
+    void LateUpdate()
+    {
+        if (Camera.main == null) return;
+
+        Camera cam = Camera.main;
+        Vector3 pos = transform.position;
+
+        // 카메라 높이/너비 계산
+        float camHeight = cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
+
+        // 경계값(World 좌표)
+        float minX = cam.transform.position.x - camWidth;
+        float maxX = cam.transform.position.x + camWidth;
+        float minY = cam.transform.position.y - camHeight;
+        float maxY = cam.transform.position.y + camHeight;
+
+        // 플레이어 위치 제한
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+        transform.position = pos;
+    }
 
 }

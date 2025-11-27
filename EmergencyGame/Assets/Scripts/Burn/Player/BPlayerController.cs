@@ -71,7 +71,7 @@ public class BPlayerController : MonoBehaviour
         if(BurngpManager.gameState == "RescuerGame" && !isGame)
         {
             isStopped = false;
-            isGame = true;
+            //isGame = true;
             v = 0;
             speed = 5.0f;
         }

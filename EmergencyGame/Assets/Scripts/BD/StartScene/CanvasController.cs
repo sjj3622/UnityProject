@@ -75,7 +75,7 @@ public class CanvasController : MonoBehaviour
     public void Again()
     {
         Debug.Log("클릭");
-        BDgpManager.gameState = "";
+        BDgpManager.gameState = null;
 
         if (BDSceneStateManager.instance != null)
         {
@@ -96,7 +96,7 @@ public class CanvasController : MonoBehaviour
     {
         Debug.Log("클릭");
         BDSceneStateManager.instance.ClearSaved();
-        BDgpManager.gameState = "";
+        BDgpManager.gameState = null;
 
         GameObject obj = GameObject.Find("BDTimer");
         if (obj != null)

@@ -1,18 +1,18 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HMPlayerController : MonoBehaviour
 {
-    static HMPlayerController instance;
+   
 
     Rigidbody2D rb;
     Animator animator;
 
     [Header("MOVE")]
     public float speed = 3.0f;
-    public bool isStopped = false;
-    bool isJump = true;
+    public float jumpForce = 6.5f;
+    bool isJump = false; // false = 바닥에 있음, true = 공중
 
-    Vector2 moveDir;
     Vector2 lastDir = Vector2.down;
 
     [Header("Animation Names")]
@@ -29,33 +29,26 @@ public class HMPlayerController : MonoBehaviour
     public string JumpL = "HMIdleJump";
     public string JumpR = "HMIdleJR";
 
+    public string AkL = "HMIdleAL";
+    public string AKR = "HMIdleAR";
+
+    public string DL = "HMIdleDL";
+    public string DR = "HMIdleDR";
 
 
     string nowAni = "", oldAni = "";
 
     void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        instance = this;
         DontDestroyOnLoad(gameObject);
+        
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
         transform.localScale = new Vector2(1f, 1f); // 기본 스케일
-
-        if (rb != null)
-        {
-            rb.gravityScale = 0f;
-        }
 
         nowAni = stopDOWNAni;
         oldAni = nowAni;
@@ -64,58 +57,83 @@ public class HMPlayerController : MonoBehaviour
 
     void Update()
     {
-        if (animator == null || rb == null) return;
-
-        
+        if (SceneManager.GetActiveScene().name == "Title")
+        {
+            Destroy(gameObject);
+        }
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        Vector2 inputDir = new Vector2(h, v);
 
-        
-
-        // 게임 시작 상태 처리
-        if (HMgpManager.gameState == "HMStart")
+        // gameState가 null일 때 (자유이동 + 중력0 + run/idle 애니)
+        if (HMgpManager.gameState == null)
         {
+            rb.gravityScale = 0f;
 
-            transform.localScale = new Vector2(0.5f, 0.5f);
-            rb.gravityScale = 3.0f;
-            v = 0;
-            if (!isJump)
+            if (inputDir.sqrMagnitude > 0.01f) // 움직일 때
             {
-                isStopped = false;
-                rb.gravityScale = 5.0f;
-               
+                rb.velocity = inputDir.normalized * speed;
+                SetRunAnimation(inputDir.normalized);
+                lastDir = inputDir.normalized; // 마지막 방향 저장
+            }
+            else // 멈췄을 때
+            {
+                rb.velocity = Vector2.zero;
+                SetIdleAnimation();
             }
 
+            return;
         }
-        if (isStopped) return;
 
-
-        moveDir = new Vector2(h, v);
-
-        if (moveDir.sqrMagnitude > 0.01f)
+        //  gameState가 HMStart일 때 (좌우이동 + 점프)
+        if (HMgpManager.gameState == "HMStart")
         {
-            Vector2 dir = moveDir.normalized;
-            rb.velocity = dir * speed;
-            SetMoveAnimation(dir);
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-            SetIdleAnimation();
-        }
+            transform.localScale = new Vector2(0.5f, 0.5f);
+            rb.gravityScale = 3f;
+            rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
+            if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+            {
+                Jump();
+            }
+            if (isJump)
+            {
+                if (h > 0) nowAni = JumpR;
+                else if (h < 0) nowAni = JumpL;
+                ChangeAnimation();
+            }
 
+            if (!isJump)
+            {
+                if (h > 0) nowAni = runRIGHTAni;
+                else if (h < 0) nowAni = runLEFTAni;
+                else nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
+                ChangeAnimation();
+            }
+
+            if (h != 0) lastDir = new Vector2(h, 0);
+        }
     }
 
-    void SetMoveAnimation(Vector2 dir)
+    //  점프 + 방향 애니메이션
+    void Jump()
     {
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        isJump = true;
+
+        nowAni = lastDir.x < 0 ? JumpL : JumpR;
+        ChangeAnimation();
+    }
+
+    void SetRunAnimation(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) // 좌우 우선
             nowAni = dir.x > 0 ? runRIGHTAni : runLEFTAni;
-        else
+        else // 상하 우선
             nowAni = dir.y > 0 ? runUPAni : runDOWNAni;
 
-        lastDir = dir;
         ChangeAnimation();
     }
 
@@ -138,18 +156,13 @@ public class HMPlayerController : MonoBehaviour
         }
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("바닥에 닿음 (물리 충돌)");
             isJump = false;
-        }
-        else
-        {
-            isJump = true;
+            nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
+            ChangeAnimation();
         }
     }
-
 }

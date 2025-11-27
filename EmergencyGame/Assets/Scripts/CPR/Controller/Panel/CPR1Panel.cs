@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CPR1Panel : MonoBehaviour
 {
     public GameObject GamePanel;
     public GameObject ClaerPanel;
     public GameObject TimerText;
+    public Text timerText;
 
     public SceneStateManager SM;
 
@@ -50,6 +52,7 @@ public class CPR1Panel : MonoBehaviour
     {
         GameManager.gameState = null;
         TimerText.SetActive(false);
+        timerText.text = "";
         SM.ClearSaved();
         SceneManager.LoadScene("CPR");
     }

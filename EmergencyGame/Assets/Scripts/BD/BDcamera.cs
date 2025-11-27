@@ -58,17 +58,6 @@ public class BDcamera : MonoBehaviour
         HandleZoom();
         ClampCameraPosition();
 
-        //  특정 상태일 때 카메라 초기화
-        //if (BDgpManager.gameState == "BDClear" && !isReset)
-        //{
-        //    ResetCamera();
-        //    isReset = true; // 중복 초기화 방지
-        //    this.enabled = false;
-        //}
-        //else if (BDgpManager.gameState != "BDClear")
-        //{
-        //    isReset = false; // 상태가 바뀌면 다시 초기화 가능하게
-        //}
     }
 
     void HandleCameraDrag()

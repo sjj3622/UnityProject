@@ -58,8 +58,12 @@ public class HeartSpeedControllerOne : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.gameState == "CPROver")
+        {
+            SceneManager.LoadScene("CPR");
+        }
 
-       
+
         if (GameManager.gameState != "gameStart") return;
         if (animator == null) return;
 
@@ -86,6 +90,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
             SceneManager.LoadScene("CPR");
         }
+        
     }
 
     void Stage1Logic()

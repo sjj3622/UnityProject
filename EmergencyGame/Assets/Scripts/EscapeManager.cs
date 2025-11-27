@@ -82,11 +82,20 @@ public class EscapeManager : MonoBehaviour
         // "Bleeding" 또는 "BleedingGamepalying" 씬이면
         else if (currentScene == "Bleeding" || currentScene == "BleedingGamepalying")
         {
-            BDgpManager.gameState = "";
+            BDgpManager.gameState = null;
             BDSceneStateManager.instance.ClearSaved();
         }
+        else if (currentScene == "Burn" || currentScene == "HouseFire")
+        {
+            BurngpManager.gameState = null;
+        }
+        else if( currentScene == "HM" || currentScene == "HMGamePlaying")
+        {
+            HMgpManager.gameState = null;
 
-        warningPanel.SetActive(false);
+        }
+
+            warningPanel.SetActive(false);
         SceneManager.LoadScene("Title");
     }
 

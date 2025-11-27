@@ -498,6 +498,7 @@ MonoBehaviour:
   GamePanel: {fileID: 1178109419}
   ClaerPanel: {fileID: 1645595311}
   TimerText: {fileID: 1667779547}
+  timerText: {fileID: 1667779548}
   SM: {fileID: 1863524609}
 --- !u!1001 &148367822
 PrefabInstance:
@@ -611,6 +612,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData:
+    gameId: 0
+    userId: 0
     starLevels: 00000000000000000000000000000000
     starLevelsSavedCount: 0
 --- !u!4 &261276864
@@ -3180,6 +3183,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7294362770829666681, guid: 83f50a026c7e9ae46977f7f377fc6ca9, type: 3}
   m_PrefabInstance: {fileID: 3835067980650512626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1667779548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5346996060943122904, guid: 83f50a026c7e9ae46977f7f377fc6ca9, type: 3}
+  m_PrefabInstance: {fileID: 3835067980650512626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667779547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1771121080
 GameObject:
   m_ObjectHideFlags: 0

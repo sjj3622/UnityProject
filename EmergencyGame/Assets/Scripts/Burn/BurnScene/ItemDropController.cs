@@ -84,6 +84,7 @@ public class ItemDropController : MonoBehaviour
 
         // 플레이어 충돌 시 이벤트 구독
         ic.OnCollected += HandleItemCollected;
+        ic.OnPatientCollected += HandlePatientCollected;
 
         Debug.Log("생성됨: Item " + itemIndex + " 위치: " + pos);
     }
@@ -169,6 +170,8 @@ public class ItemDropController : MonoBehaviour
 
         OnItemCollected(index);
     }
+
+
 
     // Timer 기준 20초마다 spawnCount 증가
     IEnumerator SpawnCountRoutine()

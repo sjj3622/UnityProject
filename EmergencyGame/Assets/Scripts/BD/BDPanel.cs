@@ -24,7 +24,8 @@ public class BDPanel : MonoBehaviour
 
     public void ExitClick()
     {
-        
+        BDgpManager.gameState = "";
+        BDSceneStateManager.ClearSaved();
         SceneManager.LoadScene("Title");
     }
 

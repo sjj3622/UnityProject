@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     TimerController timerController;
     
+    
 
     public static string gameState;
     public GateController gate;
@@ -111,6 +112,13 @@ public class GameManager : MonoBehaviour
         if(timer.timer <= 0 && panel.GamePanel.activeSelf)
         {
             StartCoroutine(GameOver());
+        }
+
+        if(GameManager.gameState == "CPROver")
+        {
+            panel.GamePanel.SetActive(true);
+            StartCoroutine(GameOver());
+            
         }
 
     }

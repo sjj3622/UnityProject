@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class BurnTimerController : MonoBehaviour
+public class HMTimerController : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public float timerDuration = 180f;
@@ -23,14 +23,9 @@ public class BurnTimerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            timer -= 20f;
-        }
-
-
-            // 게임 시작 시 실행
-            if (BurngpManager.gameState == "Rescuer" && !timerRunning)
+        
+        // 게임 시작 시 실행
+        if (HMgpManager.gameState == "HMStart" && !timerRunning)
         {
             timerRunning = true;
 
@@ -38,26 +33,26 @@ public class BurnTimerController : MonoBehaviour
 
         if (timerRunning)
         {
-           
+
             timer -= Time.deltaTime;
 
             if (timer <= 0)
             {
                 timer = 0;
                 timerRunning = false;
-                BurngpManager.gameState = "BOver";
+                HMgpManager.gameState = "HMOver";
             }
 
 
             UpdateTimerText();
         }
-        if (BurngpManager.gameState == "RescuerClear")
+        if (HMgpManager.gameState == "HMClear")
         {
             timerRunning = false;
 
             totalTimer = timer;
 
-            
+
         }
 
     }

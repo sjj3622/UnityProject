@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BurngpManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class BurngpManager : MonoBehaviour
     public GameObject fireFighterPrefab;
     public GameObject ClearPanel;
     public GameObject IconPanel;
+    
+    public TextMeshProUGUI GameOverText;
 
 
     public static string gameState;
@@ -33,10 +37,25 @@ public class BurngpManager : MonoBehaviour
         
         ClearPanel.SetActive(false);
         IconPanel.SetActive(false);
+        
+        GameOverText.text = "";
     }
 
     void Update()
     {
+        if (gameState == "BOver")
+        {
+            Debug.Log("게임 끝");
+            GameOverText.text = "GAME OVER";
+            burnTimerController.timerRunning = false;
+            itemDropController.gameObject.SetActive(false);
+            smokeGateController.gameObject.SetActive(false);
+            IconPanel.SetActive(false);
+            StartCoroutine(wait());
+
+        }
+
+
         if (gameState == "Rescuer" && !ispatient)
         {
             StartCoroutine(SpawnSequence());
@@ -58,10 +77,16 @@ public class BurngpManager : MonoBehaviour
             isPanel = true;
 
         }
-
+        
 
     }
-
+    private IEnumerator wait()
+    {
+        yield return new WaitForSeconds(1f);
+        gameState = null;
+        Debug.Log(gameState);
+        SceneManager.LoadScene("Title");
+    }
     private IEnumerator SpawnSequence()
     {
         // 1. playermove1-1 찾기

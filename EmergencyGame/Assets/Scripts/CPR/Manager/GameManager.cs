@@ -59,8 +59,11 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("게임 스테이지 :" + gameState);
 
+        
+
         if (panel == null)
             panel = FindObjectOfType<CPR1Panel>();
+
 
         messageText.gameObject.SetActive(false);
 
@@ -264,6 +267,7 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOver()
     {
         messageText.text = "사람을 살리지 못했습니다.";
+        GameManager.gameState = null;
         SetButtonsInteractable(false);
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("Title");

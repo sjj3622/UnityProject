@@ -8,16 +8,17 @@ public class CPR1Panel : MonoBehaviour
 {
     public GameObject GamePanel;
     public GameObject ClaerPanel;
-    public GameObject TimerText;
+    public GameObject TimeText;
     public Text timerText;
 
     public SceneStateManager SM;
+    
 
     void Start()
     {
         
         SM = SceneStateManager.instance;
-        TimerText.SetActive(true);
+        TimeText.SetActive(true);
 
         //시작시 Panel 비활성화
         if (GamePanel != null)
@@ -51,8 +52,9 @@ public class CPR1Panel : MonoBehaviour
     public void AgainClick()
     {
         GameManager.gameState = null;
-        TimerText.SetActive(false);
+        //TimerText.SetActive(false);
         timerText.text = "";
+
         SM.ClearSaved();
         SceneManager.LoadScene("CPR");
     }

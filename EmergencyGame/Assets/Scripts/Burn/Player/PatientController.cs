@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PatientController : MonoBehaviour
 {
+    [Header("MOVE")]
+    public float speed = 5.0f;
+
+
     [Header("Animation Names")]
     public string patientL = "patientL";
     public string patientR = "patientR";

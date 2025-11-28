@@ -10,7 +10,7 @@ public class BurngpManager : MonoBehaviour
     SmokeGateController smokeGateController;
     BurnTimerController burnTimerController;
     AmbulanceController ambulanceController;
-    
+
 
     public GameObject patient;
     public GameObject fireFighterPrefab;

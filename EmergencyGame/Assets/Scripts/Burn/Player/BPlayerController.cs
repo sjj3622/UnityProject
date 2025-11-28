@@ -6,7 +6,7 @@ using UnityEngine;
 public class BPlayerController : MonoBehaviour
 {
     BurnCanvas burnCanvas;
-
+    ItemDropController itemdropController;
     Rigidbody2D rb;
     Animator animator;
 
@@ -40,6 +40,8 @@ public class BPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         burnCanvas = FindAnyObjectByType<BurnCanvas>();
+        itemdropController = FindAnyObjectByType<ItemDropController>();
+
 
         // 초기 위치 Y값 조정
         Vector3 pos = transform.position;
@@ -73,7 +75,8 @@ public class BPlayerController : MonoBehaviour
             isStopped = false;
             //isGame = true;
             v = 0;
-            speed = 5.0f;
+            speed = itemdropController.sharedSpeed;
+            Debug.Log(speed);
         }
 
         if (BurngpManager.gameState == "FireFighter")

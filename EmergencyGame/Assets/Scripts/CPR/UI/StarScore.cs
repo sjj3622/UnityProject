@@ -94,8 +94,16 @@ public class StarScore : MonoBehaviour
 
 
 
-        // 별점 저장
-        GameDataManager.Instance.SetStar(sceneIndex, starCount);
+        //  GameDataManager에 저장
+        if (GameDataManager.Instance != null)
+            GameDataManager.Instance.SetStar(sceneIndex, starCount);
+        Debug.Log("starCount :" + starCount);
+
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SetStar(sceneIndex, starCount);
+            StartCoroutine(GameDataManager.Instance.UploadGameData());
+        }
     }
 
 

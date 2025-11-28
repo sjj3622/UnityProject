@@ -77,6 +77,8 @@ public class CanvasController : MonoBehaviour
         Debug.Log("클릭");
         BDgpManager.gameState = null;
 
+        StartCoroutine(GameDataManager.Instance.UploadGameData());
+
         if (BDSceneStateManager.instance != null)
         {
             BDSceneStateManager.instance.ClearSaved();
@@ -86,8 +88,7 @@ public class CanvasController : MonoBehaviour
             Debug.LogError("BDSceneStateManager.instance가 null입니다!");
         }
 
-        Debug.Log("씬 이름: " + SceneManager.GetActiveScene().name);
-        Debug.Log("BDSceneStateManager.instance: " + BDSceneStateManager.instance);
+       
 
         SceneManager.LoadScene("Bleeding");
     }

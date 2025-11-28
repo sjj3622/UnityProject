@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
+    public static TimerController Instance;
+
     public GameObject Player;
     public GameObject Patient;
     [Header("Timer Settings")]
@@ -15,11 +17,14 @@ public class TimerController : MonoBehaviour
 
 
     public float timer;
-    private bool timerRunning = false;
+    public bool timerRunning = false;
 
+    
     void Awake()
     {
         string currentScene = SceneManager.GetActiveScene().name;
+
+        
 
         // 씬이 "Title"이면 삭제
         if (currentScene == "Title")
@@ -30,17 +35,19 @@ public class TimerController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        else
+        if (Instance != null && Instance != this)
         {
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
-
-            //if (currentScene == "CPR" && GameManager.gameState == "GameClear")
-            //{
-            //    Destroy(gameObject);
-            //    Debug.Log("삭제");
-            //}
-
+            Destroy(gameObject); // 이미 존재하면 제거
+            return;
         }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 1개만 유지
+     
+
+
+
+
     }
     void OnEnable()
     {
@@ -66,6 +73,8 @@ public class TimerController : MonoBehaviour
 
     void Start()
     {
+       
+
         if (SceneStateManager.instance != null && !string.IsNullOrEmpty(SceneStateManager.instance.savedTimerText))
         {
             timerText.text = SceneStateManager.instance.savedTimerText;
@@ -74,12 +83,15 @@ public class TimerController : MonoBehaviour
         {
             timerText.text = "";
         }
+        
 
     }
 
     void Update()
     {
         
+        
+
         //Debug.Log(gameObject.name + " 위치: " + transform.position +
         //      ", 활성화: " + gameObject.activeSelf);
 
@@ -189,5 +201,5 @@ public class TimerController : MonoBehaviour
         Debug.Log("타이머 시작");
     }
 
-    
+
 }

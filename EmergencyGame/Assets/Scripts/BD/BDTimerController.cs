@@ -17,12 +17,10 @@ public class BDTimerController : MonoBehaviour
     void Awake()
     {
 
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-        //}
+        
+
     }
 
     void Start()
@@ -33,7 +31,11 @@ public class BDTimerController : MonoBehaviour
 
     void Update()
     {
-        
+        if (SceneManager.GetActiveScene().name == "Bleeding" && BDgpManager.gameState == null)
+        {
+            Destroy(gameObject);
+        }
+
         // 게임 시작 시 실행
         if (BDgpManager.gameState == "BDStart" && !timerRunning)
         {

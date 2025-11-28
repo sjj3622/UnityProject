@@ -106,7 +106,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.speed += speedIncreaseRate;
-                score += 1;
+                score += 2;
                 isCollidingWithHandle = false;
                 UpdateScoreAndStageMessage();
             }
@@ -119,7 +119,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             }
         }
 
-        if (score >= 5)
+        if (score >= 10)
         {
             messageText.text = "1단계 성공!";
             StartCoroutine(NextStageDelay(2, 1.5f));
@@ -141,7 +141,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 animator.speed += speedIncreaseRate;
-                score += 5;
+                score += 10;
                 isCollidingWithHandle = false;
                 UpdateScoreAndStageMessage();
 
@@ -222,7 +222,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
         // 단계별 점수 초기화 조건
         if (currentStage == 3 && newStage == 2)
         {
-            score = 10;
+            score = 50;
         }
         else if (currentStage == 2 && newStage == 1)
         {

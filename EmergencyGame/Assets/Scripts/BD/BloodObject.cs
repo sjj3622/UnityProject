@@ -4,6 +4,9 @@ public class BloodObject : MonoBehaviour
 {
     private BleedController bleedController;
     private Mouse Mouse;
+
+    private SpriteRenderer spriteRenderer;
+
     public enum ClickType
     {
         SingleClick,
@@ -33,20 +36,22 @@ public class BloodObject : MonoBehaviour
 
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         // 이름으로 타입 설정
         if (name.Contains("blood1"))
         {
             
             requiredMouseType = 0;
             clickType = ClickType.SingleClick;
-            score =1;
+            score =2;
         }
         else if (name.Contains("blood2"))
         {
             
             requiredMouseType = 1;
             clickType = ClickType.DoubleClick;
-            score = 3;
+            score = 5;
         }
         else if (name.Contains("blood3"))
         {
@@ -54,16 +59,17 @@ public class BloodObject : MonoBehaviour
             requiredMouseType = 2;
             clickType = ClickType.Hold;
             holdTimeRequired = 2f;
-            score = 5;
+            score = 7;
         }
         else if (name.Contains("blood4"))
         {
             
             requiredMouseType = 3;
             clickType = ClickType.Hold;
-            holdTimeRequired = 5f;
-            score = 10;
+            holdTimeRequired = 3f;
+            score = 15;
         }
+        
     }
     void Start()
     {
@@ -78,6 +84,7 @@ public class BloodObject : MonoBehaviour
     }
     void Update()
     {
+        
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -137,6 +144,9 @@ public class BloodObject : MonoBehaviour
                 {
                     holdTimer += Time.deltaTime;
                     Debug.Log("holdTimer :" + holdTimer);
+
+                    ApplyFadeEffect();
+
                     if (holdTimer >= holdTimeRequired)
                         RemoveObject();
                 }
@@ -147,6 +157,43 @@ public class BloodObject : MonoBehaviour
                 break;
         }
     }
+
+    void ApplyFadeEffect()
+    {
+        if (spriteRenderer != null)
+        {
+            float progress = Mathf.Clamp01(holdTimer / holdTimeRequired); // 0~1 비율
+            Color c = spriteRenderer.color;
+            c.a = 1f - progress; // 1 → 0 으로 감 (점점 연해짐)
+            spriteRenderer.color = c;
+        }
+    }
+
+    void ResetFade()
+    {
+        if (spriteRenderer != null)
+        {
+            Color c = spriteRenderer.color;
+            c.a = 1f;
+            spriteRenderer.color = c;
+        }
+    }
+
+    void ResetHold()
+    {
+        holdTimer = 0f;
+    }
+
+    void OnMouseExit()
+    {
+        isMouseOver = false;
+        ResetHold();
+        ResetFade(); 
+        clickCount = 0;
+    }
+
+
+
 
     void RemoveObject()
     {
@@ -162,18 +209,10 @@ public class BloodObject : MonoBehaviour
         Debug.Log($"{gameObject.name} 제거됨 (점수 {score}, 클릭타입 {clickType})");
     }
 
-    void ResetHold()
-    {
-        holdTimer = 0f;
-    }
+    
 
     void OnMouseEnter() => isMouseOver = true;
-    void OnMouseExit()
-    {
-        isMouseOver = false;
-        ResetHold();
-        clickCount = 0;
-    }
+    
 
     // BloodObject.cs 안에 추가
     public void OnClicked(int currentMouseType)

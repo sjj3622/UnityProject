@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a5f2ff4d7e7d44ebff99a344ebff61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
   patientL: patientL
   patientR: patientR
   patientF: patientF

@@ -113,6 +113,11 @@ public class HMPlayerController : MonoBehaviour
             }
 
             if (h != 0) lastDir = new Vector2(h, 0);
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                if(h>0) nowAni = AkL;
+            }
         }
     }
 

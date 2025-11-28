@@ -13,7 +13,7 @@ public class Mouse : MonoBehaviour
 
     private BleedController bleedController;
     private BDScoreController scoreController;
-    private Blood Blood;
+    
 
 
     void Start()
@@ -38,7 +38,7 @@ public class Mouse : MonoBehaviour
 
         bleedController = FindAnyObjectByType<BleedController>();
         scoreController = FindAnyObjectByType<BDScoreController>();
-        Blood = FindAnyObjectByType<Blood>();
+        
     }
 
 

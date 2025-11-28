@@ -7,6 +7,7 @@ public class patientController : MonoBehaviour
     public Transform tr;
     Rigidbody2D rb;
     Animator animator;
+    
 
     [Header("Animation Names")]
     public string RunAni = "SantaIdle";
@@ -29,6 +30,7 @@ public class patientController : MonoBehaviour
 
     void Start()
     {
+        
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         tr = transform;
@@ -55,4 +57,5 @@ public class patientController : MonoBehaviour
             }
         }
     }
+
 }

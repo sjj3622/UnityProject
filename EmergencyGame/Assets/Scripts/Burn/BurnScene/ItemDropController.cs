@@ -7,12 +7,14 @@ public class ItemDropController : MonoBehaviour
 {
     public static ItemDropController instance;
 
-
+    [Header("아이템/스폰")]
     public GameObject[] ItemPrefab;
     public Transform[] ItemDrops;
     public GameObject[] inventory;
     public float spawnInterval = 3f;
-    private int spawnCount = 1; // 동시에 생성되는 아이템 수
+    private int spawnCount = 1;
+
+    
 
     private bool isStart = false;
     private List<float> itemProbabilities = new List<float>();
@@ -20,15 +22,29 @@ public class ItemDropController : MonoBehaviour
 
     private BurnTimerController timerController;
 
-    void Awake() { instance = this; }
+    // 공유 속도
+    public float sharedSpeed = 5f;
+
+    // 이벤트
+    public delegate void ItemCollected(int index, BPlayerController player);
+    public event ItemCollected OnCollected;
+
+    public delegate void PatientCollected(int index, PatientController patient);
+    public event PatientCollected OnPatientCollected;
+
+    void Awake()
+    {
+        instance = this;
+
+    }
 
     void Start()
     {
         for (int i = 0; i < 10; i++)
             itemProbabilities.Add(10f);
 
-        // TimerController 참조
         timerController = FindAnyObjectByType<BurnTimerController>();
+
     }
 
     void Update()
@@ -36,25 +52,26 @@ public class ItemDropController : MonoBehaviour
         if (BurngpManager.gameState == "RescuerGame" && !isStart)
         {
             isStart = true;
+
+            // 중복 코루틴 방지
+            StopAllCoroutines(); // 혹시 이미 돌고 있던 루틴 있다면 멈춤
             StartCoroutine(SpawnItemRoutine());
             StartCoroutine(SpawnCountRoutine());
             Debug.Log("아이템 스폰 시작!");
 
+            // inventory 아이콘 초기화
             foreach (GameObject inv in inventory)
             {
                 if (inv != null)
                 {
                     Image img = inv.GetComponent<Image>();
-                    if (img != null)
-                        img.color = new Color(1f, 1f, 1f, 0.3f); // 회색(혹은 반투명)
+                    if (img != null) img.color = new Color(1f, 1f, 1f, 0.3f);
                 }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
-        {
             BurngpManager.gameState = "RescuerClear";
-        }
     }
 
     IEnumerator SpawnItemRoutine()
@@ -70,24 +87,43 @@ public class ItemDropController : MonoBehaviour
 
     void SpawnRandomItem()
     {
+        if (ItemDrops.Length == 0) return;
+
         int itemIndex = GetRandomItemIndex();
-        if (itemIndex == -1) { Debug.Log("스폰 가능한 아이템 없음"); return; }
+        if (itemIndex == -1) return;
 
-        int dropIndex = Random.Range(0, ItemDrops.Length);
-        Vector3 pos = ItemDrops[dropIndex].position;
-        pos.z = 0;
+        // 사용할 수 있는 Drop 위치 목록
+        List<int> availableDrops = new List<int>();
+        for (int i = 0; i < ItemDrops.Length; i++)
+            availableDrops.Add(i);
 
-        GameObject obj = Instantiate(ItemPrefab[itemIndex], pos, Quaternion.identity);
+        // 실제 생성할 개수는 spawnCount와 Drop 위치 수 중 작은 값
+        int spawnAmount = Mathf.Min(spawnCount, availableDrops.Count);
 
-        ItemController ic = obj.GetComponent<ItemController>();
-        ic.itemIndex = itemIndex;
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            if (availableDrops.Count == 0) break;
 
-        // 플레이어 충돌 시 이벤트 구독
-        ic.OnCollected += HandleItemCollected;
-        ic.OnPatientCollected += HandlePatientCollected;
+            // 랜덤으로 Drop 위치 선택
+            int randomIdx = Random.Range(0, availableDrops.Count);
+            int dropIndex = availableDrops[randomIdx];
+            availableDrops.RemoveAt(randomIdx); // 같은 위치 중복 방지
 
-        Debug.Log("생성됨: Item " + itemIndex + " 위치: " + pos);
+            // 스폰
+            Vector3 pos = ItemDrops[dropIndex].position;
+            pos.z = 0;
+
+            GameObject obj = Instantiate(ItemPrefab[itemIndex], pos, Quaternion.identity);
+            ItemController ic = obj.GetComponent<ItemController>();
+            ic.itemIndex = itemIndex;
+
+            // 이벤트 연결
+            ic.OnCollected += (idx, p) => OnPlayerCollect(idx, p);
+            ic.OnPatientCollected += (idx, t) => OnPatientCollect(idx, t);
+        }
     }
+
+
 
     int GetRandomItemIndex()
     {
@@ -110,88 +146,80 @@ public class ItemDropController : MonoBehaviour
         return -1;
     }
 
-    public void OnItemCollected(int index)
+    // Player 이벤트 wrapper
+    public void OnPlayerCollect(int index, BPlayerController player)
     {
-        if (index >= 5)
+        ApplySharedSpeed(index);
+        OnCollected?.Invoke(index, player);
+    }
+
+    // Patient 이벤트 wrapper
+    public void OnPatientCollect(int index, PatientController patient)
+    {
+        ApplySharedSpeed(index);
+        OnPatientCollected?.Invoke(index, patient);
+    }
+
+    // 공유 속도 적용
+    private void ApplySharedSpeed(int index)
+    {
+        // 속도 계산
+        if (index >= 0 && index <= 4) // 기본 아이템 → 속도 감소
         {
-            specialCollected[index - 5] = true;
+            sharedSpeed = Mathf.Max(0f, sharedSpeed - 1f);
+            
+        }
+        else if (index >= 5 && index <= 9) // 스페셜 아이템 → 속도 증가
+        {
+            sharedSpeed += 1f;
+            
 
-            // 기본 아이템 확률 증가
-            for (int i = 0; i < 5; i++)
-                itemProbabilities[i] += 1;
-
-            // 해당 inventory 아이콘을 진하게 변경
-            int invIndex = index - 5; // 5→0, 6→1, 7→2, 8→3, 9→4
-
+            // UI 업데이트
+            int invIndex = index - 5;
             if (invIndex >= 0 && invIndex < inventory.Length)
             {
                 Image img = inventory[invIndex].GetComponent<Image>();
-                if (img != null)
-                    img.color = new Color(1f, 1f, 1f, 1f);  // 진하게 표시
+                if (img != null) img.color = new Color(1f, 1f, 1f, 1f);
             }
 
+            specialCollected[index - 5] = true;
             CheckSpecialClear();
         }
+
+
+        // 속도 0 → 게임오버
+        if (sharedSpeed <= 0f)
+        {
+            BurngpManager.gameState = "BOver";
+            Debug.Log("공유 속도 0 → 게임오버!");
+        }
+
+        Debug.Log($"공유 속도 적용: {sharedSpeed}");
     }
 
-
-
-    void CheckSpecialClear()
+    private void CheckSpecialClear()
     {
         for (int i = 0; i < 5; i++)
             if (!specialCollected[i]) return;
 
         BurngpManager.gameState = "RescuerClear";
-        Debug.Log("RescuerClear! 모든 5~9 아이템 수집 완료");
+        Debug.Log("스페셜 5~9 모두 수집 → Clear!");
     }
 
-    // 플레이어 속도 증가/감소 처리
-    private void HandleItemCollected(int index, BPlayerController player)
-    {
-        if (player == null) return;
-
-
-        if (index >= 0 && index <= 4)
-        {
-            player.speed = Mathf.Max(0f, player.speed - 1f); // 최소 속도 0
-            Debug.Log("스피드 -1 :" + player.speed);
-        }
-        else if (index >= 5 && index <= 9)
-        {
-            player.speed += 1f;
-            Debug.Log("스피드 +1 :" + player.speed);
-        }
-        // speed가 0이면 게임 오버
-        if (player.speed <= 0f)
-        {
-            BurngpManager.gameState = "BOver";
-            Debug.Log("플레이어 속도 0! 게임 오버");
-        }
-
-        OnItemCollected(index);
-    }
-
-
-
-    // Timer 기준 20초마다 spawnCount 증가
     IEnumerator SpawnCountRoutine()
     {
-        float lastTime = timerController.timerDuration; // 180초 시작
         while (true)
         {
-            if (timerController != null)
+            if (timerController)
             {
                 float currentTime = timerController.GetCurrentTime();
-                // 20초 단위 경과 확인
-                if (lastTime - currentTime >= 20f)
+                if (timerController.timerDuration - currentTime >= 20f)
                 {
-                    spawnCount += 1;  // 생성 개수 증가
-                    lastTime -= 20f;  // 다음 20초 단위 체크
+                    spawnCount++;
+                    timerController.timerDuration -= 20f;
                 }
             }
             yield return new WaitForSeconds(1f);
         }
     }
-
-
 }

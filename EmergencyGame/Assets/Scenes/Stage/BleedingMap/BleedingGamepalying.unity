@@ -398,8 +398,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\\n Score <color=red>1</color> \uC810 = \n\n\n\\n Score <color=red>3</color>
-    \uC810 =\n\n\n\\n Score <color=red>5</color> \uC810 =\n\n\n\\n Score <color=red>10</color>
+  m_text: "\\n Score <color=red>2</color> \uC810 = \n\n\n\\n Score <color=red>5</color>
+    \uC810 =\n\n\n\\n Score <color=red>7</color> \uC810 =\n\n\n\\n Score <color=red>15</color>
     \uC810 ="
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1fdbe9cf7e82c524f9228023267c4640, type: 2}
@@ -3231,7 +3231,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\\n \uD074\uB9AD \n\n\n\\n \uB354\uBE14\uD074\uB9AD \n\n\n\\n 2\uCD08\uAC04
-    \uC67C\uCABD \uB9C8\uC6B0\uC2A4 \n \uD074\uB9AD \uC720\uC9C0\n\n\\n 4\uCD08\uAC04
+    \uC67C\uCABD \uB9C8\uC6B0\uC2A4 \n \uD074\uB9AD \uC720\uC9C0\n\n\\n 3\uCD08\uAC04
     \uC67C\uCABD \uB9C8\uC6B0\uC2A4 \n \uD074\uB9AD \uC720\uC9C0 \n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1fdbe9cf7e82c524f9228023267c4640, type: 2}

@@ -34,6 +34,9 @@ public class BDScoreController : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            AddScore(10);
+        }
     }
 }

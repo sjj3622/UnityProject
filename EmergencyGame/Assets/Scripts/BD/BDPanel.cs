@@ -16,7 +16,7 @@ public class BDPanel : MonoBehaviour
     public void AgainClick()
     {
         
-        BDgpManager.gameState = "";
+        BDgpManager.gameState = null;
         BDSceneStateManager.ClearSaved();
         SceneManager.LoadScene("Bleeding");
 
@@ -24,7 +24,7 @@ public class BDPanel : MonoBehaviour
 
     public void ExitClick()
     {
-        BDgpManager.gameState = "";
+        BDgpManager.gameState = null;
         BDSceneStateManager.ClearSaved();
         SceneManager.LoadScene("Title");
     }

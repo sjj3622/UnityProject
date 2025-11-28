@@ -94,7 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0bd45ef93b0f814eba2e53a5b244a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 8780880704188265256, guid: 3552cda3835008c448763d7697c36bda, type: 3}
   Patient: {fileID: 0}
   timerText: {fileID: 5346996060943122904}
   timerDuration: 180
+  totalTimer: 0
+  timer: 0

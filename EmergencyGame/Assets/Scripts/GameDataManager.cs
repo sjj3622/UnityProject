@@ -107,6 +107,7 @@ public class GameDataManager : MonoBehaviour
 
     public IEnumerator UploadGameData()
     {
+        Debug.Log("Update start");
         string url = "http://localhost:8080/game/save";
 
         string json = JsonUtility.ToJson(gameData);

@@ -13,7 +13,7 @@ public class SceneStateManager : MonoBehaviour
     private Vector3 savedTimerPosition;
 
     
-    public string savedTimerText = null;
+    public string savedTimerText = "";
 
     private bool playerSaved = false;
     private bool patientSaved = false;
@@ -40,7 +40,7 @@ public class SceneStateManager : MonoBehaviour
     }
     void Update()
     {
-        //Debug.Log("savedTimerText :"+savedTimerText);
+        Debug.Log("savedTimerText :"+savedTimerText);
     }
 
     void OnEnable()
@@ -116,7 +116,7 @@ public class SceneStateManager : MonoBehaviour
                     }
 
                     Timer.SetActive(true);
-                    Debug.Log("Timer 위치 복원 (Canvas 기준): " + savedTimerPosition);
+                    //Debug.Log("Timer 위치 복원 (Canvas 기준): " + savedTimerPosition);
 
                     //if(GameManager.gameState == null)
                     //{
@@ -211,7 +211,7 @@ public class SceneStateManager : MonoBehaviour
             if (timerCtrl != null && timerCtrl.timerText != null)
             {
                 savedTimerText = timerCtrl.timerText.text; // 텍스트 저장
-                //Debug.Log("Timer 텍스트 저장: " + savedTimerText);
+                Debug.Log("Timer 텍스트 저장: " + savedTimerText);
             }
         }
         else

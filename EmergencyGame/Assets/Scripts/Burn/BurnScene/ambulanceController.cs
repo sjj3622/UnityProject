@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 
 public class AmbulanceController : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject BPlayerPrefab;
+    public GameObject FireFighterfab;
     public GameObject AmbulancePrefab;
 
+    private GameObject FireFighter;
     private GameObject BPlayer;
     private GameObject Ambulance;
 
@@ -16,11 +19,15 @@ public class AmbulanceController : MonoBehaviour
     [Header("Settings")]
     public float moveSpeed = 3.0f;
 
+    
+
     BurnCanvas burnCanvas;
     PatientController patientController;
+    FFPlayerController ffPlayerController;
 
     public bool isEnding = false;
 
+    public bool isClear = false;
 
     public bool isMoving = true;
 
@@ -30,6 +37,8 @@ public class AmbulanceController : MonoBehaviour
 
     void Start()
     {
+        ffPlayerController = FindAnyObjectByType<FFPlayerController>();
+        
         burnCanvas = FindAnyObjectByType<BurnCanvas>();
         
         SpawnAmbulance();
@@ -38,6 +47,14 @@ public class AmbulanceController : MonoBehaviour
     void Update()
     {
 
+        if (ffPlayerController != null)
+        {
+            FireFighter = ffPlayerController.gameObject;
+        }
+        //else
+        //{
+        //    Debug.LogWarning("씬에 FFPlayerController가 없습니다!");
+        //}
 
         if (BurngpManager.gameState == null && isMoving)
         {
@@ -112,32 +129,24 @@ public class AmbulanceController : MonoBehaviour
         }
 
         // FireFighter 상태일 때 BPlayer 위치 이동
-        if (BurngpManager.gameState == "FireFighter" && BPlayer != null && !hasMovedBPlayer)
+        if ((BurngpManager.gameState == "FireFighter"|| BurngpManager.gameState == "FireFighterClear") && FireFighter != null &&!isClear)
         {
-            BPlayer.transform.position = StartGate.position;
-            hasMovedBPlayer = true;
+            Ambulance.transform.position = EndGate.position;
+
         }
 
         // RescuerClear 상태일 때 처리
-        if (BurngpManager.gameState == "RescuerClear")
+        if (BurngpManager.gameState == "RescuerClear" || BurngpManager.gameState == "FireFighterClear")
         {
-
-            // Ambulance가 없으면 StartGate에서 소환
-            if (Ambulance == null)
+            
+            if (GameObject.FindWithTag("Item") == null && Ambulance == null)
             {
+                Debug.Log("Item이 없으므로 Ambulance 소환");
                 Ambulance = Instantiate(AmbulancePrefab, StartGate.position, Quaternion.identity);
-
-                //// x좌표 반전 (스프라이트 뒤집기)
-                //SpriteRenderer sr = Ambulance.GetComponent<SpriteRenderer>();
-                //if (sr != null)
-                //{
-                //    Debug.Log("sr.flipX" + sr.flipX);
-                //    sr.flipX = false;
-                //}
             }
-
+            
             // EndGate까지 이동
-            if (Ambulance != null && !isEnding)
+            if (Ambulance != null && !isEnding && BurngpManager.gameState == "RescuerClear")
             {
                 patientController = FindAnyObjectByType<PatientController>();
 
@@ -162,12 +171,14 @@ public class AmbulanceController : MonoBehaviour
                     {
                         patientController.isarrive = true;
                     }
+                    
                 }
             }
 
-
+            
             if (isEnding)
             {
+                
                 SpriteRenderer sr = Ambulance.GetComponent<SpriteRenderer>();
                 if (sr != null)
                 {
@@ -175,13 +186,13 @@ public class AmbulanceController : MonoBehaviour
                 }
 
                 // StartGate로 이동
-
+                
                 Ambulance.transform.position = Vector3.MoveTowards(
                     Ambulance.transform.position,
                     StartGate.position,
                     moveSpeed * Time.deltaTime
                 );
-
+                
                 // StartGate 도착 시 제거
                 if (Vector3.Distance(Ambulance.transform.position, StartGate.position) < 0.1f)
                 {
@@ -192,6 +203,10 @@ public class AmbulanceController : MonoBehaviour
         }
     }
 
+    public static implicit operator AmbulanceController(PlayerGate_Burn v)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

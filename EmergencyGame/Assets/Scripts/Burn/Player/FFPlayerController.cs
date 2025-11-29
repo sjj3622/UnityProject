@@ -14,7 +14,7 @@ public class FFPlayerController : MonoBehaviour
     bool isStopped = false;
 
     Vector2 moveDir;
-    Vector2 lastDir = Vector2.down;
+    public Vector2 lastDir = Vector2.down;
 
     [Header("Spawn Position Fix")]
     public float groundOffsetY = -0.1f; // 소환 시 Y값 미세 조정
@@ -60,7 +60,7 @@ public class FFPlayerController : MonoBehaviour
             nowAni = FFIdleRR;
             ChangeAnimation();
             isCollidingWithPatient = true;
-            
+
         }
 
 

@@ -67,13 +67,9 @@ public class TimerController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        GameObject timerGO = GameObject.Find("Timer"); // 또는 FindWithTag 사용
-        if (timerGO != null)
-        {
-            Text t = timerGO.GetComponent<Text>();
-            if (t != null)
-                timerText = t;
-        }
+        //GameObject timerGO = GameObject.Find("Timer");
+        //if (timerGO != null)
+        //    timerText = timerGO.GetComponentInChildren<Text>(); // Text 컴포넌트가 하위에 있어도 찾음
 
     }
 
@@ -86,6 +82,8 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
+        
+
         if (SceneStateManager.instance != null && !string.IsNullOrEmpty(SceneStateManager.instance.savedTimerText))
         {
             timerText.text = SceneStateManager.instance.savedTimerText;

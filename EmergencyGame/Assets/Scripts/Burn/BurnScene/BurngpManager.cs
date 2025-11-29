@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,13 +11,15 @@ public class BurngpManager : MonoBehaviour
     SmokeGateController smokeGateController;
     BurnTimerController burnTimerController;
     AmbulanceController ambulanceController;
+    PatientController patientController;
 
 
     public GameObject patient;
     public GameObject fireFighterPrefab;
     public GameObject ClearPanel;
     public GameObject IconPanel;
-    
+
+    public GameObject GameOver;
     public TextMeshProUGUI GameOverText;
 
 
@@ -34,19 +37,24 @@ public class BurngpManager : MonoBehaviour
         smokeGateController = FindAnyObjectByType<SmokeGateController>();
         burnTimerController = FindAnyObjectByType<BurnTimerController>();
         ambulanceController = FindAnyObjectByType<AmbulanceController>();
-        
+        patientController = FindAnyObjectByType<PatientController>();
+
         ClearPanel.SetActive(false);
         IconPanel.SetActive(false);
-        
-        GameOverText.text = "";
+
+        GameOver.SetActive(false);
+        //GameOverText.text = "";
     }
 
     void Update()
     {
+        Debug.Log("스테이지 확인 :" + gameState);
+
         if (gameState == "BOver")
         {
             Debug.Log("게임 끝");
-            GameOverText.text = "GAME OVER";
+            GameOver.SetActive(true);
+            //GameOverText.text = "GAME OVER";
             burnTimerController.timerRunning = false;
             itemDropController.gameObject.SetActive(false);
             smokeGateController.gameObject.SetActive(false);
@@ -55,29 +63,37 @@ public class BurngpManager : MonoBehaviour
 
         }
 
+        //if (gameState == "FireFighterClear")
+        //{
+        //    ambulanceController.isEnding = true;
+        //    ambulanceController.isMoving = false;
+        //    //Destroy(patientController.gameObject);
+        //}
+
+
 
         if (gameState == "Rescuer" && !ispatient)
         {
             StartCoroutine(SpawnSequence());
             ispatient = true;
-            
+
         }
-        if (gameState == "RescuerClear")
+        if (gameState == "RescuerClear" || gameState == "FireFighterClear")
         {
-            
+
             burnTimerController.timerRunning = false;
             itemDropController.gameObject.SetActive(false);
             smokeGateController.gameObject.SetActive(false);
             IconPanel.SetActive(false);
 
-            if (GameObject.FindWithTag("Ambulance") == null && isPanel)
+            if (GameObject.FindWithTag("Ambulance") == null && isPanel && GameObject.FindWithTag("Patient") == null)
             {
                 ClearPanel.SetActive(true);
             }
             isPanel = true;
 
         }
-        
+
 
     }
     private IEnumerator wait()

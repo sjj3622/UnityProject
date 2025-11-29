@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7103124007857414326}
   m_Layer: 0
   m_Name: pill
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

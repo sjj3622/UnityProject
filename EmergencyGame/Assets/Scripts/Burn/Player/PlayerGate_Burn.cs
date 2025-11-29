@@ -5,80 +5,65 @@ using UnityEngine.SceneManagement;
 
 public class PlayerGate_Burn : MonoBehaviour
 {
-    [Header("Gate Settings")]
-    public string houseFireGateName = "playermove1-2";    // HouseFire 씬 도착 게이트 이름
-    public GameObject burnGate0;                          // Burn 씬에서 플레이어가 충돌하는 게이트
-    public GameObject playerPrefab;
-
-    [Header("Teleport Settings")]
-    public float offsetX = 1f;
+    public string houseFireGateName = "playermove1-2";
+    public GameObject burnGate0;
+    private float offsetX = -1f;
     public float cooldownTime = 1f;
 
-    private GameObject playerInstance;
     private HashSet<GameObject> cooldownSet = new HashSet<GameObject>();
+    private GameObject playerToTeleport;
 
+    public static AmbulanceController Instance;
 
-
-    //private void Awake()
-    //{
-    //    // 플레이어를 씬 전환 후에도 유지
-    //    GameObject player = GameObject.FindWithTag("Player");
-
-    //    Debug.Log(player);
-    //    if (player == null)
-    //    {
-    //        // 없으면 생성
-    //        player = Instantiate(playerPrefab);
-    //        player.tag = "Player"; // 태그 보장
-    //    }
-
-    //    playerInstance = player;
-    //    DontDestroyOnLoad(player);
-    //}
-
-    private void Start()
+    private void Awake()
     {
-        
-    }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);   // 중복이면 제거
+            return;
+        }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-
         if (!col.CompareTag("Player")) return;
-        
         if (cooldownSet.Contains(burnGate0)) return;
-        
-        //if (col.gameObject != playerInstance) return;
-        
         if (BurngpManager.gameState != "FireFighter") return;
-        
-        StartCoroutine(TeleportToHouseFire(col.gameObject));
-    }
 
-
-    private IEnumerator TeleportToHouseFire(GameObject player)
-    {
+        playerToTeleport = col.gameObject;
         cooldownSet.Add(burnGate0);
 
-        // 상태 저장(필요하다면)
         BurngpManager.gameState = "FFStart";
 
-        // HouseFire 씬으로 전환
+        // 씬 로드 후 이벤트 구독
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("HouseFire");
+    }
 
-        // HouseFire 씬에서 도착 게이트가 나타날 때까지 대기
-        yield return new WaitUntil(() => GameObject.Find(houseFireGateName) != null);
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "HouseFire") return;
 
         GameObject gateInHouseFire = GameObject.Find(houseFireGateName);
-
-        if (gateInHouseFire != null)
+        if (gateInHouseFire != null && playerToTeleport != null)
         {
-            Vector3 offset = new Vector3(offsetX, 0, 0);
-            player.transform.position = gateInHouseFire.transform.position + offset;
+            Vector3 offset = new Vector3(offsetX, 2f, 0);
+            playerToTeleport.transform.position = gateInHouseFire.transform.position + offset;
+            Debug.Log("Firer 이동 :" + playerToTeleport.transform.position);
         }
 
-        // 게이트 쿨다운 (Burn쪽 gate0)
+        // 씬 로드 이벤트 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // 쿨다운 제거
+        StartCoroutine(RemoveCooldown());
+    }
+
+    private IEnumerator RemoveCooldown()
+    {
         yield return new WaitForSeconds(cooldownTime);
         cooldownSet.Remove(burnGate0);
     }

@@ -29,7 +29,7 @@ public class BurnCanvas : MonoBehaviour
     public void selectBtn1()
     {
         BurngpManager.gameState = "FireFighter";
-        Debug.Log(BurngpManager.gameState);
+        
 
         // 현재 BPlayer 찾기
         GameObject bPlayer = GameObject.Find("BPlayer(Clone)");  // 이름 정확히 맞춰야 함

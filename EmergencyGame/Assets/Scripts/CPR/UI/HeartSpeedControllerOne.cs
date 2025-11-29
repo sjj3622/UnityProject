@@ -87,7 +87,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             animator.speed = maxSpeed;
             GameManager.gameState = "GameClear";
             Debug.Log("게임스테이지"+GameManager.gameState);
-            //SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
+            SceneStateManager.instance.SaveState(GameObject.Find("Timer"));
             SceneManager.LoadScene("CPR");
         }
         
@@ -184,7 +184,7 @@ public class HeartSpeedControllerOne : MonoBehaviour
             {
                 animator.speed += speedIncreaseRate;
                 targetKey = KeyCode.None;
-                score += 10;
+                score += 15;
                 UpdateScoreAndStageMessage();
 
             }

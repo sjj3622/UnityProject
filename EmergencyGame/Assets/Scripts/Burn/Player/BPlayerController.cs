@@ -76,7 +76,7 @@ public class BPlayerController : MonoBehaviour
             //isGame = true;
             v = 0;
             speed = itemdropController.sharedSpeed;
-            Debug.Log(speed);
+            
         }
 
         if (BurngpManager.gameState == "FireFighter")

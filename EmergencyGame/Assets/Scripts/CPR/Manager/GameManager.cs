@@ -111,13 +111,16 @@ public class GameManager : MonoBehaviour
             ShowQuestion(currentStep);
         }
 
-        //Debug.Log("시간 :"+ timer.timer + ", 패널 : "+ panel.GamePanel.activeSelf);
-        if(timer.timer <= 0 && panel.GamePanel.activeSelf)
-        {
-            StartCoroutine(GameOver());
-        }
+        ////Debug.Log("시간 :"+ timer.timer + ", 패널 : "+ panel.GamePanel.activeSelf);
+        //if (timer.totalTimer <= 0 && panel.GamePanel.activeSelf)
+        //{
+        //    Debug.Log("timer.totalTimer :" + timer.totalTimer);
+        //    Debug.Log("panel.GamePanel.activeSelf" + panel.GamePanel.activeSelf);
 
-        if(GameManager.gameState == "CPROver")
+        //    StartCoroutine(GameOver());
+        //}
+
+        if (GameManager.gameState == "CPROver")
         {
             panel.GamePanel.SetActive(true);
             StartCoroutine(GameOver());
@@ -264,7 +267,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator GameOver()
+    public IEnumerator GameOver()
     {
         messageText.text = "사람을 살리지 못했습니다.";
         GameManager.gameState = null;

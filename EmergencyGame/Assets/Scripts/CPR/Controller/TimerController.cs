@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
-    public static TimerController Instance;
+    public static TimerController instance;
 
     public GameObject Player;
     public GameObject Patient;
@@ -16,15 +16,16 @@ public class TimerController : MonoBehaviour
     public float totalTimer;
 
 
+
     public float timer;
     public bool timerRunning = false;
 
-    
+
     void Awake()
     {
         string currentScene = SceneManager.GetActiveScene().name;
-
         
+
 
         // 씬이 "Title"이면 삭제
         if (currentScene == "Title")
@@ -35,18 +36,18 @@ public class TimerController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        if (Instance != null && Instance != this)
+
+
+
+        if (instance != null && instance != this)
         {
-            Destroy(gameObject); // 이미 존재하면 제거
+            Destroy(gameObject);
             return;
         }
 
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // 1개만 유지
-     
-
-
-
+        // 최초 오브젝트는 유지
+        instance = this;
+        DontDestroyOnLoad(gameObject);
 
     }
     void OnEnable()
@@ -65,16 +66,26 @@ public class TimerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        GameObject timerGO = GameObject.Find("Timer"); // 또는 FindWithTag 사용
+        if (timerGO != null)
+        {
+            Text t = timerGO.GetComponent<Text>();
+            if (t != null)
+                timerText = t;
+        }
+
     }
-
-
 
 
 
     void Start()
     {
-       
 
+    }
+
+    void Update()
+    {
         if (SceneStateManager.instance != null && !string.IsNullOrEmpty(SceneStateManager.instance.savedTimerText))
         {
             timerText.text = SceneStateManager.instance.savedTimerText;
@@ -83,14 +94,8 @@ public class TimerController : MonoBehaviour
         {
             timerText.text = "";
         }
-        
 
-    }
 
-    void Update()
-    {
-        
-        
 
         //Debug.Log(gameObject.name + " 위치: " + transform.position +
         //      ", 활성화: " + gameObject.activeSelf);
@@ -98,7 +103,7 @@ public class TimerController : MonoBehaviour
         if (GameManager.gameState == "GameClear")
         {
             timerRunning = false;
-            
+
         }
 
         if (timerRunning)
@@ -120,18 +125,19 @@ public class TimerController : MonoBehaviour
             }
         }
 
-
     }
 
 
 
-   
+
+
+
     public void StartTimerDirectly()
     {
         if (!timerRunning)
         {
-
             timer = timerDuration;
+            Debug.Log("시간 :"+ timer);
             timerRunning = true;
             Debug.Log("타이머 직접 시작됨");
         }
@@ -141,7 +147,7 @@ public class TimerController : MonoBehaviour
     {
         if (GameManager.gameState == "StageRule")
         {
-            
+
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
             {
@@ -160,8 +166,8 @@ public class TimerController : MonoBehaviour
         }
         if (GameManager.gameState == "GameClear")
         {
-            
-            
+
+
             string savedText = SceneStateManager.instance.savedTimerText;
             if (!string.IsNullOrEmpty(savedText))
             {
@@ -175,7 +181,7 @@ public class TimerController : MonoBehaviour
                         Debug.Log("저장된 Timer 값으로 재시작: " + timer);
                     }
                     totalTimer = timer;
-                    
+
                 }
             }
 
@@ -183,15 +189,15 @@ public class TimerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!timerRunning &&
-            ((collision.CompareTag("Patient") && gameObject.CompareTag("Player")) ||
-             (collision.CompareTag("Player") && gameObject.CompareTag("Patient"))))
-        {
-            StartCoroutine(StartTimer());
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (!timerRunning &&
+    //        ((collision.CompareTag("Patient") && gameObject.CompareTag("Player")) ||
+    //         (collision.CompareTag("Player") && gameObject.CompareTag("Patient"))))
+    //    {
+    //        StartCoroutine(StartTimer());
+    //    }
+    //}
 
     IEnumerator StartTimer()
     {

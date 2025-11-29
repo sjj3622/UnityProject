@@ -53,7 +53,7 @@ public class CPR1Panel : MonoBehaviour
     {
         GameManager.gameState = null;
         //TimerText.SetActive(false);
-        timerText.text = "";
+        //timerText.text = "";
 
         SM.ClearSaved();
         SceneManager.LoadScene("CPR");

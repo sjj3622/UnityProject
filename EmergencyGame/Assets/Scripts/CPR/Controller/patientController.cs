@@ -8,6 +8,8 @@ public class patientController : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
     
+    GameManager gameManager;
+    CPR1Panel cpr1Panel;
 
     [Header("Animation Names")]
     public string RunAni = "SantaIdle";
@@ -30,7 +32,10 @@ public class patientController : MonoBehaviour
 
     void Start()
     {
-        
+
+        gameManager = FindAnyObjectByType<GameManager>();
+        cpr1Panel = FindAnyObjectByType<CPR1Panel>();
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         tr = transform;
@@ -57,5 +62,41 @@ public class patientController : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // 예: Player와 Patient가 충돌했을 때
+        if (other.CompareTag("Patient") && this.CompareTag("Player"))
+        {
+           
+            if (TimerController.instance != null)
+                TimerController.instance.StartTimerDirectly();
+
+
+            if (TimerController.instance.timer <= 0 && cpr1Panel.GamePanel.activeSelf)
+            {
+                Debug.Log("timer.totalTimer :" + TimerController.instance.timer);
+                Debug.Log("panel.GamePanel.activeSelf" + cpr1Panel.GamePanel.activeSelf);
+
+                gameManager.StartCoroutine(gameManager.GameOver());
+            }
+        }
+
+        // 반대 경우도 처리
+        if (other.CompareTag("Player") && this.CompareTag("Patient"))
+        {
+            if (TimerController.instance != null)
+                TimerController.instance.StartTimerDirectly();
+
+            if (TimerController.instance.timer <= 0 && cpr1Panel.GamePanel.activeSelf)
+            {
+                Debug.Log("timer.totalTimer :" + TimerController.instance.timer);
+                Debug.Log("panel.GamePanel.activeSelf" + cpr1Panel.GamePanel.activeSelf);
+
+                gameManager.StartCoroutine(gameManager.GameOver());
+            }
+        }
+    }
+
 
 }

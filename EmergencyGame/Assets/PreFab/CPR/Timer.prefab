@@ -100,3 +100,4 @@ MonoBehaviour:
   timerDuration: 180
   totalTimer: 0
   timer: 0
+  timerRunning: 0

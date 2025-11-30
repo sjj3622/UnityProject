@@ -1,19 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class HMPlayerController : MonoBehaviour
 {
-   
-
     Rigidbody2D rb;
     Animator animator;
+    SpriteRenderer sr;
+
+    HMpatientController hmpatientController;
 
     [Header("MOVE")]
     public float speed = 3.0f;
     public float jumpForce = 6.5f;
-    bool isJump = false; // false = 바닥에 있음, true = 공중
 
-    Vector2 lastDir = Vector2.down;
 
     [Header("Animation Names")]
     public string stopUPAni = "HMIdleB";
@@ -35,139 +35,271 @@ public class HMPlayerController : MonoBehaviour
     public string DL = "HMIdleDL";
     public string DR = "HMIdleDR";
 
+    public string Clear = "HMIdleClear";
 
-    string nowAni = "", oldAni = "";
+    [Header("Damage Settings")]
+    public float knockbackDistance = 2f;
+    public float invincibilityTime = 1f;
+
+
+    public GameObject boomClone;
+
+    // -------------------------
+    // 상태 관리
+    // -------------------------
+    enum PlayerState { Idle, Run, Jump, Attack, Damage }
+    PlayerState state = PlayerState.Idle;
+
+    Vector2 lastDir = Vector2.down;
+    string currentAni = "";
 
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        transform.localScale = new Vector2(1f, 1f); // 기본 스케일
+        sr = GetComponent<SpriteRenderer>();
+        hmpatientController = FindAnyObjectByType<HMpatientController>();
 
-        nowAni = stopDOWNAni;
-        oldAni = nowAni;
-        animator.Play(nowAni);
+
+        transform.localScale = new Vector2(1f, 1f);
+
+        PlayAnimation(stopDOWNAni);
     }
 
     void Update()
     {
+        
+
         if (SceneManager.GetActiveScene().name == "Title")
         {
             Destroy(gameObject);
+            return;
+        }
+
+        //-----------------------------
+        // 클리어 상태
+        //-----------------------------
+        if (HMgpManager.gameState == "HMClear")
+        {
+            rb.gravityScale = 0f;
+            rb.velocity = Vector2.zero;
+
+            if (hmpatientController.isclear)
+            {
+                animator.Play(Clear);
+            }
+            else
+            {
+                SetIdleAnimation();
+            }
+
+                return;
         }
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        Vector2 inputDir = new Vector2(h, v);
+        Vector2 inputDir = new Vector2(h, v).normalized;
 
-        // gameState가 null일 때 (자유이동 + 중력0 + run/idle 애니)
+        //---------------------------------------------------
+        // HMStart 이전 → 자유 이동(탑뷰)
+        //---------------------------------------------------
         if (HMgpManager.gameState == null)
         {
             rb.gravityScale = 0f;
+            rb.velocity = inputDir * speed;
 
-            if (inputDir.sqrMagnitude > 0.01f) // 움직일 때
+            if (inputDir.sqrMagnitude > 0.01f)
             {
-                rb.velocity = inputDir.normalized * speed;
-                SetRunAnimation(inputDir.normalized);
-                lastDir = inputDir.normalized; // 마지막 방향 저장
+                lastDir = inputDir;
+                state = PlayerState.Run;
+                SetRunAnimation(inputDir);
             }
-            else // 멈췄을 때
+            else
             {
-                rb.velocity = Vector2.zero;
+                state = PlayerState.Idle;
                 SetIdleAnimation();
             }
-
             return;
         }
 
-        //  gameState가 HMStart일 때 (좌우이동 + 점프)
+        //---------------------------------------------------
+        // HMStart 이후 → 점프/넉백 있는 사이드뷰 이동
+        //---------------------------------------------------
         if (HMgpManager.gameState == "HMStart")
         {
-            transform.localScale = new Vector2(0.5f, 0.5f);
             rb.gravityScale = 3f;
-            rb.velocity = new Vector2(h * speed, rb.velocity.y);
+            transform.localScale = new Vector2(0.5f, 0.5f);
 
-            if (Input.GetKeyDown(KeyCode.Space) && !isJump)
+            switch (state)
             {
-                Jump();
-            }
-            if (isJump)
-            {
-                if (h > 0) nowAni = JumpR;
-                else if (h < 0) nowAni = JumpL;
-                ChangeAnimation();
-            }
+                case PlayerState.Idle:
+                case PlayerState.Run:
+                    rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
-            if (!isJump)
-            {
-                if (h > 0) nowAni = runRIGHTAni;
-                else if (h < 0) nowAni = runLEFTAni;
-                else nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
-                ChangeAnimation();
-            }
+                    if (h != 0) lastDir = new Vector2(h, 0);
 
-            if (h != 0) lastDir = new Vector2(h, 0);
+                    if (Input.GetKeyDown(KeyCode.Space))
+                        Jump();
 
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                if(h>0) nowAni = AkL;
+                    if (Input.GetKeyDown(KeyCode.Z))
+                        StartAttack();
+
+                    if (state != PlayerState.Jump && state != PlayerState.Attack && state != PlayerState.Damage)
+                    {
+                        if (Mathf.Abs(h) > 0.1f)
+                        {
+                            state = PlayerState.Run;
+                            PlayAnimation(h > 0 ? runRIGHTAni : runLEFTAni);
+                        }
+                        else
+                        {
+                            state = PlayerState.Idle;
+                            PlayAnimation(lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni);
+                        }
+                    }
+                    break;
+
+                case PlayerState.Jump:
+                    rb.velocity = new Vector2(h * speed, rb.velocity.y);
+                    if (h != 0)
+                    {
+                        lastDir = new Vector2(h, 0);
+                        PlayAnimation(lastDir.x < 0 ? JumpL : JumpR);
+                    }
+                    break;
+
+                case PlayerState.Attack:
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                    break;
+
+                case PlayerState.Damage:
+                    // 넉백 중에는 velocity를 Update에서 막지 않음
+                    break;
             }
         }
     }
 
-    //  점프 + 방향 애니메이션
     void Jump()
     {
+        if (state == PlayerState.Jump || state == PlayerState.Attack || state == PlayerState.Damage) return;
+
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        isJump = true;
+        state = PlayerState.Jump;
 
-        nowAni = lastDir.x < 0 ? JumpL : JumpR;
-        ChangeAnimation();
+        PlayAnimation(lastDir.x < 0 ? JumpL : JumpR);
     }
 
-    void SetRunAnimation(Vector2 dir)
+    void StartAttack()
     {
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) // 좌우 우선
-            nowAni = dir.x > 0 ? runRIGHTAni : runLEFTAni;
-        else // 상하 우선
-            nowAni = dir.y > 0 ? runUPAni : runDOWNAni;
+        if (state == PlayerState.Attack || state == PlayerState.Damage) return;
 
-        ChangeAnimation();
+        state = PlayerState.Attack;
+        PlayAnimation(lastDir.x < 0 ? AkL : AKR);
+
+        // 플레이어 기준 앞쪽 위치 계산
+        Vector3 attackPos = transform.position;
+        float offsetX = 1f; // 앞쪽 X 거리
+        float offsetY = 0f; // 필요하면 Y 오프셋 추가
+
+        // 좌/우 방향에 따라 앞쪽 위치 조정
+        attackPos += new Vector3(lastDir.x < 0 ? -offsetX : offsetX, offsetY, 0f);
+
+        Instantiate(boomClone, attackPos, Quaternion.identity);
+
+        Invoke(nameof(EndAttack), 0.5f);
     }
 
-    void SetIdleAnimation()
+    void EndAttack()
     {
-        if (Mathf.Abs(lastDir.x) > Mathf.Abs(lastDir.y))
-            nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
+        if (state != PlayerState.Attack) return;
+
+        state = PlayerState.Idle;
+        PlayAnimation(lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni);
+    }
+
+    // -------------------------
+    // 데미지 + 넉백 + 깜빡임
+    // -------------------------
+    public void TakeDamage(Transform enemyTransform)
+    {
+        if (state == PlayerState.Damage) return;
+
+        state = PlayerState.Damage;
+
+        // 넉백 방향 계산: Enemy 반대 방향
+        Vector2 knockDir = (transform.position - enemyTransform.position).normalized;
+        knockDir.y = 0; // 수평 넉백
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 1f; // 넉백이 적용되도록 gravity 활성화
+
+        float knockbackStrength = 6f;
+        rb.AddForce(knockDir * knockbackStrength, ForceMode2D.Impulse);
+
+        // 데미지 애니메이션
+        if (knockDir.x > 0)
+            PlayAnimation(DR);
         else
-            nowAni = lastDir.y > 0 ? stopUPAni : stopDOWNAni;
+            PlayAnimation(DL);
 
-        ChangeAnimation();
+        StartCoroutine(InvincibilityCoroutine());
     }
 
-    void ChangeAnimation()
+    IEnumerator InvincibilityCoroutine()
     {
-        if (nowAni != oldAni)
+        float timer = 0f;
+        while (timer < invincibilityTime)
         {
-            oldAni = nowAni;
-            animator.Play(nowAni);
+            sr.enabled = !sr.enabled;
+            timer += 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
+        sr.enabled = true;
+
+        state = PlayerState.Idle;
+        PlayAnimation(lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isJump = false;
-            nowAni = lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni;
-            ChangeAnimation();
+            if (state == PlayerState.Jump)
+            {
+                state = PlayerState.Idle;
+                PlayAnimation(lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni);
+            }
         }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+            TakeDamage(collision.transform);
+    }
+
+    void SetRunAnimation(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            PlayAnimation(dir.x > 0 ? runRIGHTAni : runLEFTAni);
+        else
+            PlayAnimation(dir.y > 0 ? runUPAni : runDOWNAni);
+    }
+
+    void SetIdleAnimation()
+    {
+        if (Mathf.Abs(lastDir.x) > Mathf.Abs(lastDir.y))
+            PlayAnimation(lastDir.x > 0 ? stopRIGHTAni : stopLEFTAni);
+        else
+            PlayAnimation(lastDir.y > 0 ? stopUPAni : stopDOWNAni);
+    }
+
+    void PlayAnimation(string aniName)
+    {
+        if (currentAni == aniName) return;
+        currentAni = aniName;
+        animator.Play(currentAni);
     }
 }

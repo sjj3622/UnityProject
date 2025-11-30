@@ -45,6 +45,8 @@ public class ItemDropController : MonoBehaviour
 
     void Update()
     {
+       
+
         if (BurngpManager.gameState == "RescuerGame" && !isStart)
         {
             isStart = true;

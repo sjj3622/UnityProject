@@ -55,6 +55,11 @@ public class FFPlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (BurngpManager.gameState == null)
+        {
+            Destroy(gameObject);
+        }
+
         if (BurngpManager.gameState == "Rescuer")
         {
             nowAni = FFIdleRR;
@@ -68,7 +73,7 @@ public class FFPlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (BurngpManager.gameState == "FireFighter")
+        if (BurngpManager.gameState == "FireFighter" || BurngpManager.gameState == "FireFighterClear")
         {
             isStopped = false;
             rb.gravityScale = 1f;

@@ -5,34 +5,41 @@ using UnityEngine.SceneManagement;
 
 public class HMgpManager : MonoBehaviour
 {
-    public static string gameState = null;
+    private static string _gameState;
 
-    public Transform player; // 씬의 플레이어 오브젝트 연결
+    public static string gameState
+    {
+        get => _gameState;
+        set
+        {
+            Debug.Log($"gameState 변경: 이전값 = {_gameState}, 새값 = {value}\n스택: {System.Environment.StackTrace}");
+            _gameState = value;
+        }
+    }
+
+    public Transform player;
+    private bool isClearing = false;  // 중복 실행 방지
 
     void Awake()
     {
-        // 씬 전환 후에도 파괴되지 않게
+        Debug.Log("HMgpManager Awake! gameState = " + gameState);
+        if (FindObjectsOfType<HMgpManager>().Length > 1)
+        {
+            Destroy(gameObject);  // 이미 존재하면 자신을 삭제
+            return;
+        }
+
         DontDestroyOnLoad(this.gameObject);
-
-        // 씬 전환 감지
         SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void Start()
-    {
-        
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // HMGamePlaying 씬으로 이동했을 때
         if (scene.name == "HMGamePlaying" && player != null)
         {
-            // Tag가 "Gate"인 오브젝트 찾기
             GameObject gate = GameObject.FindWithTag("Gate");
             if (gate != null)
             {
-                // 플레이어 위치를 Gate 위치로 이동
                 player.position = gate.transform.position;
             }
             else
@@ -44,12 +51,59 @@ public class HMgpManager : MonoBehaviour
 
     void OnDestroy()
     {
-        // 씬 전환 후 이벤트 중복 방지
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Update()
     {
+        GameObject endGateObj = GameObject.FindWithTag("EndGate");
+        GameObject Enemy = GameObject.FindWithTag("Enemy");
 
+       
+
+        if (endGateObj != null && player != null && Enemy == null)
+        {
+            float distance = Vector3.Distance(player.position, endGateObj.transform.position);
+
+            
+            Debug.Log("EndGate pos = " + endGateObj.transform.position);
+            if (distance < 1f && !isClearing)
+            {
+                Debug.Log("플레이어가 EndGate에 도착했습니다!");
+
+                gameState = "HMClear";
+                // 2초간 위로 상승 + 씬 이동 실행
+                StartCoroutine(PlayerClearAction());
+            }
+        }
     }
+
+    IEnumerator PlayerClearAction()
+    {
+        isClearing = true;
+
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.gravityScale = 0;   // 🔥 중력 제거
+
+        float duration = 2f;
+        float elapsed = 0f;
+        float riseSpeed = 1.5f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            if (player != null)
+            {
+                player.position += Vector3.up * riseSpeed * Time.deltaTime;
+            }
+
+            yield return null;
+        }
+
+        // 씬 이동
+        SceneManager.LoadScene("HM");
+    }
+
 }

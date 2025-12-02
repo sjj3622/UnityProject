@@ -17,7 +17,7 @@ public class HMCameraController : MonoBehaviour
         cam = GetComponent<Camera>();
 
         // 이전 씬에서 넘어온 플레이어 찾기
-        GameObject playerObj = GameObject.Find("HMPlayer"); // 플레이어 이름
+        GameObject playerObj = GameObject.Find("HMPlayer(Clone)"); // 플레이어 이름
         if (playerObj != null)
         {
             player = playerObj.transform;

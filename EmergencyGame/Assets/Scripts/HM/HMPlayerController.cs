@@ -4,11 +4,14 @@ using System.Collections;
 
 public class HMPlayerController : MonoBehaviour
 {
+
+
     Rigidbody2D rb;
     Animator animator;
     SpriteRenderer sr;
 
     HMpatientController hmpatientController;
+    private HMgpManager hmgpManager;
 
     [Header("MOVE")]
     public float speed = 3.0f;
@@ -43,6 +46,7 @@ public class HMPlayerController : MonoBehaviour
 
 
     public GameObject boomClone;
+    
 
     // -------------------------
     // 상태 관리
@@ -64,6 +68,7 @@ public class HMPlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         hmpatientController = FindAnyObjectByType<HMpatientController>();
+        hmgpManager = FindAnyObjectByType<HMgpManager>(); 
 
 
         transform.localScale = new Vector2(1f, 1f);
@@ -86,19 +91,13 @@ public class HMPlayerController : MonoBehaviour
         //-----------------------------
         if (HMgpManager.gameState == "HMClear")
         {
-            rb.gravityScale = 0f;
             rb.velocity = Vector2.zero;
-
-            if (hmpatientController.isclear)
+            hmgpManager.isStart = false;
+            if (SceneManager.GetActiveScene().name == "HM")
             {
                 animator.Play(Clear);
-            }
-            else
-            {
-                SetIdleAnimation();
-            }
-
                 return;
+            }
         }
 
         float h = Input.GetAxisRaw("Horizontal");
@@ -112,6 +111,7 @@ public class HMPlayerController : MonoBehaviour
         {
             rb.gravityScale = 0f;
             rb.velocity = inputDir * speed;
+            speed = 3f;
 
             if (inputDir.sqrMagnitude > 0.01f)
             {
@@ -134,6 +134,14 @@ public class HMPlayerController : MonoBehaviour
         {
             rb.gravityScale = 3f;
             transform.localScale = new Vector2(0.5f, 0.5f);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = 6f;
+            }
+            else
+            {
+                speed = 3f; // 기본 속도 (원하는 값으로 변경)
+            }
 
             switch (state)
             {

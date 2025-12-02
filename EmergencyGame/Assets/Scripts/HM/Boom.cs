@@ -4,14 +4,14 @@ using UnityEngine;
 public class Boom : MonoBehaviour
 {
     public GameObject explosionAreaGo;
-    public CircleCollider2D circleCollider2D; // Æø¹ß ¹üÀ§¿ë
+    public CircleCollider2D circleCollider2D; // í­ë°œ ë²”ìœ„ìš©
 
     [Header("Animation Names")]
     public string bomb = "bomb";
     public string boob = "boob";
 
     private Animator animator;
-    private bool exploded = false; // Æø¹ß Áßº¹ ¹æÁö
+    private bool exploded = false; // í­ë°œ ì¤‘ë³µ ë°©ì§€
 
     void Start()
     {
@@ -23,13 +23,13 @@ public class Boom : MonoBehaviour
 
     IEnumerator ExplodeSequence()
     {
-        // bomb ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        // bomb ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         animator.Play(bomb);
 
-        // 2ÃÊ ´ë±â
-        yield return new WaitForSeconds(2f);
+        // 2ì´ˆ ëŒ€ê¸°
+        yield return new WaitForSeconds(5f);
 
-        // ÀÚµ¿ Æø¹ß
+        // ìë™ í­ë°œ
         TriggerExplosion();
     }
 
@@ -38,16 +38,16 @@ public class Boom : MonoBehaviour
         if (exploded) return;
         exploded = true;
 
-        // boob ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+        // boob ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         animator.Play(boob);
 
-        // Æø¹ß ¹üÀ§ È°¼ºÈ­
+        // í­ë°œ ë²”ìœ„ í™œì„±í™”
         explosionAreaGo.SetActive(true);
 
-        // Æø¹ß ¹üÀ§ Ã³¸®
+        // í­ë°œ ë²”ìœ„ ì²˜ë¦¬
         DestroyArea();
 
-        // ¿ÀºêÁ§Æ® Á¦°Å (1ÃÊ ÈÄ)
+        // ì˜¤ë¸Œì íŠ¸ ì œê±° (1ì´ˆ í›„)
         StartCoroutine(DestroyAfterDelay(1f));
     }
 
@@ -59,7 +59,7 @@ public class Boom : MonoBehaviour
 
     void DestroyArea()
     {
-        // Collider2D ¹üÀ§ ¾ÈÀÇ Enemy °Ë»ö
+        // Collider2D ë²”ìœ„ ì•ˆì˜ Enemy ê²€ìƒ‰
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, circleCollider2D.radius, LayerMask.GetMask("Enemy"));
 
         foreach (Collider2D hit in hits)
@@ -69,14 +69,14 @@ public class Boom : MonoBehaviour
                 EnemyController enemy = hit.GetComponent<EnemyController>();
                 if (enemy != null)
                 {
-                    enemy.TakeHit(); // ¸ÂÀ» ¶§¸¶´Ù 1´Ü°è¾¿ Åõ¸íÈ­
+                    enemy.TakeHit(); // ë§ì„ ë•Œë§ˆë‹¤ 1ë‹¨ê³„ì”© íˆ¬ëª…í™”
                 }
             }
         }
-        
+
     }
 
-    // ÀÌ ¿ÀºêÁ§Æ®°¡ Enemy¿Í Ãæµ¹ÇßÀ» ¶§ Áï½Ã Æø¹ß
+    // ì´ ì˜¤ë¸Œì íŠ¸ê°€ Enemyì™€ ì¶©ëŒí–ˆì„ ë•Œ ì¦‰ì‹œ í­ë°œ
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))

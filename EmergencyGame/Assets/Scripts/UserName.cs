@@ -11,7 +11,7 @@ public class UserName : MonoBehaviour
 
         // args[0]은 실행 파일 경로
         string userId = args.Length > 1 ? args[1] : "guest";
-        string Name = args.Length > 2 ? args[2] : "게스트";
+        string Name = args.Length > 2 ? args[2] : "양동현";
 
         Debug.Log("UserId: " + userId);
         Debug.Log("UserName: " + Name);

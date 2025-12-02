@@ -3,17 +3,17 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private int fadeStep = 0; // ÇöÀç Åõ¸íÈ­ ´Ü°è (0~3)
+    private int fadeStep = 0; // í˜„ì¬ íˆ¬ëª…í™” ë‹¨ê³„ (0~3)
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Enemy°¡ ¸Â¾ÒÀ» ¶§ È£Ãâ
+    // Enemyê°€ ë§ì•˜ì„ ë•Œ í˜¸ì¶œ
     public void TakeHit()
     {
-        fadeStep++; // ¸ÂÀ» ¶§¸¶´Ù ´Ü°è Áõ°¡
+        fadeStep++; // ë§ì„ ë•Œë§ˆë‹¤ ë‹¨ê³„ ì¦ê°€
 
         switch (fadeStep)
         {
@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case 3:
                 spriteRenderer.color = new Color(1f, 1f, 1f, 0f);
-                Destroy(gameObject); // 3´Ü°è µÇ¸é Á¦°Å
+                Destroy(gameObject); // 3ë‹¨ê³„ ë˜ë©´ ì œê±°
                 break;
         }
     }

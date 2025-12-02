@@ -15,7 +15,7 @@ public class HMStarScore : MonoBehaviour
 
     //string nowAni = "", oldAni = "";
 
-    public int sceneIndex = 1; // ¾À ÀÎµ¦½º ÁöÁ¤
+    public int sceneIndex = 1; // ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     HMTimerController hmTimerController;
 
     void Start()
@@ -24,7 +24,7 @@ public class HMStarScore : MonoBehaviour
         animator = GetComponent<Animator>();
 
         if (hmTimerController == null)
-            Debug.LogWarning("¾À¿¡¼­ TimerController¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ TimerControllerï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
     }
 
     void Update()
@@ -45,39 +45,39 @@ public class HMStarScore : MonoBehaviour
         {
             animator.Play(Star4);
             starCount = 4;
-            Debug.Log("º°4");
+            //Debug.Log("ï¿½ï¿½4");
         }
         else if (timer <= 144 && timer > 108)
         {
             animator.Play(Star3);
             starCount = 3;
-            Debug.Log("º°3");
+            //Debug.Log("ï¿½ï¿½3");
         }
         else if (timer <= 108 && timer > 72)
         {
             animator.Play(Star2);
             starCount = 2;
-            Debug.Log("º°2");
+            //Debug.Log("ï¿½ï¿½2");
         }
         else if (timer <= 72 && timer > 36)
         {
             animator.Play(Star1);
             starCount = 1;
-            Debug.Log("º°1");
+            //Debug.Log("ï¿½ï¿½1");
         }
         else
         {
             animator.Play(Star0);
             starCount = 0;
-            Debug.Log("º°0");
+            //Debug.Log("ï¿½ï¿½0");
         }
 
         //ChangeAnimation();
 
-        //  GameDataManager¿¡ ÀúÀå
+        //  GameDataManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (GameDataManager.Instance != null)
             GameDataManager.Instance.SetStar(sceneIndex, starCount);
-        Debug.Log("starCount :" + starCount);
+            //Debug.Log("starCount :" + starCount);
 
         if (GameDataManager.Instance != null)
         {

@@ -1,35 +1,38 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HMCanvas : MonoBehaviour
 {
     HMPlayerController hmPlayerController;
+    HMgpManager hmgpManager;
+
     void Start()
     {
         hmPlayerController = FindAnyObjectByType<HMPlayerController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        hmgpManager = FindAnyObjectByType<HMgpManager>();
     }
 
     public void AgainClick()
     {
+        //// í˜„ì¬ ì”¬ì—ì„œ Gate ì°¾ê¸°
+        //GameObject gate = GameObject.FindWithTag("Gate");
+        //if (gate != null)
+        //{
+        //    // StartGate ê°±ì‹ 
+        //    hmgpManager.StartGate = gate.transform;
+        //    Debug.Log(gate.transform);
+        //    // í”Œë ˆì´ì–´ ì¢Œí‘œ ì´ë™
+        //    hmgpManager.player.position = hmgpManager.StartGate.position;
+        //    Debug.Log(hmgpManager.player.position);
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("í˜„ì¬ ì”¬ì—ëŠ” StartGate ê°€ ì—†ìŠµë‹ˆë‹¤!");
+        //}
 
-        HMgpManager.gameState = null;
-
-
-        // ÇöÀç ¾À¿¡¼­ ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® Á¦°Å
-        if (hmPlayerController != null)
-        {
-            Destroy(hmPlayerController.gameObject);
-        }
-
-        SceneManager.LoadScene("HM");
+        
+        StartCoroutine(LoadHM());
     }
 
     public void ExitClick()
@@ -37,4 +40,13 @@ public class HMCanvas : MonoBehaviour
         HMgpManager.gameState = null;
         SceneManager.LoadScene("Title");
     }
+
+    IEnumerator LoadHM()
+    {
+        HMgpManager.gameState = null;
+        hmgpManager.isClearing = false;
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("HM", LoadSceneMode.Single);
+    }
+
 }

@@ -27,10 +27,13 @@ public class GameDataManager : MonoBehaviour
             gameData.userId = data.userId;
             gameData.starLevels = data.starLevels;
             gameData.starLevelsSavedCount = data.starLevelsSavedCount;
+            gameData.Keys = data.Keys;
+
 
             Debug.Log("User ID: " + data.userId);
             Debug.Log("Star Levels: " + string.Join(",", data.starLevels));
             Debug.Log("Saved Count: " + data.starLevelsSavedCount);
+            Debug.Log("Keys: " + string.Join(",", data.Keys));
 
             // 이제 data.starLevels와 data.starLevelsSavedCount를 게임에 적용 가능
         }
@@ -56,6 +59,7 @@ public class GameDataManager : MonoBehaviour
             {
                 gameData = new GameData();
                 gameData.starLevels = new int[4]; // 예: 씬 4개라면
+                gameData.Keys = new string[16];
             }
 
             // 커맨드라인에서 userId 읽기

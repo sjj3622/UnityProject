@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BlockManager : MonoBehaviour
+public class blockController2 : MonoBehaviour
 {
     public GameObject player;          // 플레이어 오브젝트
     public GameObject[] blocks;        // 블록들을 배열로 연결

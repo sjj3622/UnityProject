@@ -8,6 +8,7 @@ public class GameData
 {
     public int gameId;
     public int userId;
-    public int[] starLevels;        // 씬 4개의 별점 저장
-    public int starLevelsSavedCount; // 실제 저장된 별점 개수
+    public int[] starLevels;
+    public int starLevelsSavedCount;
+    public string[] Keys;  // ← Keys를 GameData 안에 저장
 }
